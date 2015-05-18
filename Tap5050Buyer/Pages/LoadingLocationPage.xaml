@@ -2,9 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Tap5050Buyer.LoadingLocationPage">
   <ContentPage.Content>
     <StackLayout>
-      <StackLayout x:Name="layout" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-        <ActivityIndicator IsRunning="true" />
-        <Label Text="Waiting for your current location" />
+      <StackLayout x:Name="layout" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="15, 0, 15, 0">
       </StackLayout>
     </StackLayout>
   </ContentPage.Content>
