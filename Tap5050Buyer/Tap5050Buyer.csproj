@@ -35,7 +35,6 @@
     <Compile Include="Pages\LoadingLocationPage.xaml.cs">
       <DependentUpon>LoadingLocationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GeolocationUtility.cs" />
     <Compile Include="XFLabs\Geolocation\Position.cs" />
     <Compile Include="XFLabs\Geolocation\PositionExtensions.cs" />
     <Compile Include="XFLabs\Geolocation\IGeolocator.cs" />
@@ -47,7 +46,12 @@
     <Compile Include="Pages\InviteFriendsPage.xaml.cs">
       <DependentUpon>InviteFriendsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\GeolocationManager.cs" />
+    <Compile Include="Pages\RaffleListPage.xaml.cs">
+      <DependentUpon>RaffleListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GeolocationManager.cs" />
+    <Compile Include="GeonamesCountrySubdivision.cs" />
+    <Compile Include="RaffleEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.4.2.6359\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.2.6359\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -77,6 +81,9 @@
     <Reference Include="ExifLib">
       <HintPath>..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -94,6 +101,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\InviteFriendsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\RaffleListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

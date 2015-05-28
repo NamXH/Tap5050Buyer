@@ -34,6 +34,7 @@ namespace Tap5050Buyer
             await Task.WhenAll(new List<Task>{ updateGeolocationTask, getRaffleLocationsTask });
 
             var raffleLocations = getRaffleLocationsTask.Result;
+
             if (raffleLocations == null)
             {
                 RemoveAllElement();
@@ -41,20 +42,24 @@ namespace Tap5050Buyer
             }
             else
             {
-                if (GeolocationManager.Geolocation != null)
+                if (GeolocationManager.CountrySubdivision != null)
                 {
+                    Navigation.PushAsync(new RaffleListPage(true, raffleLocations, GeolocationManager.CountrySubdivision));
+                }
+                else
+                {
+                    Navigation.PushAsync(new RaffleListPage(false, raffleLocations, null));
                 }
             }
         }
 
-        public async Task<List<string>> GetRaffleLocations()
+        public async Task<IList<string>> GetRaffleLocations()
         {
             // Placeholder while waiting for server implementation
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://api.geonames.org/");
             var response = await client.GetAsync("countrySubdivision?lat=37&lng=-122&username=namhoang");
             var json = response.Content.ReadAsStringAsync().Result;
-            Debug.WriteLine(json);
 
             if (a == 1)
             {
@@ -64,7 +69,7 @@ namespace Tap5050Buyer
                     "California",
                     "Saskatchewan",
                     "Alberta",
-                    "Ontaria"
+                    "Ontario"
                 };
             }
             else
