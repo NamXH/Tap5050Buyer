@@ -24,9 +24,20 @@ namespace Tap5050Buyer
 
                 // Fetch raffle list then populate
 
+                var raffleEvents = GetRaffleEvents();
+//                var raffleDetailsPage = new RaffleDetailsPage(raffleEvents);
+
                 var raffleEventListView = new ListView();
-                raffleEventListView.ItemsSource = GetRaffleEvents();
+                raffleEventListView.ItemsSource = raffleEvents;
                 raffleEventListView.ItemTemplate = new DataTemplate(typeof(RaffleEventCell));
+                raffleEventListView.ItemSelected += (sender, e) =>
+                {
+                    if (e.SelectedItem != null)
+                    {
+                        this.Navigation.PushAsync(new RaffleDetailsPage(raffleEvents));
+                        raffleEventListView.SelectedItem = null;
+                    }
+                };
                 layout.Children.Add(raffleEventListView);
             }
             else
