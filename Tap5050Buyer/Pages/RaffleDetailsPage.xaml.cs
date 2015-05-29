@@ -7,13 +7,18 @@ namespace Tap5050Buyer
 {
     public partial class RaffleDetailsPage : CarouselPage
     {
-        public RaffleDetailsPage(IList<RaffleEvent> raffleEvents)
+        public RaffleDetailsPage(IList<RaffleEvent> raffleEvents, int selectedRaffleId)
         {
             InitializeComponent();
   
             foreach (var raffle in raffleEvents)
             {
-                Children.Add(CreateRaffleEventDetailsPage(raffle));
+                var page = CreateRaffleEventDetailsPage(raffle);
+                Children.Add(page);
+                if (raffle.Id == selectedRaffleId)
+                {
+                    this.SelectedItem = page;
+                }
             }
         }
 

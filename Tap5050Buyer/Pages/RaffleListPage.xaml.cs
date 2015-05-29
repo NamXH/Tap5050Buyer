@@ -33,7 +33,7 @@ namespace Tap5050Buyer
                 {
                     if (e.SelectedItem != null)
                     {
-                        this.Navigation.PushAsync(new RaffleDetailsPage(raffleEvents));
+                            this.Navigation.PushAsync(new RaffleDetailsPage(raffleEvents, ((RaffleEvent)e.SelectedItem).Id));
                         raffleEventListView.SelectedItem = null;
                     }
                 };
@@ -56,6 +56,7 @@ namespace Tap5050Buyer
             {
                 new RaffleEvent
                 {
+                    Id = 1,
                     Name = "Chris Time Zone Event",
                     Organization = "Main Testing Organization",
                     Description = "Put description here for event 12502",
@@ -63,6 +64,7 @@ namespace Tap5050Buyer
                 },
                 new RaffleEvent
                 {
+                    Id = 2,
                     Name = "Jay Test Event Large Raffle",
                     Organization = "Main Testing Organization",
                     Description = "Foo Bar",
