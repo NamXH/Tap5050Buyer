@@ -52,9 +52,9 @@ namespace Tap5050Buyer
             Geolocator.StartListening(1000, 1);
             try
             {
-                _geolocation = await Geolocator.GetPositionAsync(10000);
+                _geolocation = await Geolocator.GetPositionAsync(1000);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _geolocation = null;
             }
@@ -72,7 +72,7 @@ namespace Tap5050Buyer
                 {
                     response = await client.GetAsync(endpointAddress);
                 }
-                catch (Exception e)
+                catch (Exception) 
                 {
                     _countrySubdivision = null;
                     return;

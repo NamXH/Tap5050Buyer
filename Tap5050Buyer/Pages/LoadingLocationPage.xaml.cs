@@ -41,7 +41,7 @@ namespace Tap5050Buyer
             }
             else
             {
-                if (GeolocationManager.CountrySubdivision != null)
+                if (GeolocationManager.CountrySubdivision.AdminName != null)
                 {
                     Navigation.PushAsync(new RaffleListPage(true, raffleLocations, GeolocationManager.CountrySubdivision));
                 }
@@ -56,13 +56,13 @@ namespace Tap5050Buyer
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(c_serverBaseAddress);
-            HttpResponseMessage response = null;
 
+            HttpResponseMessage response = null;
             try
             {
                 response = await client.GetAsync(c_serverLocationApiAddress);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

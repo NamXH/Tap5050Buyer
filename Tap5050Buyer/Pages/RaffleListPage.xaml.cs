@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace Tap5050Buyer
 {
     public partial class RaffleListPage : ContentPage
     {
+        public const string c_serverBaseAddress = "http://dev.tap5050.com/";
+        public const string c_serverEventApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/events";
+
         public RaffleListPage(bool locationDetected, IList<RaffleLocation> raffleLocations, GeonamesCountrySubdivision countrySubdivision)
         {
             InitializeComponent();
@@ -22,22 +30,21 @@ namespace Tap5050Buyer
                 locationPicker.SelectedIndex = 0;
                 locationPicker.IsEnabled = false;
 
-                // Fetch raffle list then populate
+                var raffleLocation = raffleLocations.FirstOrDefault(x => x.Name == countrySubdivision.AdminName);
 
-                var raffleEvents = GetRaffleEvents();
-
-                var raffleEventListView = new ListView();
-                raffleEventListView.ItemsSource = raffleEvents;
-                raffleEventListView.ItemTemplate = new DataTemplate(typeof(RaffleEventCell));
-                raffleEventListView.ItemSelected += (sender, e) =>
+                if (raffleLocation == null)
                 {
-                    if (e.SelectedItem != null)
-                    {
-                            this.Navigation.PushAsync(new RaffleDetailsPage(raffleEvents, ((RaffleEvent)e.SelectedItem).Id));
-                        raffleEventListView.SelectedItem = null;
-                    }
-                };
-                layout.Children.Add(raffleEventListView);
+                    layout.Children.Add(new Label
+                        {
+                            Text = "Sorry. There is no available raffle at your location.",
+                            HorizontalOptions = LayoutOptions.CenterAndExpand,
+                            VerticalOptions = LayoutOptions.CenterAndExpand,
+                        });
+                }
+                else
+                {
+                    PopulateRaffleEventList(raffleLocation);
+                }
             }
             else
             {
@@ -50,27 +57,47 @@ namespace Tap5050Buyer
 
         }
 
-        public List<RaffleEvent> GetRaffleEvents()
+        public async void PopulateRaffleEventList(RaffleLocation raffleLocation)
         {
-            return new List<RaffleEvent>
+            var raffleEvents = await GetRaffleEventsAtLocation(raffleLocation.Id);
+
+            var raffleEventListView = new ListView();
+            raffleEventListView.ItemsSource = raffleEvents;
+            raffleEventListView.ItemTemplate = new DataTemplate(typeof(RaffleEventCell));
+            raffleEventListView.ItemSelected += (sender, e) =>
+                {
+                    if (e.SelectedItem != null)
+                    {
+                        this.Navigation.PushAsync(new RaffleDetailsPage(raffleEvents, ((RaffleEvent)e.SelectedItem).Id));
+                        raffleEventListView.SelectedItem = null;
+                    }
+                };
+            layout.Children.Add(raffleEventListView);
+        }
+
+        public async Task<List<RaffleEvent>> GetRaffleEventsAtLocation(string locationId)
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(c_serverBaseAddress);
+
+            HttpResponseMessage response = null;
+            try
             {
-                new RaffleEvent
-                {
-                    Id = 1,
-                    Name = "Chris Time Zone Event",
-                    Organization = "Main Testing Organization",
-                    Description = "Put description here for event 12502",
-                    ImageUrl = "http://i.imgur.com/ostrOHz.png",
-                },
-                new RaffleEvent
-                {
-                    Id = 2,
-                    Name = "Jay Test Event Large Raffle",
-                    Organization = "Main Testing Organization",
-                    Description = "Foo Bar",
-                    ImageUrl = "http://i.imgur.com/ostrOHz.png",
-                }
-            };
+                response = await client.GetAsync(c_serverEventApiAddress + "?location_id=" + locationId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            var json = response.Content.ReadAsStringAsync().Result;
+
+            var obj = JsonConvert.DeserializeObject<JObject>(json);
+            var items = obj["items"];
+            if (items != null)
+            {
+                return JsonConvert.DeserializeObject<List<RaffleEvent>>(items.ToString());
+            }
+            return null; 
         }
     }
 
