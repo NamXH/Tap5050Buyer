@@ -52,7 +52,7 @@ namespace Tap5050Buyer
 //            Geolocator.StartListening(1000, 1); // It seems we must not start&stop manually in order for timeout to work
             try
             {
-                _geolocation = await Geolocator.GetPositionAsync(1000);
+                _geolocation = await Geolocator.GetPositionAsync(10000);
             }
             catch (Exception)
             {

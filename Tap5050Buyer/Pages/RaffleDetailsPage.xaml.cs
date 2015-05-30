@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace Tap5050Buyer
@@ -129,6 +129,11 @@ namespace Tap5050Buyer
             {
                 var browser = new WebView();
                 browser.Source = raffle.BuyTicketUrl;
+
+//                browser.Navigated += (object obj, WebNavigatedEventArgs eventArgs) =>
+//                {
+//                    Debug.WriteLine(eventArgs.Url);
+//                };
 
                 var browserPage = new ContentPage();
                 browserPage.Content = browser;
