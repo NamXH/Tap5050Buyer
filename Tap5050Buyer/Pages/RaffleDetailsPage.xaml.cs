@@ -36,7 +36,7 @@ namespace Tap5050Buyer
             var layout = new StackLayout
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                Padding = new Thickness(20, 0, 20, 0),
+                Padding = new Thickness(20, 5, 20, 5),
             };
             page.Content = layout;
 
@@ -83,21 +83,24 @@ namespace Tap5050Buyer
             };
             layout.Children.Add(descriptionLabel);
 
-            var jackpotTotal = new Label
+            if (raffle.HasJackpot == "Y")
             {
-                Text = "$" + raffle.JackpotTotal,
-                TextColor = Color.Red,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-            };
-            layout.Children.Add(jackpotTotal);
+                var jackpotTotal = new Label
+                {
+                    Text = "$" + raffle.JackpotTotal,
+                    TextColor = Color.Red,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                };
+                layout.Children.Add(jackpotTotal);
 
-            var jackpotDescription = new Label
-            {
-                Text = raffle.JackpotDescription,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
-            };
-            layout.Children.Add(jackpotDescription);
+                var jackpotDescription = new Label
+                {
+                    Text = raffle.JackpotDescription,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
+                };
+                layout.Children.Add(jackpotDescription);
+            }
 
             var prizeButton = new Button
             {
