@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Xamarin.Forms;
-using System.Threading.Tasks;
 using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Xamarin.Forms;
 
 namespace Tap5050Buyer
 {
@@ -12,11 +14,8 @@ namespace Tap5050Buyer
         public const string c_loadingMessage = "Waiting for your current location.";
         public const string c_cannotReachServerErrorMessage = "Cannot contact server. Please check your Internet connection and try again.";
 
-        public int a
-        {
-            get;
-            set;
-        }
+        public const string c_serverBaseAddress = "http://dev.tap5050.com/";
+        public const string c_serverLocationApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/locations";
 
         public LoadingLocationPage()
         {
@@ -53,30 +52,29 @@ namespace Tap5050Buyer
             }
         }
 
-        public async Task<IList<string>> GetRaffleLocations()
+        public async Task<List<RaffleLocation>> GetRaffleLocations()
         {
-            // Placeholder while waiting for server implementation
             var client = new HttpClient();
-            client.BaseAddress = new Uri("http://api.geonames.org/");
-            var response = await client.GetAsync("countrySubdivision?lat=37&lng=-122&username=namhoang");
-            var json = response.Content.ReadAsStringAsync().Result;
+            client.BaseAddress = new Uri(c_serverBaseAddress);
+            HttpResponseMessage response = null;
 
-            if (a == 1)
+            try
             {
-                a = 0;
-                return new List<string>
-                {
-                    "California",
-                    "Saskatchewan",
-                    "Alberta",
-                    "Ontario"
-                };
+                response = await client.GetAsync(c_serverLocationApiAddress);
             }
-            else
+            catch (Exception e)
             {
-                a = 1;
                 return null;
             }
+            var json = response.Content.ReadAsStringAsync().Result;
+
+            var obj = JsonConvert.DeserializeObject<JObject>(json);
+            var items = obj["items"];
+            if (items != null)
+            {
+                return JsonConvert.DeserializeObject<List<RaffleLocation>>(items.ToString());
+            }
+            return null;
         }
 
         private void RemoveAllElement()

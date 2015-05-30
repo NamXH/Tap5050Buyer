@@ -59,10 +59,19 @@ namespace Tap5050Buyer
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(_reverseGeocodingServiceBaseUri);
                 var endpointAddress = String.Format("countrySubdivisionJSON?lat={0}&lng={1}&username={2}", _geolocation.Latitude, _geolocation.Longitude, _geonamesUsername);
-                    
-                var response = await client.GetAsync(endpointAddress);
-                var json = response.Content.ReadAsStringAsync().Result;
 
+                HttpResponseMessage response = null;
+                try
+                {
+                    response = await client.GetAsync(endpointAddress);
+                }
+                catch (Exception e)
+                {
+                    _countrySubdivision = null;
+                    return;
+                }
+
+                var json = response.Content.ReadAsStringAsync().Result;
                 _countrySubdivision = JsonConvert.DeserializeObject<GeonamesCountrySubdivision>(json);
             }
         }

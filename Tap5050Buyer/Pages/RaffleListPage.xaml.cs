@@ -6,7 +6,7 @@ namespace Tap5050Buyer
 {
     public partial class RaffleListPage : ContentPage
     {
-        public RaffleListPage(bool locationDetected, IList<string> raffleLocations, GeonamesCountrySubdivision countrySubdivision)
+        public RaffleListPage(bool locationDetected, IList<RaffleLocation> raffleLocations, GeonamesCountrySubdivision countrySubdivision)
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
@@ -43,7 +43,7 @@ namespace Tap5050Buyer
             {
                 foreach (var location in raffleLocations)
                 {
-                    locationPicker.Items.Add(location);
+                    locationPicker.Items.Add(location.Name);
                 }
                 locationPicker.IsEnabled = true;
             }
