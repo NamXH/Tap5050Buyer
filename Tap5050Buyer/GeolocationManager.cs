@@ -50,7 +50,14 @@ namespace Tap5050Buyer
         {
             // Get device lat, long
             Geolocator.StartListening(1000, 1);
-            _geolocation = await Geolocator.GetPositionAsync(10000);
+            try
+            {
+                _geolocation = await Geolocator.GetPositionAsync(10000);
+            }
+            catch (Exception e)
+            {
+                _geolocation = null;
+            }
             Geolocator.StopListening();
 
             // Get location name from lat, long
