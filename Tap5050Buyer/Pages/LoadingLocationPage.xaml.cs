@@ -26,6 +26,7 @@ namespace Tap5050Buyer
             GetCurrentLocationAndRaffleLocationList();
         }
 
+        // Have to make this func because we can't have async ctor
         public async void GetCurrentLocationAndRaffleLocationList()
         {
             var updateGeolocationTask = GeolocationManager.UpdateGeolocation();

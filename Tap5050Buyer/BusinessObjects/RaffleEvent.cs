@@ -84,6 +84,12 @@ namespace Tap5050Buyer
             set;
         }
 
+        [JsonProperty(PropertyName = "licence_number")]
+        public string LicenceNumber {
+            get;
+            set;
+        }
+
         public RaffleEvent()
         {
         }

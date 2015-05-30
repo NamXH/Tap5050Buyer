@@ -7,7 +7,7 @@ namespace Tap5050Buyer
 {
     public partial class RaffleDetailsPage : CarouselPage
     {
-        public RaffleDetailsPage(IList<RaffleEvent> raffleEvents, int selectedRaffleId)
+        public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId)
         {
             InitializeComponent();
   
@@ -28,7 +28,8 @@ namespace Tap5050Buyer
 
             var layout = new StackLayout
             {
-                VerticalOptions = LayoutOptions.FillAndExpand
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Padding = new Thickness(20, 0, 20, 0),
             };
             page.Content = layout;
 
@@ -45,14 +46,31 @@ namespace Tap5050Buyer
             {
                 Text = raffle.Name,
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
             };
             layout.Children.Add(nameLabel);
+
+            var organizationLabel = new Label
+            {
+                Text = raffle.Organization,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+            };
+            layout.Children.Add(organizationLabel);
+
+            if (raffle.LicenceNumber != null)
+            {
+                var licenseLabel = new Label
+                {
+                    Text = "Licence Number: " + raffle.LicenceNumber,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                };
+                layout.Children.Add(licenseLabel);
+            }
 
             var descriptionLabel = new Label
             {
                 Text = raffle.Description,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
             };
             layout.Children.Add(descriptionLabel);
 
@@ -64,13 +82,13 @@ namespace Tap5050Buyer
             buyButton.Clicked += (sender, e) =>
             {
                 var browser = new WebView();
-                browser.Source = "http://www.tap5050.com/apex/f?p=TICKETBOOTH:PICKTICKET::::APP:P0_EVENT_ID:12502";
+                browser.Source = raffle.BuyTicketUrl;
 
-                var testPage = new ContentPage();
-                testPage.Content = browser;
-                testPage.Title = "test";
+                var browserPage = new ContentPage();
+                browserPage.Content = browser;
+                browserPage.Title = "Buy Tickets";
 
-                this.Navigation.PushAsync(testPage);
+                this.Navigation.PushAsync(browserPage);
             };
             layout.Children.Add(buyButton);
 

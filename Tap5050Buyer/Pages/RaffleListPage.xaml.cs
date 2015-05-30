@@ -11,6 +11,12 @@ namespace Tap5050Buyer
 {
     public partial class RaffleListPage : ContentPage
     {
+        public bool LocationDetected
+        {
+            get;
+            set;
+        }
+
         public const string c_serverBaseAddress = "http://dev.tap5050.com/";
         public const string c_serverEventApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/events";
 
@@ -18,6 +24,8 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
+
+            LocationDetected = locationDetected;
 
             var locationPicker = new Picker();
             locationPicker.HorizontalOptions = LayoutOptions.Center;
@@ -34,16 +42,24 @@ namespace Tap5050Buyer
 
                 if (raffleLocation == null)
                 {
-                    layout.Children.Add(new Label
+                    layout.Children.Add(new StackLayout
                         {
-                            Text = "Sorry. There is no available raffle at your location.",
-                            HorizontalOptions = LayoutOptions.CenterAndExpand,
+                            Children =
+                            { new Label
+                                {
+                                    Text = "Sorry. There is no available raffle at your location.",
+                                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                                }
+                            },
+                            Padding = new Thickness(20, 0, 20, 0),
                             VerticalOptions = LayoutOptions.CenterAndExpand,
-                        });
+                        }
+                    );
                 }
                 else
                 {
-                    PopulateRaffleEventList(raffleLocation);
+                    GetRaffleEventsAndCreateList(raffleLocation.Name);
                 }
             }
             else
@@ -53,29 +69,42 @@ namespace Tap5050Buyer
                     locationPicker.Items.Add(location.Name);
                 }
                 locationPicker.IsEnabled = true;
+                locationPicker.SelectedIndexChanged += (sender, e) =>
+                {
+                    if (layout.Children.Count == 2)
+                    {
+                        layout.Children.RemoveAt(1);
+                    }
+                    GetRaffleEventsAndCreateList(locationPicker.Items[locationPicker.SelectedIndex]);
+                };
             }
 
         }
 
-        public async void PopulateRaffleEventList(RaffleLocation raffleLocation)
+        // Have to make this func because we can't have async ctor
+        public async void GetRaffleEventsAndCreateList(string raffleLocationName)
         {
-            var raffleEvents = await GetRaffleEventsAtLocation(raffleLocation.Id);
+            var raffleEvents = await GetRaffleEventsAtLocation(raffleLocationName);
+            CreateRaffleEventList(raffleEvents);
+        }
 
+        public void CreateRaffleEventList(IList<RaffleEvent> raffleEvents)
+        {
             var raffleEventListView = new ListView();
             raffleEventListView.ItemsSource = raffleEvents;
             raffleEventListView.ItemTemplate = new DataTemplate(typeof(RaffleEventCell));
             raffleEventListView.ItemSelected += (sender, e) =>
+            {
+                if (e.SelectedItem != null)
                 {
-                    if (e.SelectedItem != null)
-                    {
-                        this.Navigation.PushAsync(new RaffleDetailsPage(raffleEvents, ((RaffleEvent)e.SelectedItem).Id));
-                        raffleEventListView.SelectedItem = null;
-                    }
-                };
+                    this.Navigation.PushAsync(new RaffleDetailsPage(LocationDetected, raffleEvents, ((RaffleEvent)e.SelectedItem).Id));
+                    raffleEventListView.SelectedItem = null;
+                }
+            };
             layout.Children.Add(raffleEventListView);
         }
 
-        public async Task<List<RaffleEvent>> GetRaffleEventsAtLocation(string locationId)
+        public async Task<List<RaffleEvent>> GetRaffleEventsAtLocation(string locationName)
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(c_serverBaseAddress);
@@ -83,7 +112,7 @@ namespace Tap5050Buyer
             HttpResponseMessage response = null;
             try
             {
-                response = await client.GetAsync(c_serverEventApiAddress + "?location_id=" + locationId);
+                response = await client.GetAsync(c_serverEventApiAddress + "?location=" + locationName);
             }
             catch (Exception)
             {
