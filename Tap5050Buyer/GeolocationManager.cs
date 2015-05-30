@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Xamarin.Forms;
+using System.Threading;
 
 namespace Tap5050Buyer
 {
@@ -48,8 +49,7 @@ namespace Tap5050Buyer
 
         public static async Task UpdateGeolocation()
         {
-            // Get device lat, long
-            Geolocator.StartListening(1000, 1);
+//            Geolocator.StartListening(1000, 1); // It seems we must not start&stop manually in order for timeout to work
             try
             {
                 _geolocation = await Geolocator.GetPositionAsync(1000);
@@ -58,7 +58,7 @@ namespace Tap5050Buyer
             {
                 _geolocation = null;
             }
-            Geolocator.StopListening();
+//            Geolocator.StopListening(); // It seems we must not start&stop manually in order for timeout to work
 
             // Get location name from lat, long
             if (_geolocation != null)
@@ -72,7 +72,7 @@ namespace Tap5050Buyer
                 {
                     response = await client.GetAsync(endpointAddress);
                 }
-                catch (Exception) 
+                catch (Exception)
                 {
                     _countrySubdivision = null;
                     return;

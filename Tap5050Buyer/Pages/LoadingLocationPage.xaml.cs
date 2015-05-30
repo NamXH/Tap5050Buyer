@@ -41,7 +41,7 @@ namespace Tap5050Buyer
             }
             else
             {
-                if (GeolocationManager.CountrySubdivision.AdminName != null)
+                if ((GeolocationManager.CountrySubdivision != null) && (GeolocationManager.CountrySubdivision.AdminName != null))
                 {
                     Navigation.PushAsync(new RaffleListPage(true, raffleLocations, GeolocationManager.CountrySubdivision));
                 }
