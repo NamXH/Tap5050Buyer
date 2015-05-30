@@ -7,10 +7,17 @@ namespace Tap5050Buyer
 {
     public partial class RaffleDetailsPage : CarouselPage
     {
+        public bool LocationDetected
+        {
+            get;
+            set;
+        }
+
         public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId)
         {
             InitializeComponent();
-  
+
+            LocationDetected = locationDetected;
             foreach (var raffle in raffleEvents)
             {
                 var page = CreateRaffleEventDetailsPage(raffle);
@@ -54,6 +61,7 @@ namespace Tap5050Buyer
             {
                 Text = raffle.Organization,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
+                FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
             };
             layout.Children.Add(organizationLabel);
 
@@ -63,6 +71,7 @@ namespace Tap5050Buyer
                 {
                     Text = "Licence Number: " + raffle.LicenceNumber,
                     HorizontalOptions = LayoutOptions.StartAndExpand,
+                    FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
                 };
                 layout.Children.Add(licenseLabel);
             }
@@ -73,6 +82,40 @@ namespace Tap5050Buyer
                 HorizontalOptions = LayoutOptions.StartAndExpand,
             };
             layout.Children.Add(descriptionLabel);
+
+            var jackpotTotal = new Label
+            {
+                Text = "$" + raffle.JackpotTotal,
+                TextColor = Color.Red,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+            };
+            layout.Children.Add(jackpotTotal);
+
+            var jackpotDescription = new Label
+            {
+                Text = raffle.JackpotDescription,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
+            };
+            layout.Children.Add(jackpotDescription);
+
+            var prizeButton = new Button
+            {
+                Text = "See Prizes",
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+            };
+            prizeButton.Clicked += (sender, e) =>
+            {
+                var browser = new WebView();
+                browser.Source = raffle.PrizeUrl;
+
+                var browserPage = new ContentPage();
+                browserPage.Content = browser;
+                browserPage.Title = "See Prizes";
+
+                this.Navigation.PushAsync(browserPage);
+            };
+            layout.Children.Add(prizeButton);
 
             var buyButton = new Button
             {
@@ -91,6 +134,18 @@ namespace Tap5050Buyer
                 this.Navigation.PushAsync(browserPage);
             };
             layout.Children.Add(buyButton);
+
+            if (!LocationDetected)
+            {
+                var locationWarning = new Label
+                {
+                    Text = "You may not complete the buy since we cannot detect your location.",
+                    FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.End,
+                };
+                layout.Children.Add(locationWarning);
+            }
 
             return page;
         }
