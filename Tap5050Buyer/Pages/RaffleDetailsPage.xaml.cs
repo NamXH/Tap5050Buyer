@@ -117,6 +117,8 @@ namespace Tap5050Buyer
                 browserPage.Title = "See Prizes";
 
                 this.Navigation.PushAsync(browserPage);
+
+//                Device.OpenUri(new Uri(raffle.PrizeUrl)); // External browser
             };
             layout.Children.Add(prizeButton);
 
@@ -130,9 +132,11 @@ namespace Tap5050Buyer
                 var browser = new WebView();
                 browser.Source = raffle.BuyTicketUrl;
 
-//                browser.Navigated += (object obj, WebNavigatedEventArgs eventArgs) =>
+//                browser.Navigated += async (object obj, WebNavigatedEventArgs eventArgs) =>
 //                {
 //                    Debug.WriteLine(eventArgs.Url);
+//                    var action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Email", "Twitter", "Facebook");
+//                    Debug.WriteLine("Action: " + action);
 //                };
 
                 var browserPage = new ContentPage();

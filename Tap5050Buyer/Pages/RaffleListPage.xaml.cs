@@ -78,7 +78,6 @@ namespace Tap5050Buyer
                     GetRaffleEventsAndCreateList(locationPicker.Items[locationPicker.SelectedIndex]);
                 };
             }
-
         }
 
         // Have to make this func because we can't have async ctor
@@ -157,6 +156,7 @@ namespace Tap5050Buyer
             var eventNameLabel = new Label
             {
                 YAlign = TextAlignment.Center,
+                LineBreakMode = LineBreakMode.TailTruncation,
                 FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
             };
             eventNameLabel.SetBinding(Label.TextProperty, new Binding("Name"));
@@ -164,6 +164,7 @@ namespace Tap5050Buyer
             var organizationNameLable = new Label
             {
                 YAlign = TextAlignment.Center,
+                LineBreakMode = LineBreakMode.TailTruncation,
                 FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), 
             };
             organizationNameLable.SetBinding(Label.TextProperty, new Binding("Organization"));
