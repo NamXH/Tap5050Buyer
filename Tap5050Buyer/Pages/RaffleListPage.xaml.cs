@@ -96,6 +96,7 @@ namespace Tap5050Buyer
             {
                 if (e.SelectedItem != null)
                 {
+                    // PushAsync a new RaffleDetailsPage instead of creating one and reuse it: to workaround a bug in Carousel + TabbedPage in iOS
                     this.Navigation.PushAsync(new RaffleDetailsPage(LocationDetected, raffleEvents, ((RaffleEvent)e.SelectedItem).Id));
                     raffleEventListView.SelectedItem = null;
                 }
