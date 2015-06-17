@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using System.Threading;
+using XLabs.Platform.Services.Geolocation;
+using XLabs.Ioc;
 
 namespace Tap5050Buyer
 {
@@ -21,7 +23,8 @@ namespace Tap5050Buyer
             {
                 if (_geolocator == null)
                 {
-                    _geolocator = DependencyService.Get<IGeolocator>();
+//                    _geolocator = DependencyService.Get<IGeolocator>(); // Pre XLabs 2.0
+                    _geolocator = Resolver.Resolve<IGeolocator>();
                 }
                 return _geolocator;
             }
