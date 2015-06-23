@@ -150,7 +150,7 @@ namespace Tap5050Buyer
             var labelLayout = new StackLayout
             {
                 Padding = new Thickness(5, 0, 0, 0),
-                VerticalOptions = LayoutOptions.StartAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
                 Orientation = StackOrientation.Vertical,
             };
             
@@ -162,16 +162,17 @@ namespace Tap5050Buyer
             };
             eventNameLabel.SetBinding(Label.TextProperty, new Binding("Name"));
 
-            var organizationNameLable = new Label
-            {
-                YAlign = TextAlignment.Center,
-                LineBreakMode = LineBreakMode.TailTruncation,
-                FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), 
-            };
-            organizationNameLable.SetBinding(Label.TextProperty, new Binding("Organization"));
+            // Organization name label
+//            var organizationNameLable = new Label
+//            {
+//                YAlign = TextAlignment.Center,
+//                LineBreakMode = LineBreakMode.TailTruncation,
+//                FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), 
+//            };
+//            organizationNameLable.SetBinding(Label.TextProperty, new Binding("Organization"));
 
             labelLayout.Children.Add(eventNameLabel);
-            labelLayout.Children.Add(organizationNameLable);
+//            labelLayout.Children.Add(organizationNameLable);
 
             viewLayout.Children.Add(image);
             viewLayout.Children.Add(labelLayout);
