@@ -40,41 +40,95 @@ namespace Tap5050Buyer
             };
             page.Content = layout;
 
+            #region Jackpot
+            if (raffle.HasJackpot == "Y")
+            {
+                var jackpotDescription = new Label
+                {
+                    Text = raffle.JackpotDescription,
+                    FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                };
+                layout.Children.Add(jackpotDescription);
+
+                var jackpotTotal = new Label
+                {
+//                    Text = "$" + raffle.JackpotTotal,
+                    Text = "$1,000,000",
+                    TextColor = Color.Red,
+                    FontSize = 35,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                };
+                layout.Children.Add(jackpotTotal);
+            }
+            #endregion
+
+            var imageAndNameLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+            };
+            layout.Children.Add(imageAndNameLayout);
+
+            #region Image and Licence Number
+            var imageLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+            };
+            imageAndNameLayout.Children.Add(imageLayout);
+
+            var quarterScreenSize = (DeviceService.Device.Display.Width - layout.Padding.Left - layout.Padding.Right) / 4.5;
             var image = new Image
             {
                 Source = ImageSource.FromUri(new Uri(raffle.ImageUrl)),
+                WidthRequest = quarterScreenSize,
+                HeightRequest = quarterScreenSize,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                WidthRequest = 80,
-                HeightRequest = 80,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
             };
-            layout.Children.Add(image);
+            imageLayout.Children.Add(image);
+
+            if (!String.IsNullOrWhiteSpace(raffle.LicenceNumber))
+            {
+                var licenceLabel = new Label
+                {
+                    Text = "Licence # " + raffle.LicenceNumber,
+                    FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                };
+                imageLayout.Children.Add(licenceLabel);
+            }
+            #endregion
+
+            #region Name and Organization
+            var nameLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+            };
+            imageAndNameLayout.Children.Add(nameLayout);
 
             var nameLabel = new Label
             {
                 Text = raffle.Name,
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                HorizontalOptions = LayoutOptions.StartAndExpand,
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.Center,
             };
-            layout.Children.Add(nameLabel);
+            nameLayout.Children.Add(nameLabel);
 
             var organizationLabel = new Label
             {
                 Text = raffle.Organization,
-                HorizontalOptions = LayoutOptions.StartAndExpand,
-                FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
+                FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.Center,
             };
-            layout.Children.Add(organizationLabel);
-
-            if (raffle.LicenceNumber != null)
-            {
-                var licenseLabel = new Label
-                {
-                    Text = "Licence Number: " + raffle.LicenceNumber,
-                    HorizontalOptions = LayoutOptions.StartAndExpand,
-                    FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
-                };
-                layout.Children.Add(licenseLabel);
-            }
+            nameLayout.Children.Add(organizationLabel);
+            #endregion
 
             var descriptionLabel = new Label
             {
@@ -83,24 +137,12 @@ namespace Tap5050Buyer
             };
             layout.Children.Add(descriptionLabel);
 
-            if (raffle.HasJackpot == "Y")
+            #region Buttons
+            var buttonsLayout = new StackLayout
             {
-                var jackpotTotal = new Label
-                {
-                    Text = "$" + raffle.JackpotTotal,
-                    TextColor = Color.Red,
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                };
-                layout.Children.Add(jackpotTotal);
-
-                var jackpotDescription = new Label
-                {
-                    Text = raffle.JackpotDescription,
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                    FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
-                };
-                layout.Children.Add(jackpotDescription);
-            }
+                Orientation = StackOrientation.Horizontal,
+            };
+            layout.Children.Add(buttonsLayout);
 
             var prizeButton = new Button
             {
@@ -120,7 +162,7 @@ namespace Tap5050Buyer
 
                 Device.OpenUri(new Uri(raffle.PrizeUrl)); // External browser
             };
-            layout.Children.Add(prizeButton);
+            buttonsLayout.Children.Add(prizeButton);
 
             var buyButton = new Button
             {
@@ -146,14 +188,16 @@ namespace Tap5050Buyer
 
                 this.Navigation.PushAsync(browserPage);
             };
-            layout.Children.Add(buyButton);
+            buttonsLayout.Children.Add(buyButton);
+            #endregion
 
             if (!LocationDetected)
             {
                 var locationWarning = new Label
                 {
                     Text = "You may not complete the buy since we cannot detect your location.",
-                    FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                    FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
+                    TextColor = Color.Red,
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                     VerticalOptions = LayoutOptions.End,
                 };

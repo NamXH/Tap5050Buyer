@@ -30,7 +30,8 @@ namespace Tap5050Buyer.iOS
         {
             var resolverContainer = new SimpleContainer();
 
-            resolverContainer.Register<IGeolocator>(new Geolocator());
+            resolverContainer.Register<IGeolocator>(new Geolocator())
+                .Register<IDevice>(t => AppleDevice.CurrentDevice);
 
             Resolver.SetResolver(resolverContainer.GetResolver());
         }
