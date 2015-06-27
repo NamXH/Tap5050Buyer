@@ -48,9 +48,8 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>true</MtouchProfiling>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignProvision>2fd64f2c-922c-4e5c-8fbd-0fff19548438</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -133,6 +132,15 @@
     <Reference Include="XLabs.Forms">
       <HintPath>..\packages\XLabs.Forms.2.0.5610.2\lib\Xamarin.iOS10\XLabs.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Auth.iOS">
+      <HintPath>..\Components\xamarin.social-1.1.7\lib\ios-unified\Xamarin.Auth.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>..\Components\xamarin.social-1.1.7\lib\ios-unified\Xamarin.Mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Social.iOS">
+      <HintPath>..\Components\xamarin.social-1.1.7\lib\ios-unified\Xamarin.Social.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tap5050Buyer\Tap5050Buyer.csproj">
@@ -153,6 +161,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="SocialShareIOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork" />
@@ -176,5 +185,11 @@
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_640X1136.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_1242X2208.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_750X1334.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="xamarin.social">
+      <Version>1.1.7</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
 </Project>
