@@ -37,7 +37,7 @@ namespace Tap5050Buyer.iOS
 			}
 		}	
 
-		public void email(string message,string link,string subject,string [] recivers)
+		public void email(string message,string subject,string [] recivers)
 		{
 			MFMailComposeViewController mailController= new MFMailComposeViewController ();
 			if (!MFMailComposeViewController.CanSendMail) {
@@ -47,7 +47,7 @@ namespace Tap5050Buyer.iOS
 				mailController.SetToRecipients (recivers);
 			}
 			mailController.SetSubject (subject);
-			mailController.SetMessageBody (message +"\n"+link, false);
+			mailController.SetMessageBody (message, false);
 			mailController.Finished += ( s, args) => {
 				Console.WriteLine (args.Result.ToString ());
 				args.Controller.DismissViewController (true, null);
@@ -56,7 +56,7 @@ namespace Tap5050Buyer.iOS
 			UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController (mailController, true, null);
 		}
 
-		public void sms(string message,string link,string [] recivers)
+		public void sms(string message,string [] recivers)
 		{
 
 			if (!MFMessageComposeViewController.CanSendText) {
@@ -67,7 +67,7 @@ namespace Tap5050Buyer.iOS
 			if (recivers != null) {
 				smsController.Recipients = recivers;
 			}	
-			smsController.Body=message +"\n"+link;
+			smsController.Body=message;
 			smsController.Finished += (sender, e) => smsController.DismissViewController(true, null);
 			UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(smsController, true, null);
 		}
@@ -121,7 +121,6 @@ namespace Tap5050Buyer.iOS
 
 		private void facebookPost(Account facebookAccount,string message,string clientID,string link){
 			var request = new OAuth2Request ("GET", new Uri ("https://graph.facebook.com/me"), null, facebookAccount);
-			Console.WriteLine (facebookAccount.Serialize());
 			request.GetResponseAsync ().ContinueWith (t => {
 				if (t.IsFaulted){
 					Console.WriteLine ("Error: " + t.Exception.InnerException.Message);
@@ -138,7 +137,9 @@ namespace Tap5050Buyer.iOS
 					// 2. Create an item to share
 					var item = new Item();
 					item.Text=message;
-					item.Links.Add (new Uri (link));
+					if(link!=null){
+						item.Links.Add (new Uri (link));
+					}
 
 					// 3. Present the UI on iOS
 					InvokeOnMainThread ( () => {
@@ -220,7 +221,9 @@ namespace Tap5050Buyer.iOS
 					// 2. Create an item to share
 					var item = new Item();
 					item.Text=message;
-					item.Links.Add (new Uri (link));
+					if(link!=null){
+						item.Links.Add (new Uri (link));
+					}
 
 					// 3. Present the UI on iOS
 					InvokeOnMainThread ( () => {

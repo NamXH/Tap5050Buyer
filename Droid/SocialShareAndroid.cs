@@ -40,7 +40,7 @@ namespace Tap5050Buyer.Droid
 			}
 		}	
 
-		public void email(string message,string link,string subject,string [] recivers )
+		public void email(string message,string subject,string [] recivers )
 		{
 			var email = new Intent (Android.Content.Intent.ActionSend);
 
@@ -50,14 +50,14 @@ namespace Tap5050Buyer.Droid
 
 			email.PutExtra (Android.Content.Intent.ExtraSubject, subject);
 
-			email.PutExtra (Android.Content.Intent.ExtraText, message +"\n"+link);
+			email.PutExtra (Android.Content.Intent.ExtraText, message);
 
 			email.SetType ("message/rfc822");
 
 			Forms.Context.StartActivity (email);
 		}
 
-		public void sms(string message,string link,string [] recivers )
+		public void sms(string message,string [] recivers )
 		{
 			string smsto="smsto:";
 			if (recivers != null) {
@@ -68,7 +68,7 @@ namespace Tap5050Buyer.Droid
 			}	
 			var smsUri = Android.Net.Uri.Parse(smsto);
 			var smsIntent = new Intent (Intent.ActionSendto, smsUri);
-			smsIntent.PutExtra ("sms_body", message +"\n"+link);  
+			smsIntent.PutExtra ("sms_body", message );  
 			Forms.Context.StartActivity (smsIntent);
 		}
 
@@ -132,7 +132,9 @@ namespace Tap5050Buyer.Droid
 					// 2. Create an item to share
 					var item = new Item();
 					item.Text=message;
-					item.Links.Add (new Uri (link));
+					if(link!=null){
+						item.Links.Add (new Uri (link));
+					}
 					Device.BeginInvokeOnMainThread(()=>{
 						// 3. Present the UI on iOS
 						var shareIntent = facebook.GetShareUI ((Activity)Forms.Context, item, result => {
@@ -209,7 +211,9 @@ namespace Tap5050Buyer.Droid
 					// 2. Create an item to share
 					var item = new Item();
 					item.Text=message;
-					item.Links.Add (new Uri (link));
+					if(link!=null){
+						item.Links.Add (new Uri (link));
+					}
 
 					// 3. Present the UI 
 					Device.BeginInvokeOnMainThread(()=>{

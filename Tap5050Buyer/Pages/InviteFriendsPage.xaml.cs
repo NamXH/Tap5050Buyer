@@ -7,29 +7,21 @@ namespace Tap5050Buyer
     public partial class InviteFriendsPage : ContentPage
     {
 		// Facebook and Twiiter account info
-		readonly string facebookAppID = "483558705129715";
-		readonly string twitterAPIKey="qO4EvQmukCLDch7YTQUAinGXf";
-		readonly string twitterSecrete="rYPx1avhVxgJ5EbU5OjmbpVgSKWxCAaG4nOTDagOqEB7U9KxxT";
-
-		/*
-		string facebookAppID = "838514282900661";
-		string twitterAPIKey="450048484-kvoIP6TlH4TPRDZas34SqRvsRMbIeH319ahu2lcl";
-		string twitterSecrete="kLAHaxeDf8CPTDBYUjanu6FpogRsMX8qh5f39pidizTaF";
-		*/
-
+		//readonly string facebookAppID = "483558705129715"; //Terence
+		readonly string facebookAppID = "838514282900661"; //Chris
+		readonly string twitterAPIKey="BDXgNpLtpotOT4vFqXLbg8cWE";
+		readonly string twitterSecrete="JGoVsaWvqpJS6HdVPlSVZ2tYloFaXDni7TFWhfthL1LJrsAgh7";
 
 		/****************************************************************************
 		* These are dummy data, you should remove or comments out these 
 		* **************************************************************************/
 
-		string buyTicketlink="http://dev.tap5050.com/apex/f?p=102:TICKETS:0::NO:::";
+		string shortenURL="http://dev.tap5050.com/apex/f?p=102:TICKETS:0::NO:::";
 		string organizationName = "Main Testing Organization";
 		string raffleName="Chris Time Zone Event";
-		string location = "Saskatchewan";
-		string emailSubject="emailTest";
+
 		string[] emailRecivers = { "chh990@mail.usask.ca", "chihyi.t.huang@hotmail.com.tw" };
 		string[] smsRecivers = { "13062612825","13068817772"};
-		string testmessage="Ignore this message, I am testing my app. Sorry to bother you.";
 		/*****************************************************************************/
 
         public InviteFriendsPage()
@@ -63,7 +55,7 @@ namespace Tap5050Buyer
 			facebookButton.Clicked   += (sender, e) => {
 				//TODO: change the following line to your own 
 				// all you have to change is the organizationName,raffleName,location and buyTicketlink.
-				DependencyService.Get<SocialShare>().facebook(facebookAppID,getMessage(organizationName,raffleName,location),buyTicketlink);
+				DependencyService.Get<SocialShare>().facebook(facebookAppID,getFacebookBody(raffleName,organizationName),shortenURL);
 			};
 
 			Button twitterButton = new Button
@@ -78,7 +70,8 @@ namespace Tap5050Buyer
 			twitterButton.Clicked   += (sender, e) => {
 				//TODO: change the following line to your own 
 				// all you have to change is the organizationName,raffleName,location and buyTicketlink.
-				DependencyService.Get<SocialShare>().twitter(twitterAPIKey,twitterSecrete,getMessage(organizationName,raffleName,location),buyTicketlink);
+				DependencyService.Get<SocialShare>().twitter(twitterAPIKey,twitterSecrete,getTwitterBody(raffleName,organizationName),shortenURL);
+
 			};
 
 
@@ -94,7 +87,7 @@ namespace Tap5050Buyer
 			emailButton.Clicked   += (sender, e) => {
 				//TODO: change the following line to your own 
 				//set emailRecivers to null if there is none
-				DependencyService.Get<SocialShare>().email(getMessage(organizationName,raffleName,location),buyTicketlink,emailSubject,emailRecivers);
+				DependencyService.Get<SocialShare>().email(getEmailBody(raffleName,organizationName,shortenURL),getEmailSubject(organizationName),emailRecivers);
 			};
 
 			Button SMSButton = new Button
@@ -109,7 +102,7 @@ namespace Tap5050Buyer
 			SMSButton.Clicked   += (sender, e) => {
 				//TODO: change the following line to your own 
 				//set smsRecivers to null if there is none
-				DependencyService.Get<SocialShare>().sms(testmessage,buyTicketlink,smsRecivers);
+				DependencyService.Get<SocialShare>().sms(getSMSBody(raffleName,organizationName,shortenURL),smsRecivers);
 			};
 
 			var sharePage =new ContentPage {
@@ -131,8 +124,26 @@ namespace Tap5050Buyer
 			};
 		}
 
-		public string getMessage(string organizationName,string raffleName,string location){
-			return "Support "+organizationName+" by following the link below.\n ("+location+" only)\n";
+
+			
+		public string getFacebookBody(string raffleName,string organizationName){
+			return "I bought a "+raffleName+" ticket from "+organizationName+" to support the good they do in our community. If you would like a chance to win a great prize and support their efforts you can buy a ticket at ";
+		}
+
+		public string getTwitterBody(string raffleName,string organizationName){
+			return "I just bought a raffle ticket to support "+organizationName+". To help out buy a ticket at ";
+		}
+
+		public string getEmailSubject(string organizationName){
+			return "I am supporting" + organizationName;
+		}	
+
+		public string getEmailBody(string raffleName,string organizationName,string shortenURL){
+			return "I bought a "+raffleName+" ticket from "+organizationName+" to support the good they do in our community. If you would like a chance to win a great prize and support their efforts you can buy a ticket at "+shortenURL+".";
+		}
+
+		public string getSMSBody(string raffleName,string organizationName,string shortenURL){
+			return "I just bought a raffle ticket to support " + organizationName + ". You can help out too by purchasing a ticket at " + shortenURL + ".";
 		}
     }
 
@@ -140,8 +151,8 @@ namespace Tap5050Buyer
 	{
 		void facebook(string clientID,string message,string link);
 		void twitter(string clientID,string secrete,string message,string link);
-		void email(string message,string link,string subject,string [] recivers );
-		void sms(string message,string link,string [] recivers );
+		void email(string message,string subject,string [] recivers );
+		void sms(string message,string [] recivers );
 		void resetLogin();
 	}
 }
