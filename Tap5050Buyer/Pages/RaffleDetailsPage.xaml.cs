@@ -147,6 +147,8 @@ namespace Tap5050Buyer
             var prizeButton = new Button
             {
                 Text = "See Prizes",
+                BorderWidth = 1,
+                BorderColor = Color.Blue,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
             };
             prizeButton.Clicked += (sender, e) =>
@@ -167,6 +169,8 @@ namespace Tap5050Buyer
             var buyButton = new Button
             {
                 Text = "Buy Tickets",
+                BorderWidth = 1,
+                BorderColor = Color.Blue,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
             };
             buyButton.Clicked += (sender, e) =>

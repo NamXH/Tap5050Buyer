@@ -40,7 +40,7 @@ namespace Tap5050Buyer
 			};
 
 			resetLoginButton.Clicked += (sender, e) => {
-				DependencyService.Get<SocialShare> ().resetLogin ();
+				DependencyService.Get<ISocialShare> ().ResetLogin ();
 			};
 
 			Button facebookButton = new Button
@@ -55,7 +55,7 @@ namespace Tap5050Buyer
 			facebookButton.Clicked   += (sender, e) => {
 				//TODO: change the following line to your own 
 				// all you have to change is the organizationName,raffleName,location and buyTicketlink.
-				DependencyService.Get<SocialShare>().facebook(facebookAppID,getFacebookBody(raffleName,organizationName),shortenURL);
+				DependencyService.Get<ISocialShare>().Facebook(facebookAppID,getFacebookBody(raffleName,organizationName),shortenURL);
 			};
 
 			Button twitterButton = new Button
@@ -70,7 +70,7 @@ namespace Tap5050Buyer
 			twitterButton.Clicked   += (sender, e) => {
 				//TODO: change the following line to your own 
 				// all you have to change is the organizationName,raffleName,location and buyTicketlink.
-				DependencyService.Get<SocialShare>().twitter(twitterAPIKey,twitterSecrete,getTwitterBody(raffleName,organizationName),shortenURL);
+				DependencyService.Get<ISocialShare>().Twitter(twitterAPIKey,twitterSecrete,getTwitterBody(raffleName,organizationName),shortenURL);
 
 			};
 
@@ -87,7 +87,7 @@ namespace Tap5050Buyer
 			emailButton.Clicked   += (sender, e) => {
 				//TODO: change the following line to your own 
 				//set emailRecivers to null if there is none
-				DependencyService.Get<SocialShare>().email(getEmailBody(raffleName,organizationName,shortenURL),getEmailSubject(organizationName),emailRecivers);
+				DependencyService.Get<ISocialShare>().Email(getEmailBody(raffleName,organizationName,shortenURL),getEmailSubject(organizationName),emailRecivers);
 			};
 
 			Button SMSButton = new Button
@@ -102,7 +102,7 @@ namespace Tap5050Buyer
 			SMSButton.Clicked   += (sender, e) => {
 				//TODO: change the following line to your own 
 				//set smsRecivers to null if there is none
-				DependencyService.Get<SocialShare>().sms(getSMSBody(raffleName,organizationName,shortenURL),smsRecivers);
+				DependencyService.Get<ISocialShare>().Sms(getSMSBody(raffleName,organizationName,shortenURL),smsRecivers);
 			};
 
 			var sharePage =new ContentPage {
@@ -146,13 +146,4 @@ namespace Tap5050Buyer
 			return "I just bought a raffle ticket to support " + organizationName + ". You can help out too by purchasing a ticket at " + shortenURL + ".";
 		}
     }
-
-	public interface SocialShare
-	{
-		void facebook(string clientID,string message,string link);
-		void twitter(string clientID,string secrete,string message,string link);
-		void email(string message,string subject,string [] recivers );
-		void sms(string message,string [] recivers );
-		void resetLogin();
-	}
 }
