@@ -40,9 +40,6 @@
       <DependentUpon>TabsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\InviteFriendsNavigationPage.cs" />
-    <Compile Include="Pages\InviteFriendsPage.xaml.cs">
-      <DependentUpon>InviteFriendsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\RaffleListPage.xaml.cs">
       <DependentUpon>RaffleListPage.xaml</DependentUpon>
     </Compile>
@@ -113,9 +110,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\TabsPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Pages\InviteFriendsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\RaffleListPage.xaml">
