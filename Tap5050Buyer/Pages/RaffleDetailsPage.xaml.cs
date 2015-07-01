@@ -5,19 +5,20 @@ using Xamarin.Forms;
 
 namespace Tap5050Buyer
 {
+    // TO DO: some pages need to be refactored to a better MVVM architecture
     public partial class RaffleDetailsPage : CarouselPage
     {
-        public bool LocationDetected
-        {
-            get;
-            set;
-        }
+        public bool LocationDetected { get; set; }
 
-        public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId)
+        public bool IncludeSocialMedia { get; set; }
+
+        public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId, bool includeSocialMedia)
         {
             InitializeComponent();
 
             LocationDetected = locationDetected;
+            IncludeSocialMedia = includeSocialMedia;
+
             foreach (var raffle in raffleEvents)
             {
                 var page = CreateRaffleEventDetailsPage(raffle);
@@ -206,6 +207,15 @@ namespace Tap5050Buyer
                     VerticalOptions = LayoutOptions.End,
                 };
                 layout.Children.Add(locationWarning);
+            }
+
+            if (IncludeSocialMedia)
+            {
+                var socialMediaLayout = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Padding = new Thickness(5, 5, 5, 5),
+                };
             }
 
             return page;

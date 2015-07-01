@@ -9,23 +9,22 @@ using System.Threading.Tasks;
 
 namespace Tap5050Buyer
 {
+    // TO DO: some pages need to be refactored to a better MVVM architecture
     public partial class RaffleListPage : ContentPage
     {
-        public bool LocationDetected
-        {
-            get;
-            set;
-        }
+        public bool LocationDetected { get; set; }
+        public bool IncludeSocialMedia { get; set; }
 
         public const string c_serverBaseAddress = "http://dev.tap5050.com/";
         public const string c_serverEventApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/events";
 
-        public RaffleListPage(bool locationDetected, IList<RaffleLocation> raffleLocations, GeonamesCountrySubdivision countrySubdivision)
+        public RaffleListPage(bool locationDetected, IList<RaffleLocation> raffleLocations, GeonamesCountrySubdivision countrySubdivision, bool includeSocialMedia)
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
 
             LocationDetected = locationDetected;
+            IncludeSocialMedia = includeSocialMedia;
 
             var locationPicker = new Picker();
             locationPicker.HorizontalOptions = LayoutOptions.Center;
@@ -97,7 +96,7 @@ namespace Tap5050Buyer
                 if (e.SelectedItem != null)
                 {
                     // PushAsync a new RaffleDetailsPage instead of creating one and reuse it: to workaround a bug in Carousel + TabbedPage in iOS
-                    this.Navigation.PushAsync(new RaffleDetailsPage(LocationDetected, raffleEvents, ((RaffleEvent)e.SelectedItem).Id));
+                    this.Navigation.PushAsync(new RaffleDetailsPage(LocationDetected, raffleEvents, ((RaffleEvent)e.SelectedItem).Id, IncludeSocialMedia));
                     raffleEventListView.SelectedItem = null;
                 }
             };
