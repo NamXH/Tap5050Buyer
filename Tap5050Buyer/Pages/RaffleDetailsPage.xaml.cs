@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
+using Contacts.Plugin;
+using System.Linq;
+using Contacts.Plugin.Abstractions;
+using System.Threading.Tasks;
 
 namespace Tap5050Buyer
 {
@@ -266,6 +270,22 @@ namespace Tap5050Buyer
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                 };
                 socialMediaLayout.Children.Add(smsButton);
+                smsButton.Clicked += async (sender, e) =>
+                {
+                    var allContacts = await GetAllContacts();
+                    if (allContacts != null)
+                    {
+                        var contactsWithAMobileNumber = allContacts.Where(x => x.Phones.Any(y => y.Label.Equals("Mobile", StringComparison.OrdinalIgnoreCase)));
+
+                        var extendedContacts = new List<ExtendedContact>();
+                        foreach (var contact in contactsWithAMobileNumber)
+                        {
+                            extendedContacts.Add(new ExtendedContact(contact));
+                        }
+
+                        Navigation.PushAsync(new ContactsPage(extendedContacts, 0));
+                    }
+                };
 
                 var emailButton = new ImageButton
                 {
@@ -275,9 +295,39 @@ namespace Tap5050Buyer
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                 };
                 socialMediaLayout.Children.Add(emailButton);
+                emailButton.Clicked += async (sender, e) =>
+                {
+                    var allContacts = await GetAllContacts();
+                    if (allContacts != null)
+                    {
+                        var contactsWithAnEmail = allContacts.Where(x => x.Emails.Any());
+
+                        var extendedContacts = new List<ExtendedContact>();
+                        foreach (var contact in contactsWithAnEmail)
+                        {
+                            extendedContacts.Add(new ExtendedContact(contact));
+                        }
+
+                        Navigation.PushAsync(new ContactsPage(extendedContacts, 1));
+                    }
+                };
             }
 
             return page;
+        }
+
+        public async Task<IQueryable<Contact>> GetAllContacts()
+        {
+            if (await CrossContacts.Current.RequestPermission())
+            {
+                CrossContacts.Current.PreferContactAggregation = false; //recommended by author 
+
+                return CrossContacts.Current.Contacts;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
