@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Tap5050Buyer.iOS</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.Tap5050Buyer.iOS</string>
+	<string>com.your-company.Tap5050Buyer.iOS</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
