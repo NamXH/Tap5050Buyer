@@ -15,75 +15,42 @@ namespace Tap5050Buyer
         internal const string c_loadingMessage = "Waiting for your current location.";
         internal const string c_cannotReachServerErrorMessage = "Cannot contact server. Please check your Internet connection and try again.";
 
-        internal const string c_serverBaseAddress = "http://dev.tap5050.com/";
-        internal const string c_serverLocationApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/locations";
-
-        public static IList<RaffleLocation> RaffleLocations { get; set; }
+        private LoadingLocationViewModel _viewModel;
 
         public LoadingLocationPage()
         {
             InitializeComponent();
 
+            _viewModel = new LoadingLocationViewModel();
+
             AddActivityIndicator();
 
-            GetCurrentLocationAndRaffleLocationList();
+            LoadInfo();
         }
 
-        // Have to make this func because we can't have async ctor
-        // Remove virtual later !!
-        public virtual async void GetCurrentLocationAndRaffleLocationList()
+        public async void LoadInfo()
         {
-            var updateGeolocationTask = GeolocationManager.UpdateGeolocation();
-            var getRaffleLocationsTask = GetRaffleLocations();
-            await Task.WhenAll(new List<Task>{ updateGeolocationTask, getRaffleLocationsTask });
+            await _viewModel.GetCurrentLocationAndRaffleLocationList();
 
-            var RaffleLocations = getRaffleLocationsTask.Result;
-
-            if (RaffleLocations == null)
+            if (LoadingLocationViewModel.RaffleLocations == null)
             {
                 RemoveAllElement();
                 AddTryAgainButton();
             }
             else
             {
-                if ((GeolocationManager.CountrySubdivision != null) && (GeolocationManager.CountrySubdivision.AdminName != null))
+                if ((_viewModel.CountrySubdivision != null) && (_viewModel.CountrySubdivision.AdminName != null))
                 {
-                    Navigation.PushAsync(new RaffleListPage(true, RaffleLocations, GeolocationManager.CountrySubdivision, false));
+                    Navigation.PushAsync(new RaffleListPage(true, LoadingLocationViewModel.RaffleLocations, _viewModel.CountrySubdivision, false));
                 }
                 else
                 {
-                    Navigation.PushAsync(new RaffleListPage(false, RaffleLocations, null, false));
+                    Navigation.PushAsync(new RaffleListPage(false, LoadingLocationViewModel.RaffleLocations, null, false));
                 }
             }
         }
 
-        public async Task<List<RaffleLocation>> GetRaffleLocations()
-        {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(c_serverBaseAddress);
-
-            HttpResponseMessage response = null;
-            try
-            {
-                response = await client.GetAsync(c_serverLocationApiAddress);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            var json = response.Content.ReadAsStringAsync().Result;
-
-            var obj = JsonConvert.DeserializeObject<JObject>(json);
-            var items = obj["items"];
-            if (items != null)
-            {
-                return JsonConvert.DeserializeObject<List<RaffleLocation>>(items.ToString());
-            }
-            return null;
-        }
-
-        // Change to private later
-        public void RemoveAllElement()
+        private void RemoveAllElement()
         {
             var count = layout.Children.Count - 1;
             for (int i = count; i >= 0; i--)
@@ -92,8 +59,7 @@ namespace Tap5050Buyer
             }
         }
 
-        // Change to private later !!
-        public void AddActivityIndicator()
+        private void AddActivityIndicator()
         {
             layout.Children.Add(new ActivityIndicator
                 {
@@ -105,8 +71,7 @@ namespace Tap5050Buyer
                 });   
         }
 
-        // Change to private later
-        public void AddTryAgainButton()
+        private void AddTryAgainButton()
         {
             var label = new Label
             {
@@ -123,7 +88,7 @@ namespace Tap5050Buyer
             {
                 RemoveAllElement();
                 AddActivityIndicator();
-                GetCurrentLocationAndRaffleLocationList();
+                LoadInfo();
             };
 
             layout.Children.Add(label);

@@ -10,7 +10,7 @@ namespace Tap5050Buyer
         {
             Title = "Invite Friends";
 
-            this.PushAsync(new LoadingLocationTempPage());
+            this.PushAsync(new ContentPage());
         }
     }
 }
