@@ -9,7 +9,12 @@ namespace Tap5050Buyer
         public App()
         {
             // The root page of your application
-            MainPage = new TabsPage();
+            MainPage = new LoadingLocationPage();
+
+            MessagingCenter.Subscribe<LoadingLocationPage>(this, "Success", (sender) =>
+                {
+                    MainPage = new TabsPage();
+                });
         }
 
         protected override void OnStart()

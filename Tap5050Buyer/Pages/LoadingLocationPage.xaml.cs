@@ -38,14 +38,7 @@ namespace Tap5050Buyer
             }
             else
             {
-                if ((_viewModel.CountrySubdivision != null) && (_viewModel.CountrySubdivision.AdminName != null))
-                {
-                    Navigation.PushAsync(new RaffleListPage(true, LoadingLocationViewModel.RaffleLocations, _viewModel.CountrySubdivision, false));
-                }
-                else
-                {
-                    Navigation.PushAsync(new RaffleListPage(false, LoadingLocationViewModel.RaffleLocations, null, false));
-                }
+                MessagingCenter.Send<LoadingLocationPage>(this, "Success");
             }
         }
 

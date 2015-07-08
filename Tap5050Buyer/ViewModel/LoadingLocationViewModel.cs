@@ -16,6 +16,8 @@ namespace Tap5050Buyer
 
         public GeonamesCountrySubdivision CountrySubdivision { get; set; }
 
+        public static bool IsLocationDetected { get; set; }
+
         public LoadingLocationViewModel()
         {
         }
@@ -28,6 +30,15 @@ namespace Tap5050Buyer
 
             RaffleLocations = getRaffleLocationsTask.Result;
             CountrySubdivision = GeolocationManager.CountrySubdivision;
+
+            if ((CountrySubdivision != null) && (CountrySubdivision.AdminName != null))
+            {
+                IsLocationDetected = true;
+            }
+            else
+            {
+                IsLocationDetected = false;
+            }
         }
 
         /// <summary>

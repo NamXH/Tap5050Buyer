@@ -10,7 +10,7 @@ namespace Tap5050Buyer
         {
             Title = "Invite Friends";
 
-            this.PushAsync(new ContentPage());
+            this.PushAsync(new RaffleListPage(LoadingLocationViewModel.IsLocationDetected, LoadingLocationViewModel.RaffleLocations, GeolocationManager.CountrySubdivision, true));
         }
     }
 }
