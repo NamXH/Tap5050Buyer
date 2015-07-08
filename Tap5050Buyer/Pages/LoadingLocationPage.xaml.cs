@@ -9,7 +9,6 @@ using Xamarin.Forms;
 
 namespace Tap5050Buyer
 {
-    // TO DO: some pages need to be refactored to a better MVVM architecture
     public partial class LoadingLocationPage : ContentPage
     {
         internal const string c_loadingMessage = "Waiting for your current location.";

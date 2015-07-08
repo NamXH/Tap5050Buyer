@@ -42,6 +42,7 @@ namespace Tap5050Buyer
             }
         }
 
+        // Can change to use BindingContext here later !!
         public ContentPage CreateRaffleEventDetailsPage(RaffleEvent raffle)
         {
             var page = new ContentPage();
@@ -66,8 +67,7 @@ namespace Tap5050Buyer
 
                 var jackpotTotal = new Label
                 {
-//                    Text = "$" + raffle.JackpotTotal,
-                    Text = "$1,000,000",
+                    Text = "$" + raffle.JackpotTotal,
                     TextColor = Color.Red,
                     FontSize = 35,
                     HorizontalOptions = LayoutOptions.CenterAndExpand,

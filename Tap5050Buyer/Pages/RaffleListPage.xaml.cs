@@ -13,10 +13,10 @@ namespace Tap5050Buyer
     public partial class RaffleListPage : ContentPage
     {
         public bool LocationDetected { get; set; }
+
         public bool IncludeSocialMedia { get; set; }
 
-        public const string c_serverBaseAddress = "http://dev.tap5050.com/";
-        public const string c_serverEventApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/events";
+        private RaffleListViewModel _viewModel;
 
         public RaffleListPage(bool locationDetected, IList<RaffleLocation> raffleLocations, GeonamesCountrySubdivision countrySubdivision, bool includeSocialMedia)
         {
@@ -25,6 +25,7 @@ namespace Tap5050Buyer
 
             LocationDetected = locationDetected;
             IncludeSocialMedia = includeSocialMedia;
+            _viewModel = new RaffleListViewModel(raffleLocations, countrySubdivision);
 
             var locationPicker = new Picker();
             locationPicker.HorizontalOptions = LayoutOptions.Center;
@@ -37,7 +38,7 @@ namespace Tap5050Buyer
                 locationPicker.SelectedIndex = 0;
                 locationPicker.IsEnabled = false;
 
-                var raffleLocation = raffleLocations.FirstOrDefault(x => x.Name == countrySubdivision.AdminName);
+                var raffleLocation = _viewModel.MatchRaffleLocationWithCountrySubdivision(raffleLocations, countrySubdivision);
 
                 if (raffleLocation == null)
                 {
@@ -82,7 +83,7 @@ namespace Tap5050Buyer
         // Have to make this func because we can't have async ctor
         public async void GetRaffleEventsAndCreateList(string raffleLocationName)
         {
-            var raffleEvents = await GetRaffleEventsAtLocation(raffleLocationName);
+            var raffleEvents = await _viewModel.GetRaffleEventsAtLocation(raffleLocationName);
             CreateRaffleEventList(raffleEvents);
         }
 
@@ -101,31 +102,6 @@ namespace Tap5050Buyer
                 }
             };
             layout.Children.Add(raffleEventListView);
-        }
-
-        public async Task<List<RaffleEvent>> GetRaffleEventsAtLocation(string locationName)
-        {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(c_serverBaseAddress);
-
-            HttpResponseMessage response = null;
-            try
-            {
-                response = await client.GetAsync(c_serverEventApiAddress + "?location=" + locationName);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            var json = response.Content.ReadAsStringAsync().Result;
-
-            var obj = JsonConvert.DeserializeObject<JObject>(json);
-            var items = obj["items"];
-            if (items != null)
-            {
-                return JsonConvert.DeserializeObject<List<RaffleEvent>>(items.ToString());
-            }
-            return null; 
         }
     }
 
