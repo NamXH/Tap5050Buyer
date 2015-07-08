@@ -21,11 +21,11 @@ namespace Tap5050Buyer
 
             if (socialMediaMethod == 0)
             {
-                this.ToolbarItems.Add(new ToolbarItem("Done", null, _viewModel.SendSms));
+                this.ToolbarItems.Add(new ToolbarItem("Next", null, _viewModel.SendSms));
             }
             else
             {
-                this.ToolbarItems.Add(new ToolbarItem("Done", null, _viewModel.SendEmails)); 
+                this.ToolbarItems.Add(new ToolbarItem("Next", null, _viewModel.SendEmails)); 
             }
         }
     }

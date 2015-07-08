@@ -40,6 +40,11 @@ namespace Tap5050Buyer
                     this.SelectedItem = page;
                 }
             }
+
+            MessagingCenter.Subscribe<ContactsViewModel>(this, "Done", (sender) =>
+                {
+                    Navigation.PopAsync();
+                });
         }
 
         // Can change to use BindingContext here later !!

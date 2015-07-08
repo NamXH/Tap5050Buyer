@@ -30,6 +30,8 @@ namespace Tap5050Buyer
             }
 
             socialShare.Sms("Testing", selectedContactNumbers.ToArray());
+
+            MessagingCenter.Send<ContactsViewModel>(this, "Done");
         }
 
         public void SendEmails()
@@ -46,6 +48,8 @@ namespace Tap5050Buyer
             }
 
             socialShare.Email("Testing", "abc", selectedContactNumbers.ToArray());
+
+            MessagingCenter.Send<ContactsViewModel>(this, "Done");
         }
     }
 }
