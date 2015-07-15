@@ -1,5 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Tap5050Buyer.AccountInfoPage">
-    <ContentPage.Content>
-    </ContentPage.Content>
+  <ContentPage.Content>
+    <TableView x:Name="_tableView">
+      <TableView.Root>
+        <TableSection Title="User">
+          <TextCell Text="{Binding UserAccount.FirstName}" />
+          <TextCell Text="{Binding UserAccount.LastName}" />
+        </TableSection>
+        <TableSection Title="Birthday">
+          <TextCell Text="{Binding UserAccount.Birthday}" />
+        </TableSection>
+        <TableSection Title="Phone">
+          <TextCell Text="{Binding UserAccount.Phone}" />
+        </TableSection>
+        <TableSection Title="Email">
+          <TextCell Text="{Binding UserAccount.Email}" />
+        </TableSection>
+        <TableSection Title="Address">
+          <TextCell Text="{Binding UserAccount.AddressLine1}" />
+          <TextCell Text="{Binding UserAccount.City}" />
+          <TextCell Text="{Binding UserAccount.Province}" />
+          <TextCell Text="{Binding UserAccount.Country}" />
+          <TextCell Text="{Binding UserAccount.PostalCode}" />
+        </TableSection>
+      </TableView.Root>
+    </TableView>
+  </ContentPage.Content>
 </ContentPage>

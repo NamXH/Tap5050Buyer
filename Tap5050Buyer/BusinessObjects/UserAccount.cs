@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Tap5050Buyer
 {
-    public class Account
+    public class UserAccount
     {
         [JsonProperty(PropertyName = "first_name")]
         public string FirstName 
@@ -69,7 +69,7 @@ namespace Tap5050Buyer
         }
 
         [JsonProperty(PropertyName = "mail_postal")]
-        public string Postal
+        public string PostalCode
         {
             get;
             set;
@@ -89,7 +89,7 @@ namespace Tap5050Buyer
             set;
         }
 
-        public Account()
+        public UserAccount()
         {
         }
     }
