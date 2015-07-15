@@ -97,7 +97,7 @@ namespace Tap5050Buyer
                         var loginResult = await _viewModel.Login();
                             if (loginResult.Item1)
                             {
-                                
+                                this.Navigation.PushAsync(new AccountInfoPage());
                             }
                             else
                             {
