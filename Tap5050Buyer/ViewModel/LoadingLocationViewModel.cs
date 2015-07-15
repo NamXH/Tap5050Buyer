@@ -57,6 +57,7 @@ namespace Tap5050Buyer
             }
             catch (Exception)
             {
+                // should throw exception
                 return null;
             }
             var json = response.Content.ReadAsStringAsync().Result;
