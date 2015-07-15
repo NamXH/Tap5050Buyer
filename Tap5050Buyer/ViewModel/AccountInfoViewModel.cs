@@ -42,7 +42,7 @@ namespace Tap5050Buyer
             }
         }
 
-        public async Task CreateAccount()
+        public async Task<Tuple<bool, string>> CreateAccount()
         {
             using (var client = new HttpClient())
             {
@@ -66,18 +66,41 @@ namespace Tap5050Buyer
                     });
 
                 HttpResponseMessage response = null;
-                try // should be splited !!
+                try
                 {
-                    var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token;
-                    response = await client.GetAsync(url);
-
-                    var json = response.Content.ReadAsStringAsync().Result;
-
-                    UserAccount = JsonConvert.DeserializeObject<UserAccount>(json);
+                    response = await client.PostAsync(c_userApiAddress, content);
                 }
                 catch (Exception)
                 {
-                    throw new Exception("Error while retrieving account info!");
+                    throw new Exception("Error while creating new account!");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = response.Content.ReadAsStringAsync().Result;
+
+                    var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                    string successCode;
+
+                    if (values.TryGetValue("result_success", out successCode))
+                    {
+                        if (successCode == "Y")
+                        {
+                            return new Tuple<bool, string>(true, String.Empty);
+                        }
+                        else
+                        {
+                            return new Tuple<bool, string>(true, String.Empty); // For test: change to false later !!
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Error parsing server's json!"); 
+                    } 
+                }
+                else
+                {
+                    return new Tuple<bool, string>(false, response.ReasonPhrase);
                 }
             } 
         }

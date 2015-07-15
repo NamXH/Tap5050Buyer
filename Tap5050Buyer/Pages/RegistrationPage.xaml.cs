@@ -11,7 +11,7 @@ namespace Tap5050Buyer
 
         public List<string> c_contactMethods = new List<string>() { "Do not contact me", "SMS", "Email" };
 
-        public RegistrationPage()
+        public RegistrationPage(Page parent)
         {
             InitializeComponent();
             Title = "Registration";
@@ -84,9 +84,22 @@ namespace Tap5050Buyer
             };
             createAccountButtonLayout.Children.Add(createAccountButton);
 
-            createAccountButton.Clicked += (sender, e) =>
+            createAccountButton.Clicked += async (sender, e) =>
             {
-                _viewModel.CreateAccount();
+                var result = await _viewModel.CreateAccount();
+                if (result.Item1)
+                {
+                    this.Navigation.PopAsync();
+                    var answer = await DisplayAlert("Register Phone Number", "Send registration code to your phone now?", "Later", "Yes");
+                    if (!answer) // use !answer because the negative choice has bigger font
+                    {
+                        parent.Navigation.PushAsync(new ValidatePhonePage()); 
+                    }
+                }
+                else
+                {
+                    DisplayAlert("Server request failed", "", "OK");
+                }
             };
         }
     }

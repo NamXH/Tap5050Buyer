@@ -129,7 +129,7 @@ namespace Tap5050Buyer
             signUpLayout.Children.Add(signUpButton);
             signUpButton.Clicked += (sender, e) =>
             {
-                this.Navigation.PushAsync(new RegistrationPage());
+                this.Navigation.PushAsync(new RegistrationPage(this));
             };
         }
     }
