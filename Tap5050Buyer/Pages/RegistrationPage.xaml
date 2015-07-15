@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Tap5050Buyer.RegistrationPage">
+  <TableView x:Name="_tableView">
+    <TableView.Root>
+      <TableRoot x:Name="_tableRoot">
+        <TableSection Title="User">
+          <EntryCell Label="First name" Placeholder="first name" Text="{Binding UserAccount.FirstName}" />
+          <EntryCell Label="Last name" Placeholder="last name" Text="{Binding UserAccount.LastName}" />
+        </TableSection>
+        <TableSection Title="Birth Date">
+          <EntryCell Label="Month" Placeholder="month" Text="{Binding UserAccount.MonthOfBirth}" />
+          <EntryCell Label="Date" Placeholder="date" Text="{Binding UserAccount.DateOfBirth}" />
+          <EntryCell Label="Year" Placeholder="year" Text="{Binding UserAccount.DateOfBirth}" />
+        </TableSection>
+        <TableSection Title="Contact Info">
+          <EntryCell Label="Mobile Phone" Placeholder="123-4567890" Text="{Binding UserAccount.Phone}" />
+          <EntryCell Label="Email" Placeholder="email" Text="{Binding UserAccount.Email}" />
+          <EntryCell Label="Confirm Email" Placeholder="confirm email" Text="{Binding ConfirmEmail}" />
+        </TableSection>
+        <TableSection Title="Address Info">
+          <EntryCell Label="Address 1" Placeholder="address 1" Text="{Binding UserAccount.AddressLine1}" />
+          <EntryCell Label="Address 2" Placeholder="address 2" Text="{Binding UserAccount.AddressLine2}" />
+          <EntryCell Label="Country" Placeholder="country" Text="{Binding UserAccount.Country}" />
+          <EntryCell Label="Province" Placeholder="province" Text="{Binding UserAccount.Province}" />
+          <EntryCell Label="City" Placeholder="city" Text="{Binding UserAccount.City}" />
+          <EntryCell Label="Postal / Zip" Placeholder="postal / zip" Text="{Binding UserAccount.PostalCode}" />
+        </TableSection>
+        <TableSection Title="Raffle Results" x:Name="_raffleResultsSection">
+        </TableSection>
+        <TableSection Title="Charity Marketing Messages" x:Name="_charityMessagesSection">
+        </TableSection>
+        <TableSection x:Name="_createAccountButtonSection">
+        </TableSection>
+      </TableRoot>
+    </TableView.Root>
+  </TableView>
+</ContentPage>

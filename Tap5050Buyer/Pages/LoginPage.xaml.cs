@@ -95,17 +95,17 @@ namespace Tap5050Buyer
                     else
                     {
                         var loginResult = await _viewModel.Login();
-                            if (loginResult.Item1)
-                            {
-                                // A hack !!
-                                var vm = new AccountInfoViewModel();
-                                await vm.GetAccountInfo();
-                                this.Navigation.PushAsync(new AccountInfoPage(vm));
-                            }
-                            else
-                            {
-                                DisplayAlert("Error", loginResult.Item2, "OK"); 
-                            }
+                        if (loginResult.Item1)
+                        {
+                            // A hack !!
+                            var vm = new AccountInfoViewModel();
+                            await vm.GetAccountInfo();
+                            this.Navigation.PushAsync(new AccountInfoPage(vm));
+                        }
+                        else
+                        {
+                            DisplayAlert("Error", loginResult.Item2, "OK"); 
+                        }
                     }
                 }
             };
@@ -127,6 +127,10 @@ namespace Tap5050Buyer
                 Text = "Don't have an account yet? Sign up",
             };
             signUpLayout.Children.Add(signUpButton);
+            signUpButton.Clicked += (sender, e) =>
+            {
+                this.Navigation.PushAsync(new RegistrationPage());
+            };
         }
     }
 }

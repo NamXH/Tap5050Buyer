@@ -26,6 +26,24 @@ namespace Tap5050Buyer
             set;
         }
 
+        public string DateOfBirth
+        {
+            get;
+            set;
+        }
+
+        public string MonthOfBirth
+        {
+            get;
+            set;
+        }
+
+        public string YearOfBirth 
+        {
+            get;
+            set;
+        }
+
         [JsonProperty(PropertyName = "phone_mobile")]
         public string Phone
         {
@@ -42,6 +60,12 @@ namespace Tap5050Buyer
 
         [JsonProperty(PropertyName = "mail_address_line_1")]
         public string AddressLine1
+        {
+            get;
+            set;
+        }
+
+        public string AddressLine2
         {
             get;
             set;
@@ -91,6 +115,9 @@ namespace Tap5050Buyer
 
         public UserAccount()
         {
+            PreferedContactMethod = "NOCONTACT";
+
+            PreferedContactMethodcharity = "NOCONTACT";
         }
     }
 }
