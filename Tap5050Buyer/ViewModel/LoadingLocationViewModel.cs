@@ -14,9 +14,12 @@ namespace Tap5050Buyer
 
         public static IList<RaffleLocation> RaffleLocations { get; set; }
 
+        // Don't make this static so we only use GeolocationManager instead.
         public GeonamesCountrySubdivision CountrySubdivision { get; set; }
 
         public static bool IsLocationDetected { get; set; }
+
+        public static RaffleLocation UserSelectedLocation { get; set; }
 
         public LoadingLocationViewModel()
         {
@@ -29,6 +32,11 @@ namespace Tap5050Buyer
             await Task.WhenAll(new List<Task>{ updateGeolocationTask, getRaffleLocationsTask });
 
             RaffleLocations = getRaffleLocationsTask.Result;
+            if (RaffleLocations != null)
+            {
+                // Set default value
+                UserSelectedLocation = RaffleLocations[0];
+            }
             CountrySubdivision = GeolocationManager.CountrySubdivision;
 
             if ((CountrySubdivision != null) && (CountrySubdivision.AdminName != null))

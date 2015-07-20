@@ -13,6 +13,7 @@ namespace Tap5050Buyer
     {
         internal const string c_loadingMessage = "Waiting for your current location.";
         internal const string c_cannotReachServerErrorMessage = "Cannot contact server. Please check your Internet connection and try again.";
+        internal const string c_cannotDetectGeolocationMessage = "Cannot detect your location. Please manually pick one.";
 
         private LoadingLocationViewModel _viewModel;
 
@@ -21,6 +22,7 @@ namespace Tap5050Buyer
             InitializeComponent();
 
             _viewModel = new LoadingLocationViewModel();
+            BindingContext = _viewModel;
 
             AddActivityIndicator();
 
@@ -38,7 +40,15 @@ namespace Tap5050Buyer
             }
             else
             {
-                MessagingCenter.Send<LoadingLocationPage>(this, "Success");
+                if (LoadingLocationViewModel.IsLocationDetected)
+                {
+                    MessagingCenter.Send<LoadingLocationPage>(this, "Success");
+                }
+                else
+                {
+                    RemoveAllElement();
+                    AddLocationPicker();
+                }
             }
         }
 
@@ -85,6 +95,38 @@ namespace Tap5050Buyer
 
             layout.Children.Add(label);
             layout.Children.Add(tryAgainButton);
+        }
+
+        private void AddLocationPicker()
+        {
+            var label = new Label
+            {
+                Text = c_cannotDetectGeolocationMessage,
+            };
+            layout.Children.Add(label);
+
+            var picker = new Picker
+            {
+                Title = "Province",
+                BindingContext = LoadingLocationViewModel.UserSelectedLocation,
+            };
+            layout.Children.Add(picker);
+
+            foreach (var location in LoadingLocationViewModel.RaffleLocations)
+            {
+                picker.Items.Add(location.Name);
+            }
+            picker.SetBinding(Picker.SelectedIndexProperty, new Binding("Name", BindingMode.TwoWay, new PickerRaffleLocationNameToIndexConverter(), LoadingLocationViewModel.RaffleLocations));
+
+            var button = new Button
+            {
+                Text = "Next",
+            };
+            layout.Children.Add(button);
+            button.Clicked += (sender, e) =>
+            {
+                MessagingCenter.Send<LoadingLocationPage>(this, "Success");
+            };
         }
     }
 }
