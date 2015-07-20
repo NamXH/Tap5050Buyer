@@ -44,9 +44,9 @@ namespace Tap5050Buyer
                 {
                     response = await client.PostAsync(c_authenticationApiAddress, content);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    throw new Exception("Error when authenticate!");
+                    throw new Exception("Error when authenticate:" + e.Message);
                 }
 
                 if (response.IsSuccessStatusCode)

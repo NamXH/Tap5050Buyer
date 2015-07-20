@@ -60,7 +60,7 @@ namespace Tap5050Buyer
             layout.Children.Add(new Label
                 {
                     Text = c_loadingMessage
-                });   
+                });
         }
 
         private void AddTryAgainButton()

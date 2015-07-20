@@ -26,7 +26,7 @@ namespace Tap5050Buyer
                 client.BaseAddress = new Uri(c_serverBaseAddress);
 
                 HttpResponseMessage response = null;
-                try // should be splited !!
+                try // should be more fine grain maybe !!
                 {
                     var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token;
                     response = await client.GetAsync(url);
@@ -35,9 +35,9 @@ namespace Tap5050Buyer
 
                     UserAccount = JsonConvert.DeserializeObject<UserAccount>(json);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    throw new Exception("Error while retrieving account info!");
+                    throw new Exception("Error while retrieving account info:" + e.Message);
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace Tap5050Buyer
                         }
                         else
                         {
-                            return new Tuple<bool, string>(true, String.Empty); // For test: change to false later !!
+                            return new Tuple<bool, string>(false, String.Empty); 
                         }
                     }
                     else

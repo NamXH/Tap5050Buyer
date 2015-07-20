@@ -97,10 +97,7 @@ namespace Tap5050Buyer
                         var loginResult = await _viewModel.Login();
                         if (loginResult.Item1)
                         {
-                            // A hack !!
-                            var vm = new AccountInfoViewModel();
-                            await vm.GetAccountInfo();
-                            this.Navigation.PushAsync(new AccountInfoPage(vm));
+                            this.Navigation.PushAsync(new AccountInfoPage());
                         }
                         else
                         {

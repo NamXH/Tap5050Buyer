@@ -10,7 +10,7 @@
         <TableSection Title="Birth Date">
           <EntryCell Label="Month" Placeholder="month" Text="{Binding UserAccount.MonthOfBirth}" />
           <EntryCell Label="Date" Placeholder="date" Text="{Binding UserAccount.DateOfBirth}" />
-          <EntryCell Label="Year" Placeholder="year" Text="{Binding UserAccount.DateOfBirth}" />
+          <EntryCell Label="Year" Placeholder="year" Text="{Binding UserAccount.YearOfBirth}" />
         </TableSection>
         <TableSection Title="Contact Info">
           <EntryCell Label="Mobile Phone" Placeholder="123-4567890" Text="{Binding UserAccount.Phone}" />

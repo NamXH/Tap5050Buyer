@@ -9,14 +9,26 @@ namespace Tap5050Buyer
     {
         private AccountInfoViewModel _viewModel;
 
-        public AccountInfoPage(AccountInfoViewModel vm)
+        public AccountInfoPage()
         {
             InitializeComponent();
             Title = "Account Info";
-            _tableView.Intent = TableIntent.Menu;
 
-            _viewModel = vm; // A hack!! Need to put loading screen before instead.
+            // If use code instead of xaml, we don't have to remove just add the code after. However, this is good too.
+            // Have to remove before setting the binding context because we don't implement Notify Property Changed in the View Model.
+            _layout.Children.Remove(_tableView); 
+
+            _viewModel = new AccountInfoViewModel();
             this.BindingContext = _viewModel;
+
+            LoadData();
+        }
+
+        private async void LoadData()
+        {
+            await _viewModel.GetAccountInfo();
+            _layout.Children.Remove(_indicator);
+            _layout.Children.Add(_tableView);
         }
     }
 }
