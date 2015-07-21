@@ -18,66 +18,63 @@ namespace Tap5050Buyer
 
         private RaffleListViewModel _viewModel;
 
-        public RaffleListPage(bool locationDetected, IList<RaffleLocation> raffleLocations, GeonamesCountrySubdivision countrySubdivision, bool includeSocialMedia)
+        // Can give some params default value later!!
+        public RaffleListPage(bool isLocationDetected, IList<RaffleLocation> raffleLocations, RaffleLocation userSelectedLocation, GeonamesCountrySubdivision countrySubdivision, bool includeSocialMedia)
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
 
-            LocationDetected = locationDetected;
+            LocationDetected = isLocationDetected;
             IncludeSocialMedia = includeSocialMedia;
-            _viewModel = new RaffleListViewModel(raffleLocations, countrySubdivision);
+            _viewModel = new RaffleListViewModel(isLocationDetected, raffleLocations, userSelectedLocation, countrySubdivision);
 
             var locationPicker = new Picker();
             locationPicker.HorizontalOptions = LayoutOptions.Center;
-            locationPicker.Title = "Pick a province";
             layout.Children.Add(locationPicker);
 
-            if (locationDetected)
+            locationPicker.Items.Add(_viewModel.LocationName);
+            locationPicker.SelectedIndex = 0;
+            locationPicker.IsEnabled = false;
+
+            if (_viewModel.RaffleLocation == null) // only happen when locationDetected == true
             {
-                locationPicker.Items.Add(countrySubdivision.AdminName);
-                locationPicker.SelectedIndex = 0;
-                locationPicker.IsEnabled = false;
-
-                var raffleLocation = _viewModel.MatchRaffleLocationWithCountrySubdivision(raffleLocations, countrySubdivision);
-
-                if (raffleLocation == null)
-                {
-                    layout.Children.Add(new StackLayout
-                        {
-                            Children =
-                            { new Label
-                                {
-                                    Text = "Sorry. There is no available raffle at your location.",
-                                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                                    VerticalOptions = LayoutOptions.CenterAndExpand,
-                                }
-                            },
-                            Padding = new Thickness(20, 0, 20, 0),
-                            VerticalOptions = LayoutOptions.CenterAndExpand,
-                        }
-                    );
-                }
-                else
-                {
-                    GetRaffleEventsAndCreateList(raffleLocation.Name);
-                }
+                layout.Children.Add(new StackLayout
+                    {
+                        Children =
+                        { new Label
+                            {
+                                Text = "Sorry. There is no available raffle at your location.",
+                                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                                VerticalOptions = LayoutOptions.CenterAndExpand,
+                            }
+                        },
+                        Padding = new Thickness(20, 0, 20, 0),
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
+                    }
+                );
             }
             else
             {
-                foreach (var location in raffleLocations)
-                {
-                    locationPicker.Items.Add(location.Name);
-                }
-                locationPicker.IsEnabled = true;
-                locationPicker.SelectedIndexChanged += (sender, e) =>
-                {
-                    if (layout.Children.Count == 2)
-                    {
-                        layout.Children.RemoveAt(1);
-                    }
-                    GetRaffleEventsAndCreateList(locationPicker.Items[locationPicker.SelectedIndex]);
-                };
+                GetRaffleEventsAndCreateList(_viewModel.LocationName);
             }
+
+            // Previous UX
+//            else
+//            {
+//                foreach (var location in raffleLocations)
+//                {
+//                    locationPicker.Items.Add(location.Name);
+//                }
+//                locationPicker.IsEnabled = true;
+//                locationPicker.SelectedIndexChanged += (sender, e) =>
+//                {
+//                    if (layout.Children.Count == 2)
+//                    {
+//                        layout.Children.RemoveAt(1);
+//                    }
+//                    GetRaffleEventsAndCreateList(locationPicker.Items[locationPicker.SelectedIndex]);
+//                };
+//            }
         }
 
         // Have to make this func because we can't have async ctor
