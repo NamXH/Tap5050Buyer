@@ -13,7 +13,7 @@
             <TextCell Text="{Binding UserAccount.LastName}" />
           </TableSection>
           <TableSection Title="Birthday">
-            <TextCell Text="{Binding UserAccount.Birthday}" />
+            <TextCell Text="{Binding UserAccount.BirthdayShortFormat}" />
           </TableSection>
           <TableSection Title="Phone">
             <TextCell Text="{Binding UserAccount.Phone}" />
@@ -23,9 +23,17 @@
           </TableSection>
           <TableSection Title="Address">
             <TextCell Text="{Binding UserAccount.AddressLine1}" />
+          </TableSection>
+          <TableSection Title="City">
             <TextCell Text="{Binding UserAccount.City}" />
+          </TableSection>
+          <TableSection Title="Province">
             <TextCell Text="{Binding UserAccount.Province}" />
+          </TableSection>
+          <TableSection Title="Country">
             <TextCell Text="{Binding UserAccount.Country}" />
+          </TableSection>
+          <TableSection Title="Postal Code">
             <TextCell Text="{Binding UserAccount.PostalCode}" />
           </TableSection>
         </TableView.Root>

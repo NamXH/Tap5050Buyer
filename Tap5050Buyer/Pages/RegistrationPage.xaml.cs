@@ -18,9 +18,25 @@ namespace Tap5050Buyer
             _tableView.Intent = TableIntent.Menu;
 
             _viewModel = new AccountInfoViewModel();
-            _viewModel.UserAccount = new UserAccount(); // Hack !!
-
             this.BindingContext = _viewModel;
+
+            var birthdayCell = new ViewCell();
+            _birthdaySection.Add(birthdayCell);
+
+            var birthdayLayout = new StackLayout
+            {
+                Padding = new Thickness(10, 0, 10, 0),
+            };
+            birthdayCell.View = birthdayLayout;
+
+            var datePicker = new DatePicker
+            {
+                Format = "MMM d yyyy",
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+            };
+            birthdayLayout.Children.Add(datePicker);
+            datePicker.SetBinding(DatePicker.DateProperty, "UserAccount.Birthday", BindingMode.TwoWay);
 
             var raffleResultsViewCell = new ViewCell();
             _raffleResultsSection.Add(raffleResultsViewCell);
@@ -86,6 +102,8 @@ namespace Tap5050Buyer
 
             createAccountButton.Clicked += async (sender, e) =>
             {
+                var a = _viewModel.UserAccount.Birthday;
+
                 var result = await _viewModel.CreateAccount();
                 if (result.Item1)
                 {

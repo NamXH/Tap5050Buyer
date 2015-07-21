@@ -17,6 +17,7 @@ namespace Tap5050Buyer
 
         public AccountInfoViewModel()
         {
+            UserAccount = new UserAccount();
         }
 
         public async Task GetAccountInfo()
@@ -58,7 +59,7 @@ namespace Tap5050Buyer
                         new KeyValuePair<string, string>("email", UserAccount.Email),
                         new KeyValuePair<string, string>("firstname", UserAccount.FirstName),
                         new KeyValuePair<string, string>("lastname", UserAccount.LastName),
-                        new KeyValuePair<string, string>("birthdate", UserAccount.YearOfBirth + "/" + UserAccount.MonthOfBirth + "/" + UserAccount.DateOfBirth), // need changed later
+                        new KeyValuePair<string, string>("birthdate", UserAccount.Birthday.ToString("yyyy/mm/dd")),
                         new KeyValuePair<string, string>("m_phone", UserAccount.FirstName),
                         new KeyValuePair<string, string>("add1", UserAccount.FirstName),
                         new KeyValuePair<string, string>("add2", UserAccount.FirstName),

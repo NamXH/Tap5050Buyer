@@ -20,10 +20,18 @@ namespace Tap5050Buyer
         }
 
         [JsonProperty(PropertyName = "user_birthdate")]
-        public string Birthday
+        public DateTime Birthday
         {
             get;
             set;
+        }
+
+        public string BirthdayShortFormat
+        {
+            get
+            {
+                return Birthday.ToString("d");
+            }
         }
 
         public string DateOfBirth
