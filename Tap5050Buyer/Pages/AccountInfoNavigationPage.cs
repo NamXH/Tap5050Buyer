@@ -16,7 +16,7 @@ namespace Tap5050Buyer
             }
             else
             {
-                // access data
+                this.PushAsync(new AccountInfoPage());
             }
         }
     }
