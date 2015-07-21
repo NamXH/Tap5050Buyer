@@ -11,6 +11,7 @@ namespace Tap5050Buyer
     {
         internal const string c_serverBaseAddress = "http://dev.tap5050.com/";
         internal const string c_authenticationApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/auth";
+        internal const string c_resetPasswordApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/reset_password";
 
         public string Username { get; set; }
 
@@ -100,6 +101,62 @@ namespace Tap5050Buyer
                     return new Tuple<bool, string>(false, response.ReasonPhrase);
                 }
             }
+        }
+
+        public async Task<bool> ResetPassword(string username)
+        {
+            if (String.IsNullOrWhiteSpace(username))
+            {
+                throw new ArgumentNullException("Username is empty!");
+            }
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(c_serverBaseAddress);
+
+                var content = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("email", username),
+                    });
+
+                HttpResponseMessage response = null;
+                try
+                {
+                    response = await client.PostAsync(c_resetPasswordApiAddress, content);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Error while resetting password :" + e.Message);
+                }
+
+                // BAD server api design leads to this complextity!
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = response.Content.ReadAsStringAsync().Result;
+
+                    var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                    string successCode;
+
+                    if (values.TryGetValue("result_success", out successCode))
+                    {
+                        if (successCode == "Y")
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return false;
         }
 
         public LoginPageViewModel()

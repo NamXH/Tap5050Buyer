@@ -60,6 +60,10 @@ namespace Tap5050Buyer
                 HorizontalOptions = LayoutOptions.End,
             };
             forgotPasswordLayout.Children.Add(forgotPasswordButton);
+            forgotPasswordButton.Clicked += async (sender, e) => 
+                {
+                    ResetPassword(usernameCell.Text);
+                };
 
             var loginSection = new TableSection();
             tableView.Root.Add(loginSection);
@@ -129,9 +133,29 @@ namespace Tap5050Buyer
                 }
                 else
                 {
-                    DisplayAlert("Error", loginResult.Item2, "OK"); 
+                    DisplayAlert("Error", loginResult.Item2, "Retry"); 
                 }
             } 
+        }
+
+        private async Task ResetPassword(string username)
+        {
+            if (String.IsNullOrWhiteSpace(username))
+            {
+                DisplayAlert("Validation Error", "Username is required", "Retry"); 
+            }
+            else
+            {
+                var resetPasswordResult = await _viewModel.ResetPassword(username);
+                if (resetPasswordResult)
+                {
+                    DisplayAlert("Success", "A reset email has been sent to your email.", "OK");
+                }
+                else
+                {
+                    DisplayAlert("Error", "Server request error.", "Retry"); 
+                }
+            }
         }
     }
 }
