@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using SQLite;
+using SQLite.Net;
 using SQLite.Net.Platform.XamarinIOS;
 using Xamarin.Forms;
 

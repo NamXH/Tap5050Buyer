@@ -61,11 +61,16 @@ namespace Tap5050Buyer
                     {
                         if (successCode == "Y")
                         {
-                            string token;
-                            if (values.TryGetValue("token_id", out token))
+                            string tokenValue;
+                            if (values.TryGetValue("token_id", out tokenValue))
                             {
-                                DatabaseManager.Token = token; // !!
-                                return new Tuple<bool, string>(true, token);
+                                DatabaseManager.DbConnection.Insert(new Token
+                                    {
+                                        Value = tokenValue,
+                                    });
+                                DatabaseManager.Token = DatabaseManager.GetFirstToken();
+
+                                return new Tuple<bool, string>(true, tokenValue);
                             }
                             else
                             {

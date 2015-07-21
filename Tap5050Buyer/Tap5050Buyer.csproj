@@ -78,10 +78,9 @@
     </Compile>
     <Compile Include="PickerConverters\PickerContactMethodsConverter.cs" />
     <Compile Include="PickerConverters\PickerRaffleLocationNameToIndexConverter.cs" />
-    <Compile Include="SQLite.cs" />
-    <Compile Include="SQLiteAsync.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Database\ISQLite.cs" />
+    <Compile Include="BusinessObjects\Token.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

@@ -8,7 +8,16 @@ namespace Tap5050Buyer
         public AccountInfoNavigationPage()
         {
             Title = "Account Info";
-            this.PushAsync(new LoginPage());
+
+            DatabaseManager.Token = DatabaseManager.GetFirstToken();
+            if (DatabaseManager.Token == null)
+            {
+                this.PushAsync(new LoginPage());
+            }
+            else
+            {
+                // access data
+            }
         }
     }
 }

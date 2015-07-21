@@ -28,7 +28,12 @@ namespace Tap5050Buyer
                 HttpResponseMessage response = null;
                 try // should be more fine grain maybe !!
                 {
-                    var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token;
+                    if (DatabaseManager.Token == null)
+                    {
+                        throw new Exception("Token is null while trying to retrieve data!");
+                    }
+
+                    var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token.Value;
                     response = await client.GetAsync(url);
 
                     var json = response.Content.ReadAsStringAsync().Result;
