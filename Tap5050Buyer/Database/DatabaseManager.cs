@@ -13,6 +13,7 @@ namespace Tap5050Buyer
         static DatabaseManager()
         {
             var db = DependencyService.Get<ISQLite>();
+//            db.Delete(); // For test
 
             if (!db.Exists())
             {

@@ -115,27 +115,21 @@ namespace Tap5050Buyer
 
         private async Task Login(string username, string password)
         {
-            if (String.IsNullOrWhiteSpace(username))
+            if (String.IsNullOrWhiteSpace(username) || String.IsNullOrWhiteSpace(password))
             {
-                DisplayAlert("Missing Username", "Username is required", "OK");
+                DisplayAlert("Validation Error", "Username and Password are required", "Retry");
             }
             else
             {
-                if (String.IsNullOrWhiteSpace(password))
+                var loginResult = await _viewModel.Login();
+                if (loginResult.Item1)
                 {
-                    DisplayAlert("Missing Password", "Password is required", "OK");
+                    this.Navigation.PushAsync(new AccountInfoPage());
+                    this.Navigation.RemovePage(this);
                 }
                 else
                 {
-                    var loginResult = await _viewModel.Login();
-                    if (loginResult.Item1)
-                    {
-                        this.Navigation.PushAsync(new AccountInfoPage());
-                    }
-                    else
-                    {
-                        DisplayAlert("Error", loginResult.Item2, "OK"); 
-                    }
+                    DisplayAlert("Error", loginResult.Item2, "OK"); 
                 }
             } 
         }
