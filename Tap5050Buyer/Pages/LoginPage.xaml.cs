@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Tap5050Buyer
@@ -65,6 +66,10 @@ namespace Tap5050Buyer
 
             var loginButtonViewCell = new ViewCell();
             loginSection.Add(loginButtonViewCell);
+            loginButtonViewCell.Tapped += async (sender, e) =>
+            {
+                await Login(usernameCell.Text, passwordCell.Text);
+            };
 
             var loginButtonLayout = new StackLayout
             {
@@ -82,29 +87,7 @@ namespace Tap5050Buyer
             loginButtonLayout.Children.Add(loginButton);
             loginButton.Clicked += async (sender, e) =>
             {
-                if (String.IsNullOrWhiteSpace(usernameCell.Text))
-                {
-                    DisplayAlert("Missing Username", "Username is required", "OK");
-                }
-                else
-                {
-                    if (String.IsNullOrWhiteSpace(passwordCell.Text))
-                    {
-                        DisplayAlert("Missing Password", "Password is required", "OK");
-                    }
-                    else
-                    {
-                        var loginResult = await _viewModel.Login();
-                        if (loginResult.Item1)
-                        {
-                            this.Navigation.PushAsync(new AccountInfoPage());
-                        }
-                        else
-                        {
-                            DisplayAlert("Error", loginResult.Item2, "OK"); 
-                        }
-                    }
-                }
+                await Login(usernameCell.Text, passwordCell.Text);
             };
 
             var signUpSection = new TableSection();
@@ -128,6 +111,33 @@ namespace Tap5050Buyer
             {
                 this.Navigation.PushAsync(new RegistrationPage(this));
             };
+        }
+
+        private async Task Login(string username, string password)
+        {
+            if (String.IsNullOrWhiteSpace(username))
+            {
+                DisplayAlert("Missing Username", "Username is required", "OK");
+            }
+            else
+            {
+                if (String.IsNullOrWhiteSpace(password))
+                {
+                    DisplayAlert("Missing Password", "Password is required", "OK");
+                }
+                else
+                {
+                    var loginResult = await _viewModel.Login();
+                    if (loginResult.Item1)
+                    {
+                        this.Navigation.PushAsync(new AccountInfoPage());
+                    }
+                    else
+                    {
+                        DisplayAlert("Error", loginResult.Item2, "OK"); 
+                    }
+                }
+            } 
         }
     }
 }
