@@ -20,7 +20,7 @@ namespace Tap5050Buyer
 
             var tableView = new TableView
             {
-                Intent = TableIntent.Form,
+                Intent = TableIntent.Menu,
             };
             this.Content = tableView;
 
@@ -60,10 +60,10 @@ namespace Tap5050Buyer
                 HorizontalOptions = LayoutOptions.End,
             };
             forgotPasswordLayout.Children.Add(forgotPasswordButton);
-            forgotPasswordButton.Clicked += async (sender, e) => 
-                {
-                    ResetPassword(usernameCell.Text);
-                };
+            forgotPasswordButton.Clicked += async (sender, e) =>
+            {
+                ResetPassword(usernameCell.Text);
+            };
 
             var loginSection = new TableSection();
             tableView.Root.Add(loginSection);

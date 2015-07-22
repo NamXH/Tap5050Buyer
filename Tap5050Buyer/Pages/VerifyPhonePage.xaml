@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Tap5050Buyer.VerifyPhonePage">
+  <ContentPage.Content>
+    <StackLayout x:Name="_layout">
+      <StackLayout x:Name="_indicator" Padding="0, 20, 0, 20" VerticalOptions="CenterAndExpand">
+        <Label HorizontalOptions="CenterAndExpand" Text="Please wait. Requesting server..." />
+        <ActivityIndicator HorizontalOptions="CenterAndExpand" IsRunning="true" />
+      </StackLayout>
+      <TableView x:Name="_tableView">
+        <TableView.Root>
+          <TableRoot>
+            <TableSection Title="Enter Validation Code">
+              <EntryCell Label="Verification Code" Placeholder="verification code" Text="{Binding VerificationCode}" />
+            </TableSection>
+          </TableRoot>
+        </TableView.Root>
+      </TableView>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

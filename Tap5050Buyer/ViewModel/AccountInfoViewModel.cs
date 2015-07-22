@@ -96,7 +96,7 @@ namespace Tap5050Buyer
                         }
                         else
                         {
-                            return new Tuple<bool, string>(false, String.Empty); 
+                            return new Tuple<bool, string>(true, String.Empty);  // Change to True for test when needed!!
                         }
                     }
                     else
@@ -110,6 +110,8 @@ namespace Tap5050Buyer
                 }
             } 
         }
+
+
     }
 }
 

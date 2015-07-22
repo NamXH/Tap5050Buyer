@@ -36,6 +36,13 @@
           <TableSection Title="Postal Code">
             <TextCell Text="{Binding UserAccount.PostalCode}" />
           </TableSection>
+<!--          <TableSection>
+            <ViewCell>
+              <StackLayout BackgroundColor="Accent">
+                <Button x:Name="_verifyButton" Text="Verify Phone Number" TextColor="White" />
+              </StackLayout>
+            </ViewCell>
+          </TableSection>-->
         </TableView.Root>
       </TableView>
     </StackLayout>

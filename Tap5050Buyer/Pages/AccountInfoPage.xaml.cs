@@ -29,6 +29,35 @@ namespace Tap5050Buyer
             await _viewModel.GetAccountInfo();
             _layout.Children.Remove(_indicator);
             _layout.Children.Add(_tableView);
+
+            var verifyButtonSection = new TableSection();
+            _tableView.Root.Add(verifyButtonSection);
+
+            var verifyButtonViewCell = new ViewCell();
+            verifyButtonSection.Add(verifyButtonViewCell);
+
+            var verifyButtonLayout = new StackLayout
+            {
+                BackgroundColor = Color.Accent,
+            };
+            verifyButtonViewCell.View = verifyButtonLayout;
+
+            var verifyButton = new Button
+            {
+                Text = "Verify Phone Number",
+                TextColor = Color.White,
+            };
+            verifyButtonLayout.Children.Add(verifyButton);
+
+            verifyButton.Clicked += async (sender, e) =>
+            {
+                StartVerificationProcess(); 
+            };
+        }
+
+        public async void StartVerificationProcess()
+        {
+            this.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.Country));
         }
     }
 }

@@ -109,9 +109,9 @@ namespace Tap5050Buyer
                 {
                     this.Navigation.PopAsync();
                     var answer = await DisplayAlert("Register Phone Number", "Send registration code to your phone now?", "Later", "Yes");
-                    if (!answer) // use !answer because the negative choice has bigger font
+                    if (!answer) // use !answer because the negative choice has a bigger font
                     {
-                        parent.Navigation.PushAsync(new ValidatePhonePage()); 
+                        parent.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.Country)); 
                     }
                 }
                 else

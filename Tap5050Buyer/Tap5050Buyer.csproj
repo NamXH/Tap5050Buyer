@@ -73,14 +73,15 @@
     <Compile Include="Pages\RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ValidatePhonePage.xaml.cs">
-      <DependentUpon>ValidatePhonePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PickerConverters\PickerContactMethodsConverter.cs" />
     <Compile Include="PickerConverters\PickerRaffleLocationNameToIndexConverter.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Database\ISQLite.cs" />
     <Compile Include="BusinessObjects\Token.cs" />
+    <Compile Include="ViewModel\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="Pages\VerifyPhonePage.xaml.cs">
+      <DependentUpon>VerifyPhonePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -170,7 +171,7 @@
     <EmbeddedResource Include="Pages\RegistrationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\ValidatePhonePage.xaml">
+    <EmbeddedResource Include="Pages\VerifyPhonePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
