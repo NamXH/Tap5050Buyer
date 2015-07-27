@@ -8,7 +8,8 @@ namespace Tap5050Buyer
     /// Picker: string to int converter. Convert the selected index of the Picker to the string of the item and vice versa.
     /// Converter parameters: List<string> contains the items in the picker.
     /// </summary>
-    public class PickerRaffleLocationNameToIndexConverter : IValueConverter
+    // It should be better to make these converters "generic" using interface like IHasName for RaffleLocation, Country, Province...!!
+    public class PickerCountryToIndexConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -17,8 +18,8 @@ namespace Tap5050Buyer
                 return 0;
             }
             var itemToFind = (string)value;
-            var itemList = (List<RaffleLocation>)parameter;
-            return itemList.FindIndex(x => x.Name == itemToFind);
+            var itemList = (List<Country>)parameter;
+            return itemList.FindIndex(x => x.CountryCode == itemToFind);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -30,8 +31,8 @@ namespace Tap5050Buyer
             }
             else
             {
-                var itemList = (List<RaffleLocation>)parameter;
-                return itemList[index].Name;
+                var itemList = (List<Country>)parameter;
+                return itemList[index].CountryCode;
             }
         }
     }

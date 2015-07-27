@@ -20,8 +20,8 @@
         <TableSection Title="Address Info">
           <EntryCell Label="Address 1" Placeholder="address 1" Text="{Binding UserAccount.AddressLine1}" />
           <EntryCell Label="Address 2" Placeholder="address 2" Text="{Binding UserAccount.AddressLine2}" />
-          <EntryCell Label="Country" Placeholder="country" Text="{Binding UserAccount.Country}" />
-          <EntryCell Label="Province" Placeholder="province" Text="{Binding UserAccount.Province}" />
+          <ViewCell x:Name="_countryCell" />
+          <ViewCell x:Name="_provinceCell" />
           <EntryCell Label="City" Placeholder="city" Text="{Binding UserAccount.City}" />
           <EntryCell Label="Postal / Zip" Placeholder="postal / zip" Text="{Binding UserAccount.PostalCode}" />
         </TableSection>

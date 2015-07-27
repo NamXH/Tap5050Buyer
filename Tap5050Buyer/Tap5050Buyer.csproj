@@ -92,6 +92,8 @@
     <Compile Include="BusinessObjects\Ticket.cs" />
     <Compile Include="BusinessObjects\Country.cs" />
     <Compile Include="BusinessObjects\Province.cs" />
+    <Compile Include="PickerConverters\PickerCountryToIndexConverter.cs" />
+    <Compile Include="PickerConverters\PickerProvinceToIndexConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

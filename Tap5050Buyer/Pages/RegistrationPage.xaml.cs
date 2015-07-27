@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using Xamarin.Forms;
 
 namespace Tap5050Buyer
@@ -20,6 +20,7 @@ namespace Tap5050Buyer
             _viewModel = new AccountInfoViewModel();
             this.BindingContext = _viewModel;
 
+            #region Birthday
             var birthdayCell = new ViewCell();
             _birthdaySection.Add(birthdayCell);
 
@@ -37,7 +38,80 @@ namespace Tap5050Buyer
             };
             birthdayLayout.Children.Add(datePicker);
             datePicker.SetBinding(DatePicker.DateProperty, "UserAccount.Birthday", BindingMode.TwoWay);
+            #endregion
 
+            #region Province 
+            var provinceCellLayout = new StackLayout
+            {
+                Padding = new Thickness(10, 0, 10, 0),
+            };
+            _provinceCell.View = provinceCellLayout;
+
+            var provincePicker = new Picker
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+            };
+            provinceCellLayout.Children.Add(provincePicker);
+
+            var firstCountry = DatabaseManager.DbConnection.Table<Country>().First();
+            var provinces = DatabaseManager.DbConnection.Table<Province>().Where(x => x.CountryCode == firstCountry.CountryCode).ToList();
+            foreach (var province in provinces)
+            {
+                provincePicker.Items.Add(province.ProvinceAbbreviation);
+            }
+            provincePicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.Province", BindingMode.TwoWay, new PickerProvinceToIndexConverter(), provinces));
+            #endregion
+
+            #region Country
+            var countryCellLayout = new StackLayout
+            {
+                Padding = new Thickness(10, 0, 10, 0),
+            };
+            _countryCell.View = countryCellLayout;
+
+            var countryPicker = new Picker
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+            };
+            countryCellLayout.Children.Add(countryPicker);
+
+            var countries = DatabaseManager.DbConnection.Table<Country>().ToList();
+            foreach (var country in countries)
+            {
+                countryPicker.Items.Add(country.CountryCode);
+            }
+            countryPicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.Country", BindingMode.TwoWay, new PickerCountryToIndexConverter(), countries));
+
+            countryPicker.SelectedIndexChanged += (sender, e) =>
+            {
+                provincePicker.Items.Clear();
+
+                var countryCode = countries[countryPicker.SelectedIndex].CountryCode;
+                var newProvinces = DatabaseManager.DbConnection.Table<Province>().Where(x => x.CountryCode == countryCode).ToList();
+
+                // If there is no province, use N/A
+                if ((newProvinces == null) || (newProvinces.Count == 0))
+                {
+                    newProvinces = new List<Province>
+                    {
+                        new Province
+                        {
+                            ProvinceAbbreviation = "N/A",
+                        }
+                    };
+                }
+                
+                foreach (var province in newProvinces)
+                {
+                    provincePicker.Items.Add(province.ProvinceAbbreviation);
+                }
+                provincePicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.Province", BindingMode.TwoWay, new PickerProvinceToIndexConverter(), newProvinces));
+            };
+            #endregion
+
+            #region Raffle Result
             var raffleResultsViewCell = new ViewCell();
             _raffleResultsSection.Add(raffleResultsViewCell);
 
@@ -59,7 +133,9 @@ namespace Tap5050Buyer
                 raffleResultsPicker.Items.Add(item);
             }
             raffleResultsPicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.PreferedContactMethod", BindingMode.TwoWay, new PickerContactMethodsConverter()));
+            #endregion
 
+            #region Charity Message
             var charityMessagesViewCell = new ViewCell();
             _charityMessagesSection.Add(charityMessagesViewCell);
 
@@ -81,6 +157,7 @@ namespace Tap5050Buyer
                 charityMessagesPicker.Items.Add(item);
             }
             charityMessagesPicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.PreferedContactMethodcharity", BindingMode.TwoWay, new PickerContactMethodsConverter()));
+            #endregion
 
             var createAccountButtonViewCell = new ViewCell();
             _createAccountButtonSection.Add(createAccountButtonViewCell);
@@ -102,7 +179,7 @@ namespace Tap5050Buyer
 
             createAccountButton.Clicked += async (sender, e) =>
             {
-                var a = _viewModel.UserAccount.Birthday;
+                var a = _viewModel.UserAccount; // For test!!
 
                 var result = await _viewModel.CreateAccount();
                 if (result.Item1)
