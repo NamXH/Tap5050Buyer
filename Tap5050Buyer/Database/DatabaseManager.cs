@@ -29,6 +29,8 @@ namespace Tap5050Buyer
         private static void SetupSchema()
         {
             DbConnection.CreateTable<Token>();
+            DbConnection.CreateTable<Country>();
+            DbConnection.CreateTable<Province>();
         }
 
         public static Token GetFirstToken()

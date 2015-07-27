@@ -11,6 +11,8 @@ namespace Tap5050Buyer
     {
         internal const string c_serverBaseAddress = "http://dev.tap5050.com/";
         internal const string c_serverLocationApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/locations";
+        internal const string c_countriesApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/countries";
+        internal const string c_provincesApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/states_provinces";
 
         public static IList<RaffleLocation> RaffleLocations { get; set; }
 
@@ -25,11 +27,28 @@ namespace Tap5050Buyer
         {
         }
 
-        public async Task GetCurrentLocationAndRaffleLocationList()
+        public async Task GetCurrentLocationAndServerData()
         {
             var updateGeolocationTask = GeolocationManager.UpdateGeolocation();
             var getRaffleLocationsTask = GetRaffleLocations();
-            await Task.WhenAll(new List<Task>{ updateGeolocationTask, getRaffleLocationsTask });
+            var tasks = new List<Task>{ updateGeolocationTask, getRaffleLocationsTask };
+
+            bool isGetCountriesAndProvinces = false;
+            var getCountries = GetCountries();
+            var getProvinces = GetProvinces();
+
+            if ((DatabaseManager.DbConnection.Table<Country>().Count() == 0) || (DatabaseManager.DbConnection.Table<Province>().Count() == 0))
+            {
+                isGetCountriesAndProvinces = true;
+            }
+
+            if (isGetCountriesAndProvinces)
+            {
+                tasks.Add(getCountries);
+                tasks.Add(getProvinces); 
+            }
+
+            await Task.WhenAll(tasks);
 
             RaffleLocations = getRaffleLocationsTask.Result;
             if (RaffleLocations != null)
@@ -46,6 +65,22 @@ namespace Tap5050Buyer
             else
             {
                 IsLocationDetected = false;
+            }
+
+            if (isGetCountriesAndProvinces)
+            {
+                var countries = getCountries.Result;
+                var provinces = getProvinces.Result;
+
+                foreach (var country in countries)
+                {
+                    DatabaseManager.DbConnection.Insert(country);
+                }
+
+                foreach (var province in provinces)
+                {
+                    DatabaseManager.DbConnection.Insert(province);
+                }
             }
         }
 
@@ -65,7 +100,7 @@ namespace Tap5050Buyer
             }
             catch (Exception)
             {
-                // should throw exception
+                // should throw exception !!
                 return null;
             }
             var json = response.Content.ReadAsStringAsync().Result;
@@ -77,6 +112,56 @@ namespace Tap5050Buyer
                 return JsonConvert.DeserializeObject<List<RaffleLocation>>(items.ToString());
             }
             return null;
+        }
+
+        public async Task<List<Country>> GetCountries()
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(c_serverBaseAddress);
+
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await client.GetAsync(c_countriesApiAddress);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error while getting countries: " + e.Message);
+            }
+            var json = response.Content.ReadAsStringAsync().Result;
+
+            var obj = JsonConvert.DeserializeObject<JObject>(json);
+            var items = obj["items"];
+            if (items != null)
+            {
+                return JsonConvert.DeserializeObject<List<Country>>(items.ToString());
+            }
+            return null; 
+        }
+
+        public async Task<List<Province>> GetProvinces()
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(c_serverBaseAddress);
+
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await client.GetAsync(c_provincesApiAddress);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error while getting provinces: " + e.Message);
+            }
+            var json = response.Content.ReadAsStringAsync().Result;
+
+            var obj = JsonConvert.DeserializeObject<JObject>(json);
+            var items = obj["items"];
+            if (items != null)
+            {
+                return JsonConvert.DeserializeObject<List<Province>>(items.ToString());
+            }
+            return null; 
         }
     }
 }

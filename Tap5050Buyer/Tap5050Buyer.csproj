@@ -52,7 +52,6 @@
     <Compile Include="BusinessObjects\RaffleLocation.cs" />
     <Compile Include="DeviceService.cs" />
     <Compile Include="ISocialShare.cs" />
-    <Compile Include="Pages\LoadingLocationTempPage.cs" />
     <Compile Include="Pages\ContactsPage.xaml.cs">
       <DependentUpon>ContactsPage.xaml</DependentUpon>
     </Compile>
@@ -91,6 +90,8 @@
     </Compile>
     <Compile Include="ViewModel\TicketsViewModel.cs" />
     <Compile Include="BusinessObjects\Ticket.cs" />
+    <Compile Include="BusinessObjects\Country.cs" />
+    <Compile Include="BusinessObjects\Province.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

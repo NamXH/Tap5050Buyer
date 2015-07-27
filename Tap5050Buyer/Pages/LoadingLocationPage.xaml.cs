@@ -31,7 +31,7 @@ namespace Tap5050Buyer
 
         public async void LoadInfo()
         {
-            await _viewModel.GetCurrentLocationAndRaffleLocationList();
+            await _viewModel.GetCurrentLocationAndServerData();
 
             if (LoadingLocationViewModel.RaffleLocations == null)
             {
