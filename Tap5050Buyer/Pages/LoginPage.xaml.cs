@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XLabs.Forms.Controls;
 
 namespace Tap5050Buyer
 {
@@ -31,16 +32,23 @@ namespace Tap5050Buyer
             {
                 Label = "Login",
                 Placeholder = "username",
-                Keyboard = Keyboard.Text,
+                Keyboard = Keyboard.Email,
             };
             usernameSection.Add(usernameCell);
             usernameCell.SetBinding(EntryCell.TextProperty, "Username");
 
-            var passwordCell = new EntryCell
+//            var passwordCell = new EntryCell
+//            {
+//                Label = "Password",
+//                Placeholder = "password",
+//                Keyboard = Keyboard.Text,
+//            };
+            var passwordCell = new ExtendedEntryCell
             {
                 Label = "Password",
                 Placeholder = "password",
                 Keyboard = Keyboard.Text,
+                IsPassword = true,
             };
             usernameSection.Add(passwordCell);
             passwordCell.SetBinding(EntryCell.TextProperty, "Password");
@@ -91,6 +99,7 @@ namespace Tap5050Buyer
             loginButtonLayout.Children.Add(loginButton);
             loginButton.Clicked += async (sender, e) =>
             {
+                // Maybe just make the call to be Login() and determine the parameters in the VM is better!!
                 await Login(usernameCell.Text, passwordCell.Text);
             };
 

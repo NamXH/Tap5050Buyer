@@ -3,5 +3,6 @@
   <local:RaffleNavigationPage x:Name="_raffleNavigationPage" />
   <local:InviteFriendsNavigationPage x:Name="_inviteFriendsNavigationPage" />
   <local:AccountInfoNavigationPage x:Name="_accountInfoNavigationPage" />
+  <local:TicketsNavigationPage x:Name="_ticketsNavigationPage" />
   <local:VersionPage />
 </TabbedPage>

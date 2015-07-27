@@ -27,7 +27,7 @@ namespace Tap5050Buyer
                     {
                         new KeyValuePair<string, string>("email", email),
                         new KeyValuePair<string, string>("m_phone", phoneNumber),
-                        new KeyValuePair<string, string>("m_phone", country),
+                        new KeyValuePair<string, string>("country", country),
                     });
 
                 HttpResponseMessage response = null;
