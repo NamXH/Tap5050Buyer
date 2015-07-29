@@ -6,7 +6,7 @@ namespace Tap5050Buyer
     public class UserAccount
     {
         [JsonProperty(PropertyName = "first_name")]
-        public string FirstName 
+        public string FirstName
         {
             get;
             set;
@@ -19,6 +19,15 @@ namespace Tap5050Buyer
             set;
         }
 
+        [JsonIgnore]
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+
         [JsonProperty(PropertyName = "user_birthdate")]
         public DateTime Birthday
         {
@@ -26,27 +35,31 @@ namespace Tap5050Buyer
             set;
         }
 
+        [JsonIgnore]
         public string BirthdayShortFormat
         {
             get
             {
-                return Birthday.ToString("d");
+                return Birthday.ToString("MMMM dd, yyyy");
             }
         }
 
+        [JsonIgnore]
         public string DateOfBirth
         {
             get;
             set;
         }
 
+        [JsonIgnore]
         public string MonthOfBirth
         {
             get;
             set;
         }
 
-        public string YearOfBirth 
+        [JsonIgnore]
+        public string YearOfBirth
         {
             get;
             set;
@@ -73,10 +86,20 @@ namespace Tap5050Buyer
             set;
         }
 
+        [JsonProperty(PropertyName = "mail_address_line_2")]
         public string AddressLine2
         {
             get;
             set;
+        }
+
+        [JsonIgnore]
+        public string StreetAddress
+        {
+            get
+            {
+                return AddressLine1 + ", " + AddressLine2;
+            }
         }
 
         [JsonProperty(PropertyName = "mail_country")]
@@ -105,6 +128,15 @@ namespace Tap5050Buyer
         {
             get;
             set;
+        }
+
+        [JsonIgnore]
+        public string CityAddress
+        {
+            get
+            {
+                return City + ", " + Province + " " + PostalCode;
+            }
         }
 
         [JsonProperty(PropertyName = "prefered_contact_method")]

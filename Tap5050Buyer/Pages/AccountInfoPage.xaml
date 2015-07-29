@@ -6,45 +6,6 @@
         <Label HorizontalOptions="CenterAndExpand" Text="Please wait. Loggin in..." />
         <ActivityIndicator HorizontalOptions="CenterAndExpand" IsRunning="true" />
       </StackLayout>
-      <TableView x:Name="_tableView" Intent="Menu">
-        <TableView.Root>
-          <TableSection Title="User">
-            <TextCell Text="{Binding UserAccount.FirstName}" />
-            <TextCell Text="{Binding UserAccount.LastName}" />
-          </TableSection>
-          <TableSection Title="Birthday">
-            <TextCell Text="{Binding UserAccount.BirthdayShortFormat}" />
-          </TableSection>
-          <TableSection Title="Phone">
-            <TextCell Text="{Binding UserAccount.Phone}" />
-          </TableSection>
-          <TableSection Title="Email">
-            <TextCell Text="{Binding UserAccount.Email}" />
-          </TableSection>
-          <TableSection Title="Address">
-            <TextCell Text="{Binding UserAccount.AddressLine1}" />
-          </TableSection>
-          <TableSection Title="City">
-            <TextCell Text="{Binding UserAccount.City}" />
-          </TableSection>
-          <TableSection Title="Province">
-            <TextCell Text="{Binding UserAccount.Province}" />
-          </TableSection>
-          <TableSection Title="Country">
-            <TextCell Text="{Binding UserAccount.Country}" />
-          </TableSection>
-          <TableSection Title="Postal Code">
-            <TextCell Text="{Binding UserAccount.PostalCode}" />
-          </TableSection>
-<!--          <TableSection>
-            <ViewCell>
-              <StackLayout BackgroundColor="Accent">
-                <Button x:Name="_verifyButton" Text="Verify Phone Number" TextColor="White" />
-              </StackLayout>
-            </ViewCell>
-          </TableSection>-->
-        </TableView.Root>
-      </TableView>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

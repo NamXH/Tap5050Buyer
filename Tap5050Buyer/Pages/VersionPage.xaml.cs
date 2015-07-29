@@ -10,7 +10,7 @@ namespace Tap5050Buyer
         public VersionPage()
         {
             InitializeComponent();
-            Title = "Version0.1";
+            Title = "Version0.2";
         }
     }
 }
