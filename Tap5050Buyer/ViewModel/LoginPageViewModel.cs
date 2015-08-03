@@ -65,12 +65,8 @@ namespace Tap5050Buyer
                             string tokenValue;
                             if (values.TryGetValue("token_id", out tokenValue))
                             {
-                                DatabaseManager.DbConnection.Insert(new Token
-                                    {
-                                        Value = tokenValue,
-                                    });
-                                DatabaseManager.Token = DatabaseManager.GetFirstToken();
-
+                                DatabaseManager.InsertToken(tokenValue);
+                                
                                 return new Tuple<bool, string>(true, tokenValue);
                             }
                             else
@@ -129,7 +125,7 @@ namespace Tap5050Buyer
                     throw new Exception("Error while resetting password :" + e.Message);
                 }
 
-                // BAD server api design leads to this complextity!
+                // BAD server api leads to this complexity!!
                 if (response.IsSuccessStatusCode)
                 {
                     var json = response.Content.ReadAsStringAsync().Result;

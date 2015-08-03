@@ -111,7 +111,10 @@ namespace Tap5050Buyer
             } 
         }
 
-
+        public void SignOut()
+        {
+            DatabaseManager.DeleteToken();
+        }
     }
 }
 

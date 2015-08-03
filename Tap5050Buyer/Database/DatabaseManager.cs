@@ -37,5 +37,23 @@ namespace Tap5050Buyer
         {
             return DatabaseManager.DbConnection.Table<Token>().FirstOrDefault();
         }
+
+        public static void DeleteToken()
+        {
+            DbConnection.DeleteAll<Token>();
+            Token = null;
+        }
+
+        public static Token InsertToken(string tokenValue)
+        {
+            DbConnection.Insert(new Token
+                {
+                    Value = tokenValue,
+                });
+
+            Token = DatabaseManager.GetFirstToken(); // Do this instead of taking the Token directly to make sure there's only 1 Token object. Maybe not neccessary though.
+
+            return Token;
+        }
     }
 }

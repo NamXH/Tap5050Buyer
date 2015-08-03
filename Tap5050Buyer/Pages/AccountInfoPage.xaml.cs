@@ -235,6 +235,9 @@ namespace Tap5050Buyer
             mainLayout.Children.Add(signOutButton);
             signOutButton.Clicked += (sender, e) =>
             {
+                _viewModel.SignOut();
+                this.Navigation.InsertPageBefore(new LoginPage(), this);
+                this.Navigation.PopAsync();
             };
         }
 
