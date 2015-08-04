@@ -43,15 +43,11 @@
     <Compile Include="Pages\RaffleListPage.xaml.cs">
       <DependentUpon>RaffleListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GeolocationManager.cs" />
-    <Compile Include="GeonamesCountrySubdivision.cs" />
     <Compile Include="Pages\RaffleDetailsPage.xaml.cs">
       <DependentUpon>RaffleDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="BusinessObjects\RaffleEvent.cs" />
     <Compile Include="BusinessObjects\RaffleLocation.cs" />
-    <Compile Include="DeviceService.cs" />
-    <Compile Include="ISocialShare.cs" />
     <Compile Include="Pages\ContactsPage.xaml.cs">
       <DependentUpon>ContactsPage.xaml</DependentUpon>
     </Compile>
@@ -94,6 +90,11 @@
     <Compile Include="BusinessObjects\Province.cs" />
     <Compile Include="PickerConverters\PickerCountryToIndexConverter.cs" />
     <Compile Include="PickerConverters\PickerProvinceToIndexConverter.cs" />
+    <Compile Include="Utilities\GeolocationManager.cs" />
+    <Compile Include="Utilities\GeonamesCountrySubdivision.cs" />
+    <Compile Include="Utilities\DeviceService.cs" />
+    <Compile Include="Utilities\ISocialShare.cs" />
+    <Compile Include="Utilities\ServerCaller.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -157,6 +158,7 @@
     <Folder Include="ViewModel\" />
     <Folder Include="PickerConverters\" />
     <Folder Include="Database\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\LoadingLocationPage.xaml">

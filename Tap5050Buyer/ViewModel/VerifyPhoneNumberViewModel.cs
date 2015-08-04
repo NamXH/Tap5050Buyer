@@ -10,11 +10,30 @@ namespace Tap5050Buyer
     {
         internal const string c_serverBaseAddress = "http://dev.tap5050.com/";
         internal const string c_requestPhoneVerificationApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/request_mobile_phone_verification";
+        internal const string c_phoneVerificationApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/mobile_phone_verification";
 
         public string VerificationCode { get; set; }
 
+        public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string Country { get; set; }
+
         public VerifyPhoneNumberViewModel()
         {
+        }
+
+        public VerifyPhoneNumberViewModel(string email, string phoneNumber, string country)
+        {
+            Email = email;
+            PhoneNumber = phoneNumber;
+            Country = country;
+        }
+
+        public async Task<Tuple<bool, string>> RequestPhoneNumberVerification()
+        {
+            return await RequestPhoneNumberVerification(Email, PhoneNumber, Country);
         }
 
         public async Task<Tuple<bool, string>> RequestPhoneNumberVerification(string email, string phoneNumber, string country)
@@ -77,6 +96,17 @@ namespace Tap5050Buyer
                     return new Tuple<bool, string>(false, response.ReasonPhrase);
                 }
             }
+        }
+
+        public async Task<Tuple<bool, string>> VerifyPhoneNumber()
+        {
+            var body = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("email", Email),
+                new KeyValuePair<string, string>("m_phone", PhoneNumber),
+                new KeyValuePair<string, string>("VERIFY_CODE", VerificationCode)
+            };
+            return await ServerCaller.Post(null, body, c_phoneVerificationApiAddress);
         }
     }
 }
