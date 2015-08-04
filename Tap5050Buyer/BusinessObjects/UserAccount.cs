@@ -147,7 +147,7 @@ namespace Tap5050Buyer
         }
 
         [JsonProperty(PropertyName = "prefered_contact_methodcharity")]
-        public string PreferedContactMethodcharity
+        public string PreferedContactMethodCharity
         {
             get;
             set;
@@ -157,7 +157,42 @@ namespace Tap5050Buyer
         {
             PreferedContactMethod = "NOCONTACT";
 
-            PreferedContactMethodcharity = "NOCONTACT";
+            PreferedContactMethodCharity = "NOCONTACT";
+        }
+
+        public UserAccount(UserAccount anotherAccount)
+        {
+            Email = anotherAccount.Email;
+            FirstName = anotherAccount.FirstName;
+            LastName = anotherAccount.LastName;
+            Birthday = anotherAccount.Birthday;
+            Phone = anotherAccount.Phone;
+            AddressLine1 = anotherAccount.AddressLine1;
+            AddressLine2 = anotherAccount.AddressLine2;
+            City = anotherAccount.City;
+            Province = anotherAccount.Province;
+            PostalCode = anotherAccount.PostalCode;
+            Country = anotherAccount.Country;
+            PreferedContactMethod = anotherAccount.PreferedContactMethod;
+            PreferedContactMethodCharity = anotherAccount.PreferedContactMethodCharity;
+        }
+
+        // Should override Equals instead!! -> Later
+        public static bool Compare(UserAccount first, UserAccount second)
+        {
+            return (first.Email == second.Email)
+            && (first.FirstName == second.FirstName)
+            && (first.LastName == second.LastName)
+            && (first.Birthday == second.Birthday)
+            && (first.Phone == second.Phone)
+            && (first.AddressLine1 == second.AddressLine1)
+            && (first.AddressLine2 == second.AddressLine2)
+            && (first.City == second.City)
+            && (first.Province == second.Province)
+            && (first.PostalCode == second.PostalCode)
+            && (first.Country == second.Country)
+            && (first.PreferedContactMethod == second.PreferedContactMethod)
+            && (first.PreferedContactMethodCharity == second.PreferedContactMethodCharity);
         }
     }
 }

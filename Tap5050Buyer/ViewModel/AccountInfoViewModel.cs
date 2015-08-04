@@ -13,6 +13,8 @@ namespace Tap5050Buyer
 
         public UserAccount UserAccount { get; set; }
 
+        public UserAccount UserAccountCopy { get; set; }
+
         public string ConfirmEmail { get; set; }
 
         public AccountInfoViewModel()
@@ -23,6 +25,19 @@ namespace Tap5050Buyer
         public AccountInfoViewModel(UserAccount userAccount)
         {
             UserAccount = userAccount;
+            UserAccountCopy = new UserAccount(UserAccount);
+        }
+
+        public bool InfoHasChanged()
+        {
+            if (UserAccountCopy == null)
+            {
+                return false;
+            }
+            else
+            {
+                return UserAccount.Compare(UserAccount, UserAccountCopy);
+            }
         }
 
         public async Task GetAccountInfo()

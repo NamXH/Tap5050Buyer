@@ -14,7 +14,14 @@ namespace Tap5050Buyer
         public RegistrationPage(bool isUpdate, Page parent = null, UserAccount userAccount = null)
         {
             InitializeComponent();
-            Title = "Registration";
+            if (!isUpdate)
+            {
+                Title = "Registration";
+            }
+            else
+            {
+                Title = "Update Information";
+            }
             _tableView.Intent = TableIntent.Menu;
 
             if (userAccount == null)
@@ -205,6 +212,20 @@ namespace Tap5050Buyer
                         DisplayAlert("Server request failed", "", "OK");
                     }
                 };
+            }
+            else
+            {
+                this.ToolbarItems.Add(new ToolbarItem("Done", null, () =>
+                        {
+                            if (_viewModel.InfoHasChanged())
+                            {
+                                // Call server here!!
+                            }
+                            else
+                            {
+                                DisplayAlert("Warning", "Your information has not changed.", "Retry");
+                            }
+                        }));
             }
         }
     }
