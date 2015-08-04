@@ -106,7 +106,7 @@ namespace Tap5050Buyer
                 new KeyValuePair<string, string>("m_phone", PhoneNumber),
                 new KeyValuePair<string, string>("VERIFY_CODE", VerificationCode)
             };
-            return await ServerCaller.Post(null, body, c_phoneVerificationApiAddress);
+            return await ServerCaller.PostAsync(null, body, c_phoneVerificationApiAddress);
         }
     }
 }

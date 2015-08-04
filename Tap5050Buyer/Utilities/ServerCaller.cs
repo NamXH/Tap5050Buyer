@@ -8,16 +8,25 @@ namespace Tap5050Buyer
 {
     public static class ServerCaller
     {
+        // May remove the trailing slash later!!
         public static readonly string ServerBaseAddress = "http://dev.tap5050.com/";
 
-        public static async Task<Tuple<bool, string>> Post(List<KeyValuePair<string, string>> queryString, List<KeyValuePair<string, string>> body, string endpointUrl)
+        public static async Task<Tuple<bool, string>> PostAsync(List<KeyValuePair<string, string>> queryString, List<KeyValuePair<string, string>> body, string endpointUrl)
         {
-            // Haven't used queryString!!
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServerBaseAddress);
 
                 var content = new FormUrlEncodedContent(body);
+                if (queryString != null)
+                {
+                    endpointUrl += "?";
+                    foreach (var kvp in queryString)
+                    {
+                        endpointUrl += String.Format("{0}={1}&", kvp.Key, kvp.Value);
+                    }
+                    endpointUrl.Remove(endpointUrl.Length - 1); //Remove the extra &
+                }
 
                 HttpResponseMessage response = null;
                 try

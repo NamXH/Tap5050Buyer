@@ -44,6 +44,14 @@ namespace Tap5050Buyer
             }
         }
 
+        public string BirthdayServerCallsFormat
+        {
+            get
+            {
+                return Birthday.ToString("yyyy/mm/dd");
+            }
+        }
+
         [JsonIgnore]
         public string DateOfBirth
         {
@@ -180,7 +188,7 @@ namespace Tap5050Buyer
         // Should override Equals instead!! -> Later
         public static bool Compare(UserAccount first, UserAccount second)
         {
-            return (first.Email == second.Email)
+            var rs = (first.Email == second.Email)
             && (first.FirstName == second.FirstName)
             && (first.LastName == second.LastName)
             && (first.Birthday == second.Birthday)
@@ -193,6 +201,8 @@ namespace Tap5050Buyer
             && (first.Country == second.Country)
             && (first.PreferedContactMethod == second.PreferedContactMethod)
             && (first.PreferedContactMethodCharity == second.PreferedContactMethodCharity);
+
+            return rs;
         }
     }
 }

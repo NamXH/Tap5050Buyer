@@ -10,6 +10,7 @@ namespace Tap5050Buyer
     {
         internal const string c_serverBaseAddress = "http://dev.tap5050.com/";
         internal const string c_userApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/users";
+        internal const string c_userUpdateApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/user_update";
 
         public UserAccount UserAccount { get; set; }
 
@@ -28,7 +29,7 @@ namespace Tap5050Buyer
             UserAccountCopy = new UserAccount(UserAccount);
         }
 
-        public bool InfoHasChanged()
+        public bool InfoHasNotChanged()
         {
             if (UserAccountCopy == null)
             {
@@ -80,15 +81,15 @@ namespace Tap5050Buyer
                         new KeyValuePair<string, string>("firstname", UserAccount.FirstName),
                         new KeyValuePair<string, string>("lastname", UserAccount.LastName),
                         new KeyValuePair<string, string>("birthdate", UserAccount.Birthday.ToString("yyyy/mm/dd")),
-                        new KeyValuePair<string, string>("m_phone", UserAccount.FirstName),
-                        new KeyValuePair<string, string>("add1", UserAccount.FirstName),
-                        new KeyValuePair<string, string>("add2", UserAccount.FirstName),
-                        new KeyValuePair<string, string>("city", UserAccount.FirstName),
-                        new KeyValuePair<string, string>("province", UserAccount.FirstName),
-                        new KeyValuePair<string, string>("postal", UserAccount.FirstName),
-                        new KeyValuePair<string, string>("country", UserAccount.FirstName),
-                        new KeyValuePair<string, string>("raffle_result", UserAccount.FirstName),
-                        new KeyValuePair<string, string>("charity_marketing_message", UserAccount.FirstName),
+                        new KeyValuePair<string, string>("m_phone", UserAccount.Phone),
+                        new KeyValuePair<string, string>("add1", UserAccount.AddressLine1),
+                        new KeyValuePair<string, string>("add2", UserAccount.AddressLine2),
+                        new KeyValuePair<string, string>("city", UserAccount.City),
+                        new KeyValuePair<string, string>("province", UserAccount.Province),
+                        new KeyValuePair<string, string>("postal", UserAccount.PostalCode),
+                        new KeyValuePair<string, string>("country", UserAccount.Country),
+                        new KeyValuePair<string, string>("raffle_result", UserAccount.PreferedContactMethod),
+                        new KeyValuePair<string, string>("charity_marketing_message", UserAccount.PreferedContactMethodCharity),
                     });
 
                 HttpResponseMessage response = null;
@@ -129,6 +130,33 @@ namespace Tap5050Buyer
                     return new Tuple<bool, string>(false, response.ReasonPhrase);
                 }
             } 
+        }
+
+        public async Task<Tuple<bool, string>> UpdateAccountInfo()
+        {
+            var queryString = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("token_id", DatabaseManager.Token.Value)
+            };
+
+            var body = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("email", UserAccount.Email),
+                new KeyValuePair<string, string>("firstname", UserAccount.FirstName),
+                new KeyValuePair<string, string>("lastname", UserAccount.LastName),
+                new KeyValuePair<string, string>("birthday", UserAccount.BirthdayServerCallsFormat),
+                new KeyValuePair<string, string>("m_phone", UserAccount.Phone),
+                new KeyValuePair<string, string>("add1", UserAccount.AddressLine1),
+                new KeyValuePair<string, string>("add2", UserAccount.AddressLine2),
+                new KeyValuePair<string, string>("city", UserAccount.City),
+                new KeyValuePair<string, string>("province", UserAccount.Province),
+                new KeyValuePair<string, string>("postal", UserAccount.PostalCode),
+                new KeyValuePair<string, string>("country", UserAccount.Country),
+                new KeyValuePair<string, string>("raffle_result", UserAccount.PreferedContactMethod),
+                new KeyValuePair<string, string>("charity_marketing_message", UserAccount.PreferedContactMethodCharity),
+            };
+
+            return await ServerCaller.PostAsync(queryString, body, c_userUpdateApiAddress);
         }
 
         public void SignOut()

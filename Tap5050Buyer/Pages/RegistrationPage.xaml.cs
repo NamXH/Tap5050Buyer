@@ -11,7 +11,7 @@ namespace Tap5050Buyer
 
         public List<string> c_contactMethods = new List<string>() { "Do not contact me", "SMS", "Email" };
 
-        public RegistrationPage(bool isUpdate, Page parent = null, UserAccount userAccount = null)
+        public RegistrationPage(bool isUpdate, Page parent, UserAccount userAccount = null)
         {
             InitializeComponent();
             if (!isUpdate)
@@ -170,7 +170,7 @@ namespace Tap5050Buyer
             {
                 charityMessagesPicker.Items.Add(item);
             }
-            charityMessagesPicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.PreferedContactMethodcharity", BindingMode.TwoWay, new PickerContactMethodsConverter()));
+            charityMessagesPicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.PreferedContactMethodCharity", BindingMode.TwoWay, new PickerContactMethodsConverter()));
             #endregion
 
             if (!isUpdate)
@@ -215,15 +215,26 @@ namespace Tap5050Buyer
             }
             else
             {
-                this.ToolbarItems.Add(new ToolbarItem("Done", null, () =>
+                // Edit Account Page
+                this.ToolbarItems.Add(new ToolbarItem("Done", null, async () =>
                         {
-                            if (_viewModel.InfoHasChanged())
+                            if (_viewModel.InfoHasNotChanged())
                             {
-                                // Call server here!!
+                                DisplayAlert("Warning", "Your information has not changed.", "Retry");
                             }
                             else
                             {
-                                DisplayAlert("Warning", "Your information has not changed.", "Retry");
+                                var result = await _viewModel.UpdateAccountInfo();
+                                if (result.Item1)
+                                {
+                                    this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
+                                    this.Navigation.PopAsync();
+                                    this.Navigation.PopAsync();
+                                }
+                                else
+                                {
+                                    DisplayAlert("Error", result.Item2, "Retry");    
+                                } 
                             }
                         }));
             }
