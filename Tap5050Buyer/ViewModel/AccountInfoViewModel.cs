@@ -20,6 +20,11 @@ namespace Tap5050Buyer
             UserAccount = new UserAccount();
         }
 
+        public AccountInfoViewModel(UserAccount userAccount)
+        {
+            UserAccount = userAccount;
+        }
+
         public async Task GetAccountInfo()
         {
             using (var client = new HttpClient())

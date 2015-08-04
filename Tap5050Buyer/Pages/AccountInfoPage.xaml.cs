@@ -19,6 +19,7 @@ namespace Tap5050Buyer
 
             this.ToolbarItems.Add(new ToolbarItem("Edit", null, () =>
                     {
+                        this.Navigation.PushAsync(new RegistrationPage(true, null, _viewModel.UserAccount));
                     }));
 
             LoadData();

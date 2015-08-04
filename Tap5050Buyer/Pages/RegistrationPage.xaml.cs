@@ -11,13 +11,20 @@ namespace Tap5050Buyer
 
         public List<string> c_contactMethods = new List<string>() { "Do not contact me", "SMS", "Email" };
 
-        public RegistrationPage(Page parent)
+        public RegistrationPage(bool isUpdate, Page parent = null, UserAccount userAccount = null)
         {
             InitializeComponent();
             Title = "Registration";
             _tableView.Intent = TableIntent.Menu;
 
-            _viewModel = new AccountInfoViewModel();
+            if (userAccount == null)
+            {
+                _viewModel = new AccountInfoViewModel();
+            }
+            else
+            {
+                _viewModel = new AccountInfoViewModel(userAccount);
+            }
             this.BindingContext = _viewModel;
 
             #region Birthday
@@ -159,43 +166,46 @@ namespace Tap5050Buyer
             charityMessagesPicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.PreferedContactMethodcharity", BindingMode.TwoWay, new PickerContactMethodsConverter()));
             #endregion
 
-            var createAccountButtonViewCell = new ViewCell();
-            _createAccountButtonSection.Add(createAccountButtonViewCell);
-
-            var createAccountButtonLayout = new StackLayout
+            if (!isUpdate)
             {
-                Padding = new Thickness(5, 0, 5, 0),
-                BackgroundColor = Color.Accent,
-            };
-            createAccountButtonViewCell.View = createAccountButtonLayout;
+                var createAccountButtonViewCell = new ViewCell();
+                _createAccountButtonSection.Add(createAccountButtonViewCell);
 
-            var createAccountButton = new Button
-            {
-                Text = "Create Account",
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                TextColor = Color.White,
-            };
-            createAccountButtonLayout.Children.Add(createAccountButton);
-
-            createAccountButton.Clicked += async (sender, e) =>
-            {
-                var a = _viewModel.UserAccount; // For test!!
-
-                var result = await _viewModel.CreateAccount();
-                if (result.Item1)
+                var createAccountButtonLayout = new StackLayout
                 {
-                    this.Navigation.PopAsync();
-                    var answer = await DisplayAlert("Register Phone Number", "Send registration code to your phone now?", "Later", "Yes");
-                    if (!answer) // use !answer because the negative choice has a bigger font
+                    Padding = new Thickness(5, 0, 5, 0),
+                    BackgroundColor = Color.Accent,
+                };
+                createAccountButtonViewCell.View = createAccountButtonLayout;
+
+                var createAccountButton = new Button
+                {
+                    Text = "Create Account",
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    TextColor = Color.White,
+                };
+                createAccountButtonLayout.Children.Add(createAccountButton);
+
+                createAccountButton.Clicked += async (sender, e) =>
+                {
+                    var a = _viewModel.UserAccount; // For test!!
+
+                    var result = await _viewModel.CreateAccount();
+                    if (result.Item1)
                     {
-                        parent.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.Country)); 
+                        this.Navigation.PopAsync();
+                        var answer = await DisplayAlert("Register Phone Number", "Send registration code to your phone now?", "Later", "Yes");
+                        if (!answer) // use !answer because the negative choice has a bigger font
+                        {
+                            parent.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.Country)); 
+                        }
                     }
-                }
-                else
-                {
-                    DisplayAlert("Server request failed", "", "OK");
-                }
-            };
+                    else
+                    {
+                        DisplayAlert("Server request failed", "", "OK");
+                    }
+                };
+            }
         }
     }
 }
