@@ -72,7 +72,7 @@ namespace Tap5050Buyer
             var provinces = DatabaseManager.DbConnection.Table<Province>().Where(x => x.CountryCode == firstCountry.CountryCode).ToList();
             foreach (var province in provinces)
             {
-                provincePicker.Items.Add(province.ProvinceAbbreviation);
+                provincePicker.Items.Add(province.ProvinceName);
             }
             provincePicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.Province", BindingMode.TwoWay, new PickerProvinceToIndexConverter(), provinces));
             #endregion
@@ -94,7 +94,7 @@ namespace Tap5050Buyer
             var countries = DatabaseManager.DbConnection.Table<Country>().ToList();
             foreach (var country in countries)
             {
-                countryPicker.Items.Add(country.CountryCode);
+                countryPicker.Items.Add(country.CountryName);
             }
             countryPicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.Country", BindingMode.TwoWay, new PickerCountryToIndexConverter(), countries));
 
@@ -112,14 +112,14 @@ namespace Tap5050Buyer
                     {
                         new Province
                         {
-                            ProvinceAbbreviation = "N/A",
+                            ProvinceName = "N/A",
                         }
                     };
                 }
                 
                 foreach (var province in newProvinces)
                 {
-                    provincePicker.Items.Add(province.ProvinceAbbreviation);
+                    provincePicker.Items.Add(province.ProvinceName);
                 }
                 provincePicker.SetBinding(Picker.SelectedIndexProperty, new Binding("UserAccount.Province", BindingMode.TwoWay, new PickerProvinceToIndexConverter(), newProvinces));
             };

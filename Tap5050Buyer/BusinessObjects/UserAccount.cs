@@ -110,18 +110,34 @@ namespace Tap5050Buyer
             }
         }
 
-        [JsonProperty(PropertyName = "mail_country")]
+        [JsonIgnore]
         public string Country
         {
             get;
             set;
         }
 
-        [JsonProperty(PropertyName = "mail_prov_state")]
+        [JsonProperty(PropertyName = "mail_country")]
+        public string CountryCode
+        {
+            get;
+            set;
+//                return DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryName == this.Country).FirstOrDefault().CountryCode;
+        }
+
+        [JsonIgnore]
         public string Province
         {
             get;
             set;
+        }
+
+        [JsonProperty(PropertyName = "mail_prov_state")]
+        public string ProvinceAbbreviation
+        {
+            get;
+            set;
+//                return DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceAbbreviation == this.Province).FirstOrDefault().ProvinceAbbreviation;
         }
 
         [JsonProperty(PropertyName = "mail_city")]
@@ -189,18 +205,18 @@ namespace Tap5050Buyer
         public static bool Compare(UserAccount first, UserAccount second)
         {
             var rs = (first.Email == second.Email)
-            && (first.FirstName == second.FirstName)
-            && (first.LastName == second.LastName)
-            && (first.Birthday == second.Birthday)
-            && (first.Phone == second.Phone)
-            && (first.AddressLine1 == second.AddressLine1)
-            && (first.AddressLine2 == second.AddressLine2)
-            && (first.City == second.City)
-            && (first.Province == second.Province)
-            && (first.PostalCode == second.PostalCode)
-            && (first.Country == second.Country)
-            && (first.PreferedContactMethod == second.PreferedContactMethod)
-            && (first.PreferedContactMethodCharity == second.PreferedContactMethodCharity);
+                     && (first.FirstName == second.FirstName)
+                     && (first.LastName == second.LastName)
+                     && (first.Birthday == second.Birthday)
+                     && (first.Phone == second.Phone)
+                     && (first.AddressLine1 == second.AddressLine1)
+                     && (first.AddressLine2 == second.AddressLine2)
+                     && (first.City == second.City)
+                     && (first.Province == second.Province)
+                     && (first.PostalCode == second.PostalCode)
+                     && (first.Country == second.Country)
+                     && (first.PreferedContactMethod == second.PreferedContactMethod)
+                     && (first.PreferedContactMethodCharity == second.PreferedContactMethodCharity);
 
             return rs;
         }

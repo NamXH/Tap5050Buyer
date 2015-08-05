@@ -61,6 +61,19 @@ namespace Tap5050Buyer
                     var json = response.Content.ReadAsStringAsync().Result;
 
                     UserAccount = JsonConvert.DeserializeObject<UserAccount>(json);
+
+                    // Translate from code to full name
+                    var country = DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryCode == UserAccount.CountryCode).FirstOrDefault();
+                    if (country != null)
+                    {
+                        UserAccount.Country = country.CountryName;
+                    }
+
+                    var province = DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceAbbreviation == UserAccount.ProvinceAbbreviation).FirstOrDefault();
+                    if (province != null)
+                    {
+                        UserAccount.Province = province.ProvinceName;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -71,6 +84,26 @@ namespace Tap5050Buyer
 
         public async Task<Tuple<bool, string>> CreateAccount()
         {
+            // Translate
+            var country = DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryName == UserAccount.Country).FirstOrDefault();
+            if (country != null)
+            {
+                UserAccount.CountryCode = country.CountryCode;
+            }
+            else
+            {
+                UserAccount.CountryCode = "";
+            }
+            var province = DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceName == UserAccount.Province).FirstOrDefault();
+            if (province != null)
+            {
+                UserAccount.ProvinceAbbreviation = province.ProvinceAbbreviation;
+            }
+            else
+            {
+                UserAccount.ProvinceAbbreviation = "";
+            }
+                
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(c_serverBaseAddress);
@@ -85,9 +118,9 @@ namespace Tap5050Buyer
                         new KeyValuePair<string, string>("add1", UserAccount.AddressLine1),
                         new KeyValuePair<string, string>("add2", UserAccount.AddressLine2),
                         new KeyValuePair<string, string>("city", UserAccount.City),
-                        new KeyValuePair<string, string>("province", UserAccount.Province),
+                        new KeyValuePair<string, string>("province", UserAccount.ProvinceAbbreviation),
                         new KeyValuePair<string, string>("postal", UserAccount.PostalCode),
-                        new KeyValuePair<string, string>("country", UserAccount.Country),
+                        new KeyValuePair<string, string>("country", UserAccount.CountryCode),
                         new KeyValuePair<string, string>("raffle_result", UserAccount.PreferedContactMethod),
                         new KeyValuePair<string, string>("charity_marketing_message", UserAccount.PreferedContactMethodCharity),
                     });
@@ -134,6 +167,26 @@ namespace Tap5050Buyer
 
         public async Task<Tuple<bool, string>> UpdateAccountInfo()
         {
+            // Translate
+            var country = DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryName == UserAccount.Country).FirstOrDefault();
+            if (country != null)
+            {
+                UserAccount.CountryCode = country.CountryCode;
+            }
+            else
+            {
+                UserAccount.CountryCode = "";
+            }
+            var province = DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceName == UserAccount.Province).FirstOrDefault();
+            if (province != null)
+            {
+                UserAccount.ProvinceAbbreviation = province.ProvinceAbbreviation;
+            }
+            else
+            {
+                UserAccount.ProvinceAbbreviation = "";
+            }
+
             var queryString = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("token_id", DatabaseManager.Token.Value)
@@ -149,9 +202,9 @@ namespace Tap5050Buyer
                 new KeyValuePair<string, string>("add1", UserAccount.AddressLine1),
                 new KeyValuePair<string, string>("add2", UserAccount.AddressLine2),
                 new KeyValuePair<string, string>("city", UserAccount.City),
-                new KeyValuePair<string, string>("province", UserAccount.Province),
+                new KeyValuePair<string, string>("province", UserAccount.ProvinceAbbreviation),
                 new KeyValuePair<string, string>("postal", UserAccount.PostalCode),
-                new KeyValuePair<string, string>("country", UserAccount.Country),
+                new KeyValuePair<string, string>("country", UserAccount.CountryCode),
                 new KeyValuePair<string, string>("raffle_result", UserAccount.PreferedContactMethod),
                 new KeyValuePair<string, string>("charity_marketing_message", UserAccount.PreferedContactMethodCharity),
             };

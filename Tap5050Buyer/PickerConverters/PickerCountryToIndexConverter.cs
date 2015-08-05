@@ -19,7 +19,7 @@ namespace Tap5050Buyer
             }
             var itemToFind = (string)value;
             var itemList = (List<Country>)parameter;
-            return itemList.FindIndex(x => x.CountryCode == itemToFind);
+            return itemList.FindIndex(x => x.CountryName == itemToFind);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -32,7 +32,7 @@ namespace Tap5050Buyer
             else
             {
                 var itemList = (List<Country>)parameter;
-                return itemList[index].CountryCode;
+                return itemList[index].CountryName;
             }
         }
     }
