@@ -195,8 +195,6 @@ namespace Tap5050Buyer
 
                 createAccountButton.Clicked += async (sender, e) =>
                 {
-                    var a = _viewModel.UserAccount; // For test!!
-
                     var result = await _viewModel.CreateAccount();
                     if (result.Item1)
                     {
@@ -204,7 +202,7 @@ namespace Tap5050Buyer
                         var answer = await DisplayAlert("Register Phone Number", "Send registration code to your phone now?", "Later", "Yes");
                         if (!answer) // use !answer because the negative choice has a bigger font
                         {
-                            parent.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.Country)); 
+                            parent.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.CountryCode)); //Country code is updated after calling _viewModel.CreateAccount()
                         }
                     }
                     else

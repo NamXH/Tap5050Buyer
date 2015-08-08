@@ -9,7 +9,7 @@ namespace Tap5050Buyer
     {
         private VerifyPhoneNumberViewModel _viewModel;
 
-        public VerifyPhonePage(string email, string phoneNumber, string country)
+        public VerifyPhonePage(string email, string phoneNumber, string countryCode)
         {
             InitializeComponent();
             _tableView.Intent = TableIntent.Menu;
@@ -18,10 +18,10 @@ namespace Tap5050Buyer
             // Have to remove before setting the binding context because we don't implement Notify Property Changed in the View Model.
             _layout.Children.Remove(_tableView); 
 
-            _viewModel = new VerifyPhoneNumberViewModel(email, phoneNumber, country);
+            _viewModel = new VerifyPhoneNumberViewModel(email, phoneNumber, countryCode);
             this.BindingContext = _viewModel;
 
-            StartVerificationProcess(email, phoneNumber, country);
+            StartVerificationProcess(email, phoneNumber, countryCode);
 
             this.ToolbarItems.Add(new ToolbarItem("Done", null, async () =>
                     {

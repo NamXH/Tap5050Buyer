@@ -110,6 +110,10 @@ namespace Tap5050Buyer
             }
         }
 
+        // Country and Country code are only different when:
+        // + Getting Account Info from server: CountryCode is filled -> derive Country (null at first)
+        // + Registering new Account: Country is filled -> derive Country Code (null at first)
+        // + Updating Account Info: Country is filled -> derive Country Code (old valude at first)
         [JsonIgnore]
         public string Country
         {
@@ -122,7 +126,6 @@ namespace Tap5050Buyer
         {
             get;
             set;
-//                return DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryName == this.Country).FirstOrDefault().CountryCode;
         }
 
         [JsonIgnore]
@@ -137,7 +140,6 @@ namespace Tap5050Buyer
         {
             get;
             set;
-//                return DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceAbbreviation == this.Province).FirstOrDefault().ProvinceAbbreviation;
         }
 
         [JsonProperty(PropertyName = "mail_city")]

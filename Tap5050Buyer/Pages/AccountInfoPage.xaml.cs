@@ -244,7 +244,7 @@ namespace Tap5050Buyer
 
         public async void StartVerificationProcess()
         {
-            this.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.Country));
+            this.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.CountryCode));
         }
     }
 }

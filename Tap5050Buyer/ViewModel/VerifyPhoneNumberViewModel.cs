@@ -20,15 +20,11 @@ namespace Tap5050Buyer
 
         public string Country { get; set; }
 
-        public VerifyPhoneNumberViewModel()
-        {
-        }
-
-        public VerifyPhoneNumberViewModel(string email, string phoneNumber, string country)
+        public VerifyPhoneNumberViewModel(string email, string phoneNumber, string countryCode)
         {
             Email = email;
             PhoneNumber = phoneNumber;
-            Country = country;
+            Country = countryCode;
         }
 
         public async Task<Tuple<bool, string>> RequestPhoneNumberVerification()
