@@ -181,8 +181,8 @@ namespace Tap5050Buyer
 
         public UserAccount()
         {
+            Birthday = new DateTime(1900, 1, 1);
             PreferedContactMethod = "NOCONTACT";
-
             PreferedContactMethodCharity = "NOCONTACT";
         }
 
