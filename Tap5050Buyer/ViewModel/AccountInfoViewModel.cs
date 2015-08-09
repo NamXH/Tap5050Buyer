@@ -37,7 +37,7 @@ namespace Tap5050Buyer
             }
             else
             {
-                return UserAccount.Compare(UserAccount, UserAccountCopy);
+                return UserAccount.Equals(UserAccount, UserAccountCopy);
             }
         }
 
@@ -197,7 +197,7 @@ namespace Tap5050Buyer
                 new KeyValuePair<string, string>("email", UserAccount.Email),
                 new KeyValuePair<string, string>("firstname", UserAccount.FirstName),
                 new KeyValuePair<string, string>("lastname", UserAccount.LastName),
-                new KeyValuePair<string, string>("birthday", UserAccount.BirthdayServerCallsFormat),
+                new KeyValuePair<string, string>("birthdate", UserAccount.BirthdayServerCallsFormat),
                 new KeyValuePair<string, string>("m_phone", UserAccount.Phone),
                 new KeyValuePair<string, string>("add1", UserAccount.AddressLine1),
                 new KeyValuePair<string, string>("add2", UserAccount.AddressLine2),

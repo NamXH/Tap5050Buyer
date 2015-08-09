@@ -48,7 +48,7 @@ namespace Tap5050Buyer
         {
             get
             {
-                return Birthday.ToString("yyyy/mm/dd");
+                return Birthday.ToString("yyyy/MM/dd");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Tap5050Buyer
         }
 
         // Should override Equals instead!! -> Later
-        public static bool Compare(UserAccount first, UserAccount second)
+        public static bool Equals(UserAccount first, UserAccount second)
         {
             var rs = (first.Email == second.Email)
                      && (first.FirstName == second.FirstName)

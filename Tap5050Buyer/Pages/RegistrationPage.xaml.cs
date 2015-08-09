@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace Tap5050Buyer
 {
@@ -214,29 +215,77 @@ namespace Tap5050Buyer
             else
             {
                 // Edit Account Page
-                this.ToolbarItems.Add(new ToolbarItem("Done", null, async () =>
+
+                Count = 0; // For test
+                Debug.WriteLine(Count);
+
+                _toolbarItemIsEnabled = true;
+
+                _onDoneButtonClicked = new Command(async () =>
+                    {
+                        if (_toolbarItemIsEnabled)
                         {
+                            Count++;
+                            Debug.WriteLine("click: " + Count);
+
                             if (_viewModel.InfoHasNotChanged())
                             {
                                 DisplayAlert("Warning", "Your information has not changed.", "Retry");
                             }
                             else
                             {
+                                _toolbarItemIsEnabled = false; // Disable the button while await
                                 var result = await _viewModel.UpdateAccountInfo();
+                                _toolbarItemIsEnabled = true;
                                 if (result.Item1)
                                 {
-                                    this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
-                                    this.Navigation.PopAsync();
-                                    this.Navigation.PopAsync();
+//                                this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
+                                    this.Navigation.PopAsync(false);
+                                    this.Navigation.PopAsync(false);
+                                    this.Navigation.PushAsync(new AccountInfoPage(), false);
                                 }
                                 else
                                 {
                                     DisplayAlert("Error", result.Item2, "Retry");    
                                 } 
                             }
-                        }));
+                        }
+                    });
+                
+                var toolbarItem = new ToolbarItem
+                {
+                    Text = "Done",
+                    Command = _onDoneButtonClicked,
+                };
+                this.ToolbarItems.Add(toolbarItem);
             }
         }
+
+        private Command _onDoneButtonClicked;
+        private bool _toolbarItemIsEnabled;
+
+        // Tried to disable toolbar item following the bellow thread without success
+        // http://stackoverflow.com/questions/27803038/disable-toolbaritem-xamarin-forms
+        //        private bool _toolbarItemIsEnabled;
+        //
+        //        public bool ToolbarItemIsEnabled
+        //        {
+        //            get
+        //            {
+        //                return _toolbarItemIsEnabled;
+        //            }
+        //            set
+        //            {
+        //                if (_toolbarItemIsEnabled != value)
+        //                {
+        //                    _toolbarItemIsEnabled = value;
+        //                    _onDoneButtonClicked.ChangeCanExecute();
+        //                    OnPropertyChanged();
+        //                }
+        //            }
+        //        }
+
+        public int Count { get; set; }
     }
 }
 
