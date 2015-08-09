@@ -23,6 +23,8 @@ namespace Tap5050Buyer
             else
             {
                 DbConnection = db.GetConnection();
+                DbConnection.DeleteAll<Province>();
+                DbConnection.DeleteAll<Country>();
             }
         }
 
