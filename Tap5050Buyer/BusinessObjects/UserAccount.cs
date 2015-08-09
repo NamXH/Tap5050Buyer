@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Tap5050Buyer
 {
@@ -209,7 +210,7 @@ namespace Tap5050Buyer
             var rs = (first.Email == second.Email)
                      && (first.FirstName == second.FirstName)
                      && (first.LastName == second.LastName)
-                     && (first.Birthday == second.Birthday)
+                     && (first.Birthday.Date == second.Birthday.Date)// Ignore hour:minute is important. Date picker for some reasons use 12:00:00 AM while the default value after deserialization is 06:00:00 AM
                      && (first.Phone == second.Phone)
                      && (first.AddressLine1 == second.AddressLine1)
                      && (first.AddressLine2 == second.AddressLine2)

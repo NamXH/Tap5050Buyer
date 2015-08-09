@@ -215,19 +215,12 @@ namespace Tap5050Buyer
             else
             {
                 // Edit Account Page
-
-                Count = 0; // For test
-                Debug.WriteLine(Count);
-
                 _toolbarItemIsEnabled = true;
 
                 _onDoneButtonClicked = new Command(async () =>
                     {
                         if (_toolbarItemIsEnabled)
                         {
-                            Count++;
-                            Debug.WriteLine("click: " + Count);
-
                             if (_viewModel.InfoHasNotChanged())
                             {
                                 DisplayAlert("Warning", "Your information has not changed.", "Retry");
@@ -239,10 +232,9 @@ namespace Tap5050Buyer
                                 _toolbarItemIsEnabled = true;
                                 if (result.Item1)
                                 {
-//                                this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
+                                    this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
                                     this.Navigation.PopAsync(false);
                                     this.Navigation.PopAsync(false);
-                                    this.Navigation.PushAsync(new AccountInfoPage(), false);
                                 }
                                 else
                                 {
@@ -284,8 +276,6 @@ namespace Tap5050Buyer
         //                }
         //            }
         //        }
-
-        public int Count { get; set; }
     }
 }
 
