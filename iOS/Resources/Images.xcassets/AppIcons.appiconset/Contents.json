@@ -45,6 +45,7 @@
       "idiom": "iphone"
     },
     {
+      "filename": "TAP_180X180.png",
       "size": "60x60",
       "scale": "3x",
       "idiom": "iphone"
@@ -94,13 +95,13 @@
       "idiom": "ipad"
     },
     {
-      "filename": "Icon-76.png",
+      "filename": "TAP_76X76.png",
       "size": "76x76",
       "scale": "1x",
       "idiom": "ipad"
     },
     {
-      "filename": "Icon-76@2x.png",
+      "filename": "TAP_152X152.png",
       "size": "76x76",
       "scale": "2x",
       "idiom": "ipad"

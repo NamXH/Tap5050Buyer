@@ -217,6 +217,13 @@
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_640X1136.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_1242X2208.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_750X1334.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\TAP_180X180.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\TAP_76X76.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\TAP_152X152.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_2208X1242.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\TAP_768X1024.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\TAP_1536X2048.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_320X480.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="xamarin.social">

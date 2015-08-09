@@ -23,6 +23,7 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
+            Title = "Raffle List";
 
             LocationDetected = isLocationDetected;
             IncludeSocialMedia = includeSocialMedia;

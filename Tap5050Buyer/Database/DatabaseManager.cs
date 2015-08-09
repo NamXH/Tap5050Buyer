@@ -23,6 +23,8 @@ namespace Tap5050Buyer
             else
             {
                 DbConnection = db.GetConnection();
+
+                // Download countries, provinces every time user starts the app by deleting the old ones
                 DbConnection.DeleteAll<Province>();
                 DbConnection.DeleteAll<Country>();
             }
