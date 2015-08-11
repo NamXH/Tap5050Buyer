@@ -8,7 +8,7 @@ namespace Tap5050Buyer
 {
     public class AccountInfoViewModel
     {
-        internal const string c_serverBaseAddress = "http://dev.tap5050.com/";
+        internal const string c_serverBaseAddress = "https://dev.tap5050.com/";
         internal const string c_userApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/users";
         internal const string c_userUpdateApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/user_update";
 

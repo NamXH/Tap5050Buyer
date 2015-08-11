@@ -9,7 +9,7 @@ namespace Tap5050Buyer
     public static class ServerCaller
     {
         // May remove the trailing slash later!!
-        public static readonly string ServerBaseAddress = "http://dev.tap5050.com/";
+        public static readonly string ServerBaseAddress = "https://dev.tap5050.com/";
 
         public static async Task<Tuple<bool, string>> PostAsync(List<KeyValuePair<string, string>> queryString, List<KeyValuePair<string, string>> body, string endpointUrl)
         {
