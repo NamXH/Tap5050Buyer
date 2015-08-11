@@ -85,6 +85,7 @@ namespace Tap5050Buyer
             CreateRaffleEventList(raffleEvents);
         }
 
+        // Should refactor later to become a better MVVM architecture!! Use TicketListPage as a reference !!
         public void CreateRaffleEventList(IList<RaffleEvent> raffleEvents)
         {
             var raffleEventListView = new ListView();

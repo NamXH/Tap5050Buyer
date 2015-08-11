@@ -8,7 +8,7 @@ namespace Tap5050Buyer
         public TicketsNavigationPage()
         {
             Title = "Tickets";
-            this.PushAsync(new TicketsPage());
+            this.PushAsync(new TicketListPage());
         }
     }
 }

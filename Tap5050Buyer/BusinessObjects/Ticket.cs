@@ -12,6 +12,13 @@ namespace Tap5050Buyer
             set;
         }
 
+        [JsonProperty(PropertyName = "event_id")]
+        public int EventId
+        {
+            get;
+            set;
+        }
+
         [JsonProperty(PropertyName = "draw_date")]
         public DateTime DrawDate
         {
@@ -55,7 +62,14 @@ namespace Tap5050Buyer
         }
 
         [JsonProperty(PropertyName = "jackpot_total")]
-        public string JackpotTotal
+        public int JackpotTotal
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "winning_ticket")]
+        public string WinningTicket
         {
             get;
             set;
