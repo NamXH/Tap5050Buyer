@@ -12,10 +12,13 @@ namespace Tap5050Buyer
     {
         internal const string c_serverBaseAddress = "https://dev.tap5050.com/";
         internal const string c_ticketsApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/tickets";
+        internal const string c_userApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/users";
 
         public List<Ticket> Tickets { get; set; }
 
         public IEnumerable<RaffleEventForTickets> EventForTicketsList { get; set; }
+
+        public UserAccount UserAccount { get; set; }
 
         public TicketListViewModel()
         {
@@ -58,6 +61,7 @@ namespace Tap5050Buyer
         public async Task LoadData()
         {
             Tickets = await GetTickets();
+            await GetAccountInfo(); // Not very good here!!
 
             if (Tickets != null)
             {
@@ -82,6 +86,47 @@ namespace Tap5050Buyer
                 }
 
                 EventForTicketsList = raffleEventForTicketsDic.Values;
+            }
+        }
+
+        public async Task GetAccountInfo()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(c_serverBaseAddress);
+
+                HttpResponseMessage response = null;
+                try // should be more fine grain maybe !!
+                {
+                    if (DatabaseManager.Token == null)
+                    {
+                        throw new Exception("Token is null while trying to retrieve data!");
+                    }
+
+                    var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token.Value;
+                    response = await client.GetAsync(url);
+
+                    var json = response.Content.ReadAsStringAsync().Result;
+
+                    UserAccount = JsonConvert.DeserializeObject<UserAccount>(json);
+
+                    // Translate from code to full name
+                    var country = DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryCode == UserAccount.CountryCode).FirstOrDefault();
+                    if (country != null)
+                    {
+                        UserAccount.Country = country.CountryName;
+                    }
+
+                    var province = DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceAbbreviation == UserAccount.ProvinceAbbreviation).FirstOrDefault();
+                    if (province != null)
+                    {
+                        UserAccount.Province = province.ProvinceName;
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Error while retrieving account info:" + e.Message);
+                }
             }
         }
     }
