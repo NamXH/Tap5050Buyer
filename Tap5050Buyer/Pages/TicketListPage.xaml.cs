@@ -83,8 +83,12 @@ namespace Tap5050Buyer
             ticketsListView.ItemTemplate = new DataTemplate(typeof(TicketCell));
             ticketsListView.ItemSelected += (sender, e) =>
             {
-                // PushAsync a new RaffleDetailsPage instead of creating one and reuse it: to workaround a bug in Carousel + TabbedPage in iOS
-                this.Navigation.PushAsync(new TicketDetailPage(_viewModel.Tickets, ((RaffleEventForTickets)e.SelectedItem).Id));
+                if (e.SelectedItem != null)
+                {
+                    // PushAsync a new RaffleDetailsPage instead of creating one and reuse it: to workaround a bug in Carousel + TabbedPage in iOS
+                    this.Navigation.PushAsync(new TicketDetailPage(_viewModel.Tickets, ((RaffleEventForTickets)e.SelectedItem).Id));
+                    ticketsListView.SelectedItem = null;
+                }
             };
 
             this.Content = layout;
