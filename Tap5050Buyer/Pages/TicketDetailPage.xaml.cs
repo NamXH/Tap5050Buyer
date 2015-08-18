@@ -225,6 +225,59 @@ namespace Tap5050Buyer
                 #endregion
             }
 
+            var raffleStatusLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+            };
+            layout.Children.Add(raffleStatusLayout);
+
+            var raffleText = new Label
+            {
+                Text = "Raffle is ",
+                VerticalOptions = LayoutOptions.Center,
+            };
+            raffleStatusLayout.Children.Add(raffleText);
+
+            if (firstTicket.RaffleStatus == "Y")
+            {
+                var status = new Label
+                {
+                    Text = "OPEN",
+                    TextColor = Color.Green,
+                    VerticalOptions = LayoutOptions.Center,
+                };
+                raffleStatusLayout.Children.Add(status);
+
+                var button = new Button
+                {
+                    Text = "Buy More Tickets",
+                    VerticalOptions = LayoutOptions.Center,
+                };
+                raffleStatusLayout.Children.Add(button);
+
+                button.Clicked += (sender, e) =>
+                {
+                    var browser = new WebView();
+                    browser.Source = firstTicket.BuyTicketUrl;
+
+                    var browserPage = new ContentPage();
+                    browserPage.Content = browser;
+                    browserPage.Title = "Buy Tickets";
+
+                    this.Navigation.PushAsync(browserPage);
+                };
+            }
+            else
+            {
+                var status = new Label
+                {
+                    Text = "OVER",
+                    TextColor = Color.Red,
+                    VerticalOptions = LayoutOptions.Center,
+                };
+                raffleStatusLayout.Children.Add(status); 
+            }
+
             return page;
         }
     }
