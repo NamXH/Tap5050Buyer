@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Tap5050Buyer
 {
@@ -55,12 +56,11 @@ namespace Tap5050Buyer
             set;
         }
 
-        [JsonProperty(PropertyName = "ticket_number")]
-        public string TicketNumber 
-        {
-            get;
-            set;
-        }
+        [JsonIgnore]
+        public List<TicketNumber> TicketNumbers { get; set; }
+
+        [JsonIgnore]
+        public List<WinningNumber> WinningNumbers { get; set; }
 
         [JsonProperty(PropertyName = "purchase_date")]
         public string PurchaseDate
@@ -78,13 +78,6 @@ namespace Tap5050Buyer
 
         [JsonProperty(PropertyName = "jackpot_total")]
         public int JackpotTotal
-        {
-            get;
-            set;
-        }
-
-        [JsonProperty(PropertyName = "winning_ticket")]
-        public string WinningTicket
         {
             get;
             set;

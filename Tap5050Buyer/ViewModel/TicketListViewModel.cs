@@ -80,7 +80,6 @@ namespace Tap5050Buyer
                                 Type = ticket.RaffleType,
                                 PrizeDescription = ticket.PrizeDescription,
                                 JackpotTotal = ticket.JackpotTotal,
-                                WinningTicket = ticket.WinningTicket,
                                 ImageUrl = ticket.ImageUrl,
                             });
                     }

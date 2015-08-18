@@ -19,8 +19,6 @@ namespace Tap5050Buyer
 
         public int JackpotTotal { get; set; }
 
-        public string WinningTicket { get; set; }
-
         public string TicketNumberUrl
         {
             get;

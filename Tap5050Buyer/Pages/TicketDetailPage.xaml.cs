@@ -18,6 +18,13 @@ namespace Tap5050Buyer
 
             _viewModel = new TicketDetailViewModel(tickets);
 
+            LoadDataThenCreateCarouselPage(eventId);
+        }
+
+        public async void LoadDataThenCreateCarouselPage(int eventId)
+        {
+            await _viewModel.LoadData();
+
             foreach (var ticketGroup in _viewModel.TicketGroups)
             {
                 var page = CreatePage(ticketGroup);
@@ -126,7 +133,7 @@ namespace Tap5050Buyer
                 date.Text = ticket.DrawDate.ToString("MMMM dd, yyyy");
                 #endregion
 
-                #region Draw Date
+                #region Licence
                 var licenceLayout = new StackLayout
                 {
                     Orientation = StackOrientation.Horizontal,
@@ -147,7 +154,75 @@ namespace Tap5050Buyer
                 licence.Text = ticket.LicenceNumber;
                 #endregion
 
+                #region Winning Numbers
+                var winningNumbersLayout = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                };
+                ticketLayout.Children.Add(winningNumbersLayout);
 
+                var winningNumbersLabel = new Label
+                {
+                    Text = "Winning Number(s):",
+                    FontAttributes = FontAttributes.Bold,
+                    WidthRequest = labelWidthRequest,
+                    XAlign = TextAlignment.End,
+                };
+                winningNumbersLayout.Children.Add(winningNumbersLabel);
+
+                var numbersSubLayout = new StackLayout
+                {
+                    Orientation = StackOrientation.Vertical,
+                };
+                winningNumbersLayout.Children.Add(numbersSubLayout);
+
+                if (ticket.WinningNumbers != null)
+                {
+                    foreach (var number in ticket.WinningNumbers)
+                    {
+                        var numberLabel = new Label
+                        {
+                            Text = number.Number,
+                        };
+                        numbersSubLayout.Children.Add(numberLabel);
+                    }
+                }
+                #endregion
+
+                #region Ticket Number
+                var ticketNumberLayout = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                };
+                ticketLayout.Children.Add(ticketNumberLayout);
+
+                var ticketNumberLabel = new Label
+                {
+                    Text = "My Number(s):",
+                    FontAttributes = FontAttributes.Bold,
+                    WidthRequest = labelWidthRequest,
+                    XAlign = TextAlignment.End,
+                };
+                ticketNumberLayout.Children.Add(ticketNumberLabel);
+
+                var numbersLayout = new StackLayout
+                {
+                    Orientation = StackOrientation.Vertical,
+                };
+                ticketNumberLayout.Children.Add(numbersLayout);
+
+                if (ticket.TicketNumbers != null)
+                {
+                    foreach (var number in ticket.TicketNumbers)
+                    {
+                        var numberLabel = new Label
+                        {
+                            Text = number.Number,
+                        };
+                        numbersLayout.Children.Add(numberLabel);
+                    }
+                }
+                #endregion
             }
 
             return page;
