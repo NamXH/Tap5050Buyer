@@ -14,7 +14,7 @@ namespace Tap5050Buyer
         public TicketDetailPage(List<Ticket> Tickets, int eventId)
         {
             InitializeComponent();
-            Title = "Tickets";
+            Title = "Your Tickets";
 
             var a = from ticket in Tickets
                              group ticket by ticket.EventId into g

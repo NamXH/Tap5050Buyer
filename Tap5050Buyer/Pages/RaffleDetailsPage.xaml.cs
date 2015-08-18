@@ -27,7 +27,14 @@ namespace Tap5050Buyer
         public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId, bool includeSocialMedia)
         {
             InitializeComponent();
-            Title = "Raffle Details";
+            if (!includeSocialMedia)
+            {
+                Title = "Raffle Details";
+            }
+            else
+            {
+                Title = "Choose Media";
+            }
 
             LocationDetected = locationDetected;
             IncludeSocialMedia = includeSocialMedia;

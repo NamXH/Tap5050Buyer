@@ -20,5 +20,47 @@ namespace Tap5050Buyer
         public int JackpotTotal { get; set; }
 
         public string WinningTicket { get; set; }
+
+        public string TicketNumberUrl
+        {
+            get;
+            set;
+        }
+
+        public string WinningNumberUrl
+        {
+            get;
+            set;
+        }
+
+        public string BuyTicketUrl 
+        {
+            get;
+            set;
+        }
+
+        public int TicketId
+        {
+            get;
+            set;
+        }
+
+        public string RaffleStatus 
+        {
+            get;
+            set;
+        }
+
+        public DateTime EventEndTime 
+        {
+            get;
+            set;
+        }
+
+        public string ImageUrl
+        {
+            get;
+            set;
+        }
     }
 }

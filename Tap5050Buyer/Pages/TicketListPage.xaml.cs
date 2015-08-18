@@ -11,7 +11,7 @@ namespace Tap5050Buyer
         public TicketListPage()
         {
             InitializeComponent();
-            this.Title = "Ticket Events";
+            this.Title = "Your Raffles";
 
             if (DatabaseManager.Token == null)
             {
@@ -107,7 +107,7 @@ namespace Tap5050Buyer
                 WidthRequest = 44,
                 HeightRequest = 44,
             };
-//            image.SetBinding(Image.SourceProperty, new Binding("ImageUrl"));  // Check UI design, do we have image here? !!
+            image.SetBinding(Image.SourceProperty, new Binding("ImageUrl"));
             viewLayout.Children.Add(image);
 
             var labelLayout = new StackLayout

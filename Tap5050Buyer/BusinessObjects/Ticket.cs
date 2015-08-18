@@ -3,8 +3,16 @@ using Newtonsoft.Json;
 
 namespace Tap5050Buyer
 {
+    // Messy properties. Do this to be compatible with server's api.
     public class Ticket
     {
+        [JsonProperty(PropertyName = "image_url")]
+        public string ImageUrl
+        {
+            get;
+            set;
+        }
+
         [JsonProperty(PropertyName = "raffle_name")]
         public string RaffleName
         {
@@ -21,6 +29,13 @@ namespace Tap5050Buyer
 
         [JsonProperty(PropertyName = "draw_date")]
         public DateTime DrawDate
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "event_end_time")]
+        public DateTime EventEndTime 
         {
             get;
             set;
@@ -84,6 +99,41 @@ namespace Tap5050Buyer
 
         [JsonProperty(PropertyName = "last_name")]
         public string LastName
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "ticket_number_url")]
+        public string TicketNumberUrl
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "winning_number_url")]
+        public string WinningNumberUrl
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "buy_ticket_url")]
+        public string BuyTicketUrl 
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "ticket_id")]
+        public int TicketId
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "raffle_status")]
+        public string RaffleStatus 
         {
             get;
             set;

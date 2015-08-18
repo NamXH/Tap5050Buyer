@@ -81,6 +81,7 @@ namespace Tap5050Buyer
                                 PrizeDescription = ticket.PrizeDescription,
                                 JackpotTotal = ticket.JackpotTotal,
                                 WinningTicket = ticket.WinningTicket,
+                                ImageUrl = ticket.ImageUrl,
                             });
                     }
                 }

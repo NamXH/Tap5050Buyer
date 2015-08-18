@@ -23,7 +23,14 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
-            Title = "Raffle List";
+            if (!includeSocialMedia)
+            {
+                Title = "Available Raffles";
+            }
+            else
+            {
+                Title = "Pick a Raffle";
+            }
 
             LocationDetected = isLocationDetected;
             IncludeSocialMedia = includeSocialMedia;
