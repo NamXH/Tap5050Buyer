@@ -24,6 +24,8 @@ namespace Tap5050Buyer
 
         public bool IncludeSocialMedia { get; set; }
 
+        public Color BackgroundColor { get; set; }
+
         public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId, bool includeSocialMedia)
         {
             InitializeComponent();
@@ -34,6 +36,7 @@ namespace Tap5050Buyer
             else
             {
                 Title = "Choose Media";
+                BackgroundColor = Color.FromRgb(240, 248, 255);
             }
 
             LocationDetected = locationDetected;
@@ -59,6 +62,7 @@ namespace Tap5050Buyer
         public ContentPage CreateRaffleEventDetailsPage(RaffleEvent raffle)
         {
             var page = new ContentPage();
+            page.BackgroundColor = BackgroundColor;
 
             var layout = new StackLayout
             {
