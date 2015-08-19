@@ -28,7 +28,8 @@ namespace Tap5050Buyer
                         var result = await _viewModel.VerifyPhoneNumber();
                         if (result.Item1)
                         {
-                            DisplayAlert("Success", "Your phone number has been verified.", "OK");
+                            await DisplayAlert("Success", "Your phone number has been verified.", "OK");
+                            this.Navigation.PopAsync();
                         }
                         else
                         {
