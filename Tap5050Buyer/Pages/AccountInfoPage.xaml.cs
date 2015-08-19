@@ -19,7 +19,7 @@ namespace Tap5050Buyer
 
             this.ToolbarItems.Add(new ToolbarItem("Edit", null, () =>
                     {
-                    this.Navigation.PushAsync(new RegistrationPage(true, this, new UserAccount(_viewModel.UserAccount)));
+                        this.Navigation.PushAsync(new RegistrationPage(true, this, new UserAccount(_viewModel.UserAccount)));
                     }));
 
             LoadData();
@@ -137,15 +137,18 @@ namespace Tap5050Buyer
             phoneLayout.Children.Add(phone);
             phone.SetBinding(Label.TextProperty, "UserAccount.Phone");
 
-            var verifyButton = new Button
+            if (_viewModel.UserAccount.MobilePhoneVerified == "N")
             {
-                Text = "Verify",
-            };
-            phoneLayout.Children.Add(verifyButton);
-            verifyButton.Clicked += (sender, e) =>
-            {
-                StartVerificationProcess();
-            };
+                var verifyButton = new Button
+                {
+                    Text = "Verify",
+                };
+                phoneLayout.Children.Add(verifyButton);
+                verifyButton.Clicked += (sender, e) =>
+                {
+                    StartVerificationProcess();
+                };
+            }
             #endregion
 
             #region Email

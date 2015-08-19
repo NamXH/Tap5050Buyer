@@ -180,6 +180,13 @@ namespace Tap5050Buyer
             set;
         }
 
+        [JsonProperty(PropertyName = "mobile_phone_verified")]
+        public string MobilePhoneVerified
+        {
+            get;
+            set;
+        }
+
         public UserAccount()
         {
             Birthday = new DateTime(1900, 1, 1);
@@ -202,6 +209,7 @@ namespace Tap5050Buyer
             Country = anotherAccount.Country;
             PreferedContactMethod = anotherAccount.PreferedContactMethod;
             PreferedContactMethodCharity = anotherAccount.PreferedContactMethodCharity;
+            MobilePhoneVerified = anotherAccount.MobilePhoneVerified;
         }
 
         // Should override Equals instead!! -> Later
@@ -219,7 +227,8 @@ namespace Tap5050Buyer
                      && (first.PostalCode == second.PostalCode)
                      && (first.Country == second.Country)
                      && (first.PreferedContactMethod == second.PreferedContactMethod)
-                     && (first.PreferedContactMethodCharity == second.PreferedContactMethodCharity);
+                     && (first.PreferedContactMethodCharity == second.PreferedContactMethodCharity)
+                     && (first.MobilePhoneVerified == second.MobilePhoneVerified);
 
             return rs;
         }
