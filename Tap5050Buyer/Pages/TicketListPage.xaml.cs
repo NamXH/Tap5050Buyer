@@ -50,31 +50,34 @@ namespace Tap5050Buyer
         {
             var layout = new StackLayout();
 
-            var verifyButtonLayout = new StackLayout
+            if ((_viewModel.UserAccount != null) & (_viewModel.UserAccount.MobilePhoneVerified == "N"))
             {
-                Orientation = StackOrientation.Vertical,
-                Padding = new Thickness(20, 5, 20, 5),
-            };
-            layout.Children.Add(verifyButtonLayout);
+                var verifyButtonLayout = new StackLayout
+                {
+                    Orientation = StackOrientation.Vertical,
+                    Padding = new Thickness(20, 5, 20, 5),
+                };
+                layout.Children.Add(verifyButtonLayout);
 
-            var label = new Label
-            {
-                Text = "To Display 50/50's verify phone",
-                HorizontalOptions = LayoutOptions.Center,
-            };
-            verifyButtonLayout.Children.Add(label);
+                var label = new Label
+                {
+                    Text = "To Display 50/50's Verify Phone",
+                    HorizontalOptions = LayoutOptions.Center,
+                };
+                verifyButtonLayout.Children.Add(label);
 
-            var button = new Button
-            {
-                Text = "Verify",
-                HorizontalOptions = LayoutOptions.Center,
-            };
-            verifyButtonLayout.Children.Add(button);
-            button.Clicked += (sender, e) =>
-            {
-                // Not very nice here!!
-                this.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.CountryCode));
-            };
+                var button = new Button
+                {
+                    Text = "Verify",
+                    HorizontalOptions = LayoutOptions.Center,
+                };
+                verifyButtonLayout.Children.Add(button);
+                button.Clicked += (sender, e) =>
+                {
+                    // Not very nice here!!
+                    this.Navigation.PushAsync(new VerifyPhonePage(_viewModel.UserAccount.Email, _viewModel.UserAccount.Phone, _viewModel.UserAccount.CountryCode));
+                };
+            }
            
             var ticketsListView = new ListView();
             layout.Children.Add(ticketsListView);

@@ -61,7 +61,7 @@ namespace Tap5050Buyer
         public async Task LoadData()
         {
             Tickets = await GetTickets();
-            await GetAccountInfo(); // Not very good here!!
+            await GetAccountInfo(); // Not very good here!! We get Account Info here only to check if his phone has been verified or not!!
 
             if (Tickets != null)
             {
