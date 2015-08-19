@@ -158,7 +158,7 @@ namespace Tap5050Buyer
                 var resetPasswordResult = await _viewModel.ResetPassword(username);
                 if (resetPasswordResult)
                 {
-                    DisplayAlert("Success", "A reset email has been sent to your email.", "OK");
+                    DisplayAlert("Success", "A temporary password has been sent to your registered email.", "OK");
                 }
                 else
                 {

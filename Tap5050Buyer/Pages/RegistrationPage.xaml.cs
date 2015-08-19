@@ -223,7 +223,7 @@ namespace Tap5050Buyer
                         {
                             if (_viewModel.InfoHasNotChanged())
                             {
-                                DisplayAlert("Warning", "Your information has not changed.", "Retry");
+                                this.Navigation.PopAsync(); // Pop Registration page
                             }
                             else
                             {
@@ -233,8 +233,8 @@ namespace Tap5050Buyer
                                 if (result.Item1)
                                 {
                                     this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
-                                    this.Navigation.PopAsync(false);
-                                    this.Navigation.PopAsync(false);
+                                    this.Navigation.PopAsync(false); // Pop Registration page
+                                    this.Navigation.PopAsync(false); // Pop old AccountInfo page
                                 }
                                 else
                                 {
