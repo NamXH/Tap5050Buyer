@@ -191,8 +191,8 @@ namespace Tap5050Buyer
 
                 var gap = new Label
                 {
-                        Text = "",
-                        HeightRequest = 10.0,
+                    Text = "",
+                    HeightRequest = 10.0,
                 };
                 ticketLayout.Children.Add(gap);
 
@@ -284,6 +284,35 @@ namespace Tap5050Buyer
                 };
                 raffleStatusLayout.Children.Add(status); 
             }
+
+            var disclaimerFrame = new Frame
+            {
+                OutlineColor = Color.Silver,
+                HasShadow = true,
+            };
+            layout.Children.Add(disclaimerFrame);
+
+            var disclaimerLayout = new StackLayout();
+            disclaimerFrame.Content = disclaimerLayout;
+
+            var disclaimerLabel = new Label
+            {
+                Text = "Tap50:50 believes the information posted here is accurate and correct. In the case where the information conflicts with official results, the official results will be deemed correct.",
+            };
+            disclaimerLayout.Children.Add(disclaimerLabel);
+
+            var warningLabel1 = new Label
+            {
+                TextColor = Color.Red,
+                Text = "Warning:",
+            };
+            disclaimerLayout.Children.Add(warningLabel1);
+
+            var warningLabel2 = new Label
+            {
+                Text = "Do not throw away your basic tickets that do not contain your name (usually 50/50 tickets). The physical ticket is required to qualify to win.",
+            };
+            disclaimerLayout.Children.Add(warningLabel2);
 
             return page;
         }
