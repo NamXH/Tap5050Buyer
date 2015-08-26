@@ -255,24 +255,27 @@ namespace Tap5050Buyer
                 };
                 raffleStatusLayout.Children.Add(status);
 
-                var button = new Button
+                if (firstTicket.RaffleType == "Large")
                 {
-                    Text = "Buy More Tickets",
-                    VerticalOptions = LayoutOptions.Center,
-                };
-                raffleStatusLayout.Children.Add(button);
+                    var button = new Button
+                    {
+                        Text = "Buy More Tickets",
+                        VerticalOptions = LayoutOptions.Center,
+                    };
+                    raffleStatusLayout.Children.Add(button);
 
-                button.Clicked += (sender, e) =>
-                {
-                    var browser = new WebView();
-                    browser.Source = firstTicket.BuyTicketUrl;
+                    button.Clicked += (sender, e) =>
+                    {
+                        var browser = new WebView();
+                        browser.Source = firstTicket.BuyTicketUrl;
 
-                    var browserPage = new ContentPage();
-                    browserPage.Content = browser;
-                    browserPage.Title = "Buy Tickets";
+                        var browserPage = new ContentPage();
+                        browserPage.Content = browser;
+                        browserPage.Title = "Buy Tickets";
 
-                    this.Navigation.PushAsync(browserPage);
-                };
+                        this.Navigation.PushAsync(browserPage);
+                    };
+                }
             }
             else
             {
@@ -285,6 +288,7 @@ namespace Tap5050Buyer
                 raffleStatusLayout.Children.Add(status); 
             }
 
+            #region Disclaimer
             var disclaimerFrame = new Frame
             {
                 OutlineColor = Color.Silver,
@@ -313,6 +317,7 @@ namespace Tap5050Buyer
                 Text = "Do not throw away your basic tickets that do not contain your name (usually 50/50 tickets). The physical ticket is required to qualify to win.",
             };
             disclaimerLayout.Children.Add(warningLabel2);
+            #endregion
 
             return page;
         }
