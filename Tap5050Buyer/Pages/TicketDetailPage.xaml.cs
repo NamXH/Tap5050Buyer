@@ -130,7 +130,7 @@ namespace Tap5050Buyer
 
                 var date = new Label();
                 drawDateLayout.Children.Add(date);
-                date.Text = ticket.DrawDate.ToString("MMMM dd, yyyy");
+                date.Text = ticket.DrawDate.ToString("MMM dd, yyyy");
                 #endregion
 
                 #region Licence
