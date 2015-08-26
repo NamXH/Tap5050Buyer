@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Xamarin.Forms;
 
 namespace Tap5050Buyer
 {
@@ -66,6 +67,7 @@ namespace Tap5050Buyer
                             if (values.TryGetValue("token_id", out tokenValue))
                             {
                                 DatabaseManager.InsertToken(tokenValue);
+                                MessagingCenter.Send<LoginPageViewModel>(this, "Login");
                                 
                                 return new Tuple<bool, string>(true, tokenValue);
                             }

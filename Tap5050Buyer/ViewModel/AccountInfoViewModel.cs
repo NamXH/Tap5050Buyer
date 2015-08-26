@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Tap5050Buyer
 {
@@ -215,6 +216,7 @@ namespace Tap5050Buyer
         public void SignOut()
         {
             DatabaseManager.DeleteToken();
+            MessagingCenter.Send<AccountInfoViewModel> (this, "Logout");
         }
     }
 }
