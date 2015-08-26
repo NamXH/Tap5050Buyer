@@ -163,7 +163,7 @@ namespace Tap5050Buyer
 
                 var winningNumbersLabel = new Label
                 {
-                    Text = "Winning Number(s):",
+                    Text = "Winning #(s):",
                     FontAttributes = FontAttributes.Bold,
                     WidthRequest = labelWidthRequest,
                     XAlign = TextAlignment.End,
