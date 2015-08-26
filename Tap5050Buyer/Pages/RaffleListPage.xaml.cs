@@ -30,7 +30,8 @@ namespace Tap5050Buyer
             else
             {
                 Title = "Pick a Raffle";
-                this.BackgroundColor = Color.FromRgb(240, 248, 255);
+//                this.BackgroundColor = Color.FromRgb(240, 248, 255);
+                this.BackgroundColor = Color.Accent;
             }
 
             LocationDetected = isLocationDetected;

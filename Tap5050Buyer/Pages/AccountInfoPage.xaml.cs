@@ -91,7 +91,7 @@ namespace Tap5050Buyer
 
             var addressLabel = new Label
             {
-                Text = "Address:",
+                Text = "Add:",
                 FontAttributes = FontAttributes.Bold,
                 WidthRequest = labelWidthRequest,
                 XAlign = TextAlignment.End,

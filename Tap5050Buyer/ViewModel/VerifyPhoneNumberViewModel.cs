@@ -29,26 +29,15 @@ namespace Tap5050Buyer
 
         public async Task<Tuple<bool, string>> RequestPhoneNumberVerification()
         {
-            return await RequestPhoneNumberVerification(Email, PhoneNumber, Country);
-        }
-
-        public async Task<Tuple<bool, string>> RequestPhoneNumberVerification(string email, string phoneNumber, string country)
-        {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(c_serverBaseAddress);
-
-                var content = new FormUrlEncodedContent(new[]
-                    {
-                        new KeyValuePair<string, string>("email", email),
-                        new KeyValuePair<string, string>("m_phone", phoneNumber),
-                        new KeyValuePair<string, string>("country", country),
-                    });
+                var url = c_requestPhoneVerificationApiAddress + "?token_id=" + DatabaseManager.Token.Value;
 
                 HttpResponseMessage response = null;
                 try
                 {
-                    response = await client.PostAsync(c_requestPhoneVerificationApiAddress, content);
+                    response = await client.PostAsync(url, new StringContent(""));
                 }
                 catch (Exception e)
                 {

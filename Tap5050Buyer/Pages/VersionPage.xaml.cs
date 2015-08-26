@@ -10,7 +10,7 @@ namespace Tap5050Buyer
         public VersionPage()
         {
             InitializeComponent();
-            Title = "Version0.4";
+            Title = "Version0.5";
 
             Content = new StackLayout
             {
@@ -18,7 +18,7 @@ namespace Tap5050Buyer
                 Children =
                 {new Label
                     {
-                        Text = "Version 0.4",
+                        Text = "Version 0.5",
                     }
                 },
             };
