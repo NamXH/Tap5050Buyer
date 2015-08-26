@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace Tap5050Buyer
 {
@@ -24,14 +25,23 @@ namespace Tap5050Buyer
 
         public async Task LoadData()
         {
+//            var time0 = DateTime.Now;
+//            Debug.WriteLine("time0: " + time0.ToString());
+
             foreach (var ticket in Tickets)
             {
                 ticket.TicketNumbers = await GetTicketNumbers(ticket.TicketNumberUrl);
             }
 
+//            var time1 = DateTime.Now;
+//            Debug.WriteLine("time1: " + time1.ToString());
+
             TicketGroups = from ticket in Tickets
                                     group ticket by ticket.EventId into g
                                     select new TicketGroup { EventId = g.Key, Tickets = g.ToList() };
+
+//            var time2 = DateTime.Now;
+//            Debug.WriteLine("time2: " + time2.ToString());
 
             foreach (var group in TicketGroups)
             {
@@ -44,6 +54,11 @@ namespace Tap5050Buyer
                     }
                 }
             }
+
+//            var time3 = DateTime.Now;
+//            Debug.WriteLine("time2: " + time3.ToString());
+//
+//            Debug.WriteLine("total: " + (time3 - time0).TotalMilliseconds);
         }
 
         public async Task<List<TicketNumber>> GetTicketNumbers(string ticketNumberUrl)

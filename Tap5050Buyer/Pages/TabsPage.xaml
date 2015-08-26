@@ -2,6 +2,5 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:Tap5050Buyer;assembly=Tap5050Buyer" x:Class="Tap5050Buyer.TabsPage">
   <local:RaffleNavigationPage x:Name="_raffleNavigationPage" />
   <local:AccountInfoNavigationPage x:Name="_accountInfoNavigationPage" />
-  <local:TicketsNavigationPage x:Name="_ticketsNavigationPage" />
   <local:VersionPage />
 </TabbedPage>

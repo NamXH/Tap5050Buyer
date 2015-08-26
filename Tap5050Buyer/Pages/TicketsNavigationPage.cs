@@ -1,5 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace Tap5050Buyer
 {
@@ -10,25 +11,25 @@ namespace Tap5050Buyer
             Title = "Tickets";
             this.PushAsync(new TicketListPage());
 
-            MessagingCenter.Subscribe<LoginPageViewModel>(this, "Login", (sender) =>
-                {
-                    Refresh();
-                });
-            
-            MessagingCenter.Subscribe<AccountInfoViewModel>(this, "Logout", (sender) =>
-                {
-                    Refresh();
-                });
         }
 
-        private void Refresh()
-        {
-            this.PopToRootAsync(false);
-            var oldRoot = this.CurrentPage;
-
-            this.Navigation.PushAsync(new TicketListPage(), false);
-            this.Navigation.RemovePage(oldRoot);
-        }
+        // Doesn't work. Sometimes, PushAsync/PopAsync... doesn't update NavigationStack.Count
+//        private void Refresh()
+//        {
+//            var oldRoot = this.Navigation.NavigationStack.First();
+//            this.Navigation.InsertPageBefore(new TicketListPage(), oldRoot);
+//            this.Navigation.PopAsync();
+//
+////            this.PushAsync(new TicketListPage(), false);
+////
+////            if (this.Navigation.NavigationStack.Count() == 1)
+////            {
+////            }
+////            else
+////            {
+////                this.Navigation.RemovePage(oldRoot); 
+////            }
+//        }
     }
 }
 
