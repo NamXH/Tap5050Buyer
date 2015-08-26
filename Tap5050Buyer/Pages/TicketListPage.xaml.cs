@@ -8,6 +8,10 @@ namespace Tap5050Buyer
     {
         private TicketListViewModel _viewModel;
 
+        private StackLayout _layout;
+
+        private StackLayout _verifyButtonLayout;
+
         public TicketListPage()
         {
             InitializeComponent();
@@ -37,6 +41,11 @@ namespace Tap5050Buyer
                 this.BindingContext = _viewModel;
 
                 GetTicketsAndCreateList();
+
+                MessagingCenter.Subscribe<VerifyPhonePage>(this, "Verified", (sender) =>
+                    {
+                        _layout.Children.Remove(_verifyButtonLayout);
+                    });
             }
         }
 
@@ -48,30 +57,30 @@ namespace Tap5050Buyer
 
         public void CreateList()
         {
-            var layout = new StackLayout();
+            _layout = new StackLayout();
 
             if ((_viewModel.UserAccount != null) & (_viewModel.UserAccount.MobilePhoneVerified == "N"))
             {
-                var verifyButtonLayout = new StackLayout
+                _verifyButtonLayout = new StackLayout
                 {
                     Orientation = StackOrientation.Vertical,
                     Padding = new Thickness(20, 5, 20, 5),
                 };
-                layout.Children.Add(verifyButtonLayout);
+                _layout.Children.Add(_verifyButtonLayout);
 
                 var label = new Label
                 {
                     Text = "To Display 50/50's Verify Phone",
                     HorizontalOptions = LayoutOptions.Center,
                 };
-                verifyButtonLayout.Children.Add(label);
+                _verifyButtonLayout.Children.Add(label);
 
                 var button = new Button
                 {
                     Text = "Verify",
                     HorizontalOptions = LayoutOptions.Center,
                 };
-                verifyButtonLayout.Children.Add(button);
+                _verifyButtonLayout.Children.Add(button);
                 button.Clicked += (sender, e) =>
                 {
                     // Not very nice here!!
@@ -80,7 +89,7 @@ namespace Tap5050Buyer
             }
            
             var ticketsListView = new ListView();
-            layout.Children.Add(ticketsListView);
+            _layout.Children.Add(ticketsListView);
 
             ticketsListView.SetBinding(ListView.ItemsSourceProperty, "EventForTicketsList", BindingMode.TwoWay);
             ticketsListView.ItemTemplate = new DataTemplate(typeof(TicketCell));
@@ -94,7 +103,7 @@ namespace Tap5050Buyer
                 }
             };
 
-            this.Content = layout;
+            this.Content = _layout;
         }
     }
 

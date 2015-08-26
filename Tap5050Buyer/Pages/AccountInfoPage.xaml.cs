@@ -9,6 +9,10 @@ namespace Tap5050Buyer
     {
         private AccountInfoViewModel _viewModel;
 
+        private StackLayout _phoneLayout;
+
+        private Button _verifyButton;
+
         public AccountInfoPage()
         {
             InitializeComponent();
@@ -23,6 +27,11 @@ namespace Tap5050Buyer
                     }));
 
             LoadData();
+
+            MessagingCenter.Subscribe<VerifyPhonePage>(this, "Verified", (sender) =>
+                {
+                    _phoneLayout.Children.Remove(_verifyButton);
+                });
         }
 
         private async void LoadData()
@@ -114,11 +123,11 @@ namespace Tap5050Buyer
             #endregion
 
             #region Mobile Phone
-            var phoneLayout = new StackLayout
+            _phoneLayout = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
             };
-            playerInfoLayout.Children.Add(phoneLayout);
+            playerInfoLayout.Children.Add(_phoneLayout);
 
             var phoneLabel = new Label
             {
@@ -128,23 +137,23 @@ namespace Tap5050Buyer
                 XAlign = TextAlignment.End,
                 VerticalOptions = LayoutOptions.Center,
             };
-            phoneLayout.Children.Add(phoneLabel);
+            _phoneLayout.Children.Add(phoneLabel);
 
             var phone = new Label
             { 
                 VerticalOptions = LayoutOptions.Center,
             };
-            phoneLayout.Children.Add(phone);
+            _phoneLayout.Children.Add(phone);
             phone.SetBinding(Label.TextProperty, "UserAccount.Phone");
 
             if (_viewModel.UserAccount.MobilePhoneVerified == "N")
             {
-                var verifyButton = new Button
+                _verifyButton = new Button
                 {
                     Text = "Verify",
                 };
-                phoneLayout.Children.Add(verifyButton);
-                verifyButton.Clicked += (sender, e) =>
+                _phoneLayout.Children.Add(_verifyButton);
+                _verifyButton.Clicked += (sender, e) =>
                 {
                     StartVerificationProcess();
                 };

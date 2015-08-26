@@ -29,6 +29,7 @@ namespace Tap5050Buyer
                         if (result.Item1)
                         {
                             await DisplayAlert("Success", "Your phone number has been verified.", "OK");
+                            MessagingCenter.Send<VerifyPhonePage>(this, "Verified");
                             this.Navigation.PopAsync();
                         }
                         else
