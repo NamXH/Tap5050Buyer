@@ -189,6 +189,13 @@ namespace Tap5050Buyer
                 }
                 #endregion
 
+                var gap = new Label
+                {
+                        Text = "",
+                        HeightRequest = 10.0,
+                };
+                ticketLayout.Children.Add(gap);
+
                 #region Ticket Number
                 var ticketNumberLayout = new StackLayout
                 {
