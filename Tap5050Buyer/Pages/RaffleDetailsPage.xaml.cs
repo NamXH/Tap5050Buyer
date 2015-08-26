@@ -22,25 +22,14 @@ namespace Tap5050Buyer
 
         public bool LocationDetected { get; set; }
 
-        public bool IncludeSocialMedia { get; set; }
-
         public Color BackgroundColor { get; set; }
 
-        public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId, bool includeSocialMedia)
+        public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId)
         {
             InitializeComponent();
-            if (!includeSocialMedia)
-            {
-                Title = "Raffle Details";
-            }
-            else
-            {
-                Title = "Choose Media";
-                BackgroundColor = Color.FromRgb(240, 248, 255);
-            }
 
+            Title = "Raffle Details";
             LocationDetected = locationDetected;
-            IncludeSocialMedia = includeSocialMedia;
 
             foreach (var raffle in raffleEvents)
             {
@@ -168,22 +157,20 @@ namespace Tap5050Buyer
             layout.Children.Add(descriptionLabel);
 
             #region See Prizes and Buy Tickets buttons
-            if (!IncludeSocialMedia)
+            var buttonsLayout = new StackLayout
             {
-                var buttonsLayout = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                };
-                layout.Children.Add(buttonsLayout);
+                Orientation = StackOrientation.Horizontal,
+            };
+            layout.Children.Add(buttonsLayout);
 
-                var prizeButton = new Button
-                {
-                    Text = "See Prizes",
-                    BorderColor = Color.Blue,
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                };
-                prizeButton.Clicked += (sender, e) =>
-                {
+            var prizeButton = new Button
+            {
+                Text = "See Prizes",
+                BorderColor = Color.Blue,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+            };
+            prizeButton.Clicked += (sender, e) =>
+            {
 //                var browser = new WebView();
 //                browser.Source = raffle.PrizeUrl;
 //
@@ -193,20 +180,20 @@ namespace Tap5050Buyer
 //
 //                this.Navigation.PushAsync(browserPage);
 
-                    Device.OpenUri(new Uri(raffle.PrizeUrl)); // External browser
-                };
-                buttonsLayout.Children.Add(prizeButton);
+                Device.OpenUri(new Uri(raffle.PrizeUrl)); // External browser
+            };
+            buttonsLayout.Children.Add(prizeButton);
 
-                var buyButton = new Button
-                {
-                    Text = "Buy Tickets",
-                    BorderColor = Color.Blue,
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                };
-                buyButton.Clicked += (sender, e) =>
-                {
-                    var browser = new WebView();
-                    browser.Source = raffle.BuyTicketUrl;
+            var buyButton = new Button
+            {
+                Text = "Buy Tickets",
+                BorderColor = Color.Blue,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+            };
+            buyButton.Clicked += (sender, e) =>
+            {
+                var browser = new WebView();
+                browser.Source = raffle.BuyTicketUrl;
 
 
 //                browser.Navigated += async (object obj, WebNavigatedEventArgs eventArgs) =>
@@ -216,17 +203,16 @@ namespace Tap5050Buyer
 //                    Debug.WriteLine("Action: " + action);
 //                };
 
-                    var browserPage = new ContentPage();
-                    browserPage.Content = browser;
-                    browserPage.Title = "Buy Tickets";
+                var browserPage = new ContentPage();
+                browserPage.Content = browser;
+                browserPage.Title = "Buy Tickets";
 
-                    this.Navigation.PushAsync(browserPage);
-                };
-                buttonsLayout.Children.Add(buyButton);
-            }
+                this.Navigation.PushAsync(browserPage);
+            };
+            buttonsLayout.Children.Add(buyButton);
             #endregion
 
-            if (!LocationDetected && !IncludeSocialMedia)
+            if (!LocationDetected)
             {
                 var locationWarning = new Label
                 {
@@ -239,94 +225,91 @@ namespace Tap5050Buyer
                 layout.Children.Add(locationWarning);
             }
 
-            if (IncludeSocialMedia)
+            var socialShare = DependencyService.Get<ISocialShare>();
+
+            var socialMediaLayout = new StackLayout
             {
-                var socialShare = DependencyService.Get<ISocialShare>();
+                Orientation = StackOrientation.Horizontal,
+                Padding = new Thickness(5, 5, 5, 5),
+                VerticalOptions = LayoutOptions.End,
+            };
+            layout.Children.Add(socialMediaLayout);
 
-                var socialMediaLayout = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Padding = new Thickness(5, 5, 5, 5),
-                    VerticalOptions = LayoutOptions.End,
-                };
-                layout.Children.Add(socialMediaLayout);
+            var facebookButton = new ImageButton
+            {
+                ImageHeightRequest = 50,
+                ImageWidthRequest = 50,
+                Source = "facebook.png",
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+            };
+            socialMediaLayout.Children.Add(facebookButton);
+            facebookButton.Clicked += (sender, e) =>
+            {
+                socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Name, raffle.Organization, raffle.BuyTicketUrl), raffle.BuyTicketUrl);
+            };
 
-                var facebookButton = new ImageButton
-                {
-                    ImageHeightRequest = 50,
-                    ImageWidthRequest = 50,
-                    Source = "facebook.png",
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                };
-                socialMediaLayout.Children.Add(facebookButton);
-                facebookButton.Clicked += (sender, e) =>
-                {
-                    socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Name, raffle.Organization, raffle.BuyTicketUrl), raffle.BuyTicketUrl);
-                };
+            var twitterButton = new ImageButton
+            {
+                ImageHeightRequest = 50,
+                ImageWidthRequest = 50,
+                Source = "twitter.png",
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+            };
+            socialMediaLayout.Children.Add(twitterButton);
+            twitterButton.Clicked += (sender, e) =>
+            {
+                socialShare.Twitter(c_twitterAPIKey, c_twitterSecret, String.Format(c_facebookMessageTemplate, raffle.Name, raffle.Organization, raffle.BuyTicketUrl), raffle.BuyTicketUrl);
+            };
 
-                var twitterButton = new ImageButton
+            var smsButton = new ImageButton
+            {
+                ImageHeightRequest = 50,
+                ImageWidthRequest = 50,
+                Source = "sms.png",
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+            };
+            socialMediaLayout.Children.Add(smsButton);
+            smsButton.Clicked += async (sender, e) =>
+            {
+                var allContacts = await GetAllContacts();
+                if (allContacts != null)
                 {
-                    ImageHeightRequest = 50,
-                    ImageWidthRequest = 50,
-                    Source = "twitter.png",
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                };
-                socialMediaLayout.Children.Add(twitterButton);
-                twitterButton.Clicked += (sender, e) =>
-                {
-                    socialShare.Twitter(c_twitterAPIKey, c_twitterSecret, String.Format(c_facebookMessageTemplate, raffle.Name, raffle.Organization, raffle.BuyTicketUrl), raffle.BuyTicketUrl);
-                };
+                    var contactsWithAMobileNumber = allContacts.Where(x => x.Phones.Any(y => y.Label.Equals("Mobile", StringComparison.OrdinalIgnoreCase)));
 
-                var smsButton = new ImageButton
-                {
-                    ImageHeightRequest = 50,
-                    ImageWidthRequest = 50,
-                    Source = "sms.png",
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                };
-                socialMediaLayout.Children.Add(smsButton);
-                smsButton.Clicked += async (sender, e) =>
-                {
-                    var allContacts = await GetAllContacts();
-                    if (allContacts != null)
+                    var extendedContacts = new List<ExtendedContact>();
+                    foreach (var contact in contactsWithAMobileNumber)
                     {
-                        var contactsWithAMobileNumber = allContacts.Where(x => x.Phones.Any(y => y.Label.Equals("Mobile", StringComparison.OrdinalIgnoreCase)));
-
-                        var extendedContacts = new List<ExtendedContact>();
-                        foreach (var contact in contactsWithAMobileNumber)
-                        {
-                            extendedContacts.Add(new ExtendedContact(contact));
-                        }
-
-                        Navigation.PushAsync(new ContactsPage(extendedContacts, 0));
+                        extendedContacts.Add(new ExtendedContact(contact));
                     }
-                };
 
-                var emailButton = new ImageButton
+                    Navigation.PushAsync(new ContactsPage(extendedContacts, 0));
+                }
+            };
+
+            var emailButton = new ImageButton
+            {
+                ImageHeightRequest = 50,
+                ImageWidthRequest = 50,
+                Source = "email.png",
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+            };
+            socialMediaLayout.Children.Add(emailButton);
+            emailButton.Clicked += async (sender, e) =>
+            {
+                var allContacts = await GetAllContacts();
+                if (allContacts != null)
                 {
-                    ImageHeightRequest = 50,
-                    ImageWidthRequest = 50,
-                    Source = "email.png",
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                };
-                socialMediaLayout.Children.Add(emailButton);
-                emailButton.Clicked += async (sender, e) =>
-                {
-                    var allContacts = await GetAllContacts();
-                    if (allContacts != null)
+                    var contactsWithAnEmail = allContacts.Where(x => x.Emails.Any());
+
+                    var extendedContacts = new List<ExtendedContact>();
+                    foreach (var contact in contactsWithAnEmail)
                     {
-                        var contactsWithAnEmail = allContacts.Where(x => x.Emails.Any());
-
-                        var extendedContacts = new List<ExtendedContact>();
-                        foreach (var contact in contactsWithAnEmail)
-                        {
-                            extendedContacts.Add(new ExtendedContact(contact));
-                        }
-
-                        Navigation.PushAsync(new ContactsPage(extendedContacts, 1));
+                        extendedContacts.Add(new ExtendedContact(contact));
                     }
-                };
-            }
+
+                    Navigation.PushAsync(new ContactsPage(extendedContacts, 1));
+                }
+            };
 
             return page;
         }

@@ -14,28 +14,17 @@ namespace Tap5050Buyer
     {
         public bool LocationDetected { get; set; }
 
-        public bool IncludeSocialMedia { get; set; }
-
         private RaffleListViewModel _viewModel;
 
         // Can give some params default value later!!
-        public RaffleListPage(bool isLocationDetected, IList<RaffleLocation> raffleLocations, RaffleLocation userSelectedLocation, GeonamesCountrySubdivision countrySubdivision, bool includeSocialMedia)
+        public RaffleListPage(bool isLocationDetected, IList<RaffleLocation> raffleLocations, RaffleLocation userSelectedLocation, GeonamesCountrySubdivision countrySubdivision)
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
-            if (!includeSocialMedia)
-            {
-                Title = "Available Raffles";
-            }
-            else
-            {
-                Title = "Pick a Raffle";
-//                this.BackgroundColor = Color.FromRgb(240, 248, 255);
-                this.BackgroundColor = Color.Accent;
-            }
+
+            Title = "Available Raffles";
 
             LocationDetected = isLocationDetected;
-            IncludeSocialMedia = includeSocialMedia;
             _viewModel = new RaffleListViewModel(isLocationDetected, raffleLocations, userSelectedLocation, countrySubdivision);
 
             var locationPicker = new Picker();
@@ -105,7 +94,7 @@ namespace Tap5050Buyer
                 if (e.SelectedItem != null)
                 {
                     // PushAsync a new RaffleDetailsPage instead of creating one and reuse it: to workaround a bug in Carousel + TabbedPage in iOS !!
-                    this.Navigation.PushAsync(new RaffleDetailsPage(LocationDetected, raffleEvents, ((RaffleEvent)e.SelectedItem).Id, IncludeSocialMedia));
+                    this.Navigation.PushAsync(new RaffleDetailsPage(LocationDetected, raffleEvents, ((RaffleEvent)e.SelectedItem).Id));
                     raffleEventListView.SelectedItem = null;
                 }
             };

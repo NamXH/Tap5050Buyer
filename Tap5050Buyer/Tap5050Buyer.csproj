@@ -39,7 +39,6 @@
     <Compile Include="Pages\TabsPage.xaml.cs">
       <DependentUpon>TabsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\InviteFriendsNavigationPage.cs" />
     <Compile Include="Pages\RaffleListPage.xaml.cs">
       <DependentUpon>RaffleListPage.xaml</DependentUpon>
     </Compile>
