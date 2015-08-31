@@ -56,11 +56,25 @@ namespace Tap5050Buyer
             set;
         }
 
-        [JsonIgnore]
-        public List<TicketNumber> TicketNumbers { get; set; }
+        [JsonProperty(PropertyName = "ticket_numbers")]
+        public string TicketNumbersString
+        {
+            get;
+            set;
+        }
 
         [JsonIgnore]
-        public List<WinningNumber> WinningNumbers { get; set; }
+        public List<string> TicketNumbers { get; set; }
+
+        [JsonProperty(PropertyName = "winning_numbers")]
+        public string WinningNumbersString
+        {
+            get;
+            set;
+        }
+
+        [JsonIgnore]
+        public List<string> WinningNumbers { get; set; }
 
         [JsonProperty(PropertyName = "purchase_date")]
         public string PurchaseDate
@@ -92,20 +106,6 @@ namespace Tap5050Buyer
 
         [JsonProperty(PropertyName = "last_name")]
         public string LastName
-        {
-            get;
-            set;
-        }
-
-        [JsonProperty(PropertyName = "ticket_number_url")]
-        public string TicketNumberUrl
-        {
-            get;
-            set;
-        }
-
-        [JsonProperty(PropertyName = "winning_number_url")]
-        public string WinningNumberUrl
         {
             get;
             set;

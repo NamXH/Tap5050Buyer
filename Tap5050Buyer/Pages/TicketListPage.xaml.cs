@@ -51,7 +51,7 @@ namespace Tap5050Buyer
 
         public async void GetTicketsAndCreateList()
         {
-            await _viewModel.LoadData();
+            await _viewModel.LoadData(); // Can reduce app startup time by loading this data only when the Tickets tab is selected !!
             CreateList();
         }
 

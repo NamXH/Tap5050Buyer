@@ -61,6 +61,20 @@ namespace Tap5050Buyer
         public async Task LoadData()
         {
             Tickets = await GetTickets();
+
+            foreach (var ticket in Tickets)
+            {
+                if (!String.IsNullOrWhiteSpace(ticket.TicketNumbersString))
+                {
+                    ticket.TicketNumbers = ticket.TicketNumbersString.Trim().Split(' ').ToList();
+                }
+
+                if (!String.IsNullOrWhiteSpace(ticket.WinningNumbersString))
+                {
+                    ticket.WinningNumbers = ticket.WinningNumbersString.Trim().Split(' ').ToList();
+                }
+            }
+
             await GetAccountInfo(); // Not very good here!! We get Account Info here only to check if his phone has been verified or not!!
 
             if (Tickets != null)

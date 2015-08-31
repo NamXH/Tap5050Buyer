@@ -23,8 +23,6 @@ namespace Tap5050Buyer
 
         public async void LoadDataThenCreateCarouselPage(int eventId)
         {
-            await _viewModel.LoadData();
-
             foreach (var ticketGroup in _viewModel.TicketGroups)
             {
                 var page = CreatePage(ticketGroup);
@@ -40,6 +38,12 @@ namespace Tap5050Buyer
         {
             var page = new ContentPage();
 
+            var firstTicket = ticketGroup.Tickets.FirstOrDefault();
+            if (firstTicket == null)
+            {
+                return page;
+            }
+
             var scroll = new ScrollView();
             page.Content = scroll;
 
@@ -48,12 +52,6 @@ namespace Tap5050Buyer
                 Padding = new Thickness(10, 5, 10, 5),
             };
             scroll.Content = layout;
-
-            var firstTicket = ticketGroup.Tickets.FirstOrDefault();
-            if (firstTicket == null)
-            {
-                return page;
-            }
 
             #region Image
             var imageLayout = new StackLayout
@@ -182,7 +180,7 @@ namespace Tap5050Buyer
                     {
                         var numberLabel = new Label
                         {
-                            Text = number.Number,
+                            Text = number
                         };
                         numbersSubLayout.Children.Add(numberLabel);
                     }
@@ -224,7 +222,7 @@ namespace Tap5050Buyer
                     {
                         var numberLabel = new Label
                         {
-                            Text = number.Number,
+                            Text = number
                         };
                         numbersLayout.Children.Add(numberLabel);
                     }
