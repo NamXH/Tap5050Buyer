@@ -228,18 +228,71 @@ namespace Tap5050Buyer
                             else
                             {
                                 _toolbarItemIsEnabled = false; // Disable the button while await
-                                var result = await _viewModel.UpdateAccountInfo();
-                                _toolbarItemIsEnabled = true;
-                                if (result.Item1)
+
+                                var allRequiredFieldsAreValid = true;
+
+                                // A lot of duplication code here !! Can be refactored
+                                if (String.IsNullOrWhiteSpace(_viewModel.UserAccount.FirstName))
                                 {
-                                    this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
-                                    this.Navigation.PopAsync(false); // Pop Registration page
-                                    this.Navigation.PopAsync(false); // Pop old AccountInfo page
+                                    allRequiredFieldsAreValid = false;
+                                    DisplayAlert("Missing Info", "The first name field is required", "Retry");
+                                }
+                                if (String.IsNullOrWhiteSpace(_viewModel.UserAccount.LastName))
+                                {
+                                    allRequiredFieldsAreValid = false;
+                                    DisplayAlert("Missing Info", "The last name field is required", "Retry");
+                                }
+                                if (String.IsNullOrWhiteSpace(_viewModel.UserAccount.Phone))
+                                {
+                                    allRequiredFieldsAreValid = false;
+                                    DisplayAlert("Missing Info", "The phone field is required", "Retry");
+                                }
+                                if (String.IsNullOrWhiteSpace(_viewModel.UserAccount.Email))
+                                {
+                                    allRequiredFieldsAreValid = false;
+                                    DisplayAlert("Missing Info", "The email field is required", "Retry");
+                                }
+                                if (String.IsNullOrWhiteSpace(_viewModel.ConfirmEmail)) // Better UX: require Confirm Email only if Email has changed !!
+                                {
+                                    allRequiredFieldsAreValid = false;
+                                    DisplayAlert("Missing Info", "The confirm email field is required", "Retry");
+                                }
+                                if (_viewModel.UserAccount.Email != _viewModel.ConfirmEmail)
+                                {
+                                    allRequiredFieldsAreValid = false;
+                                    DisplayAlert("Confirm Email Invalid", "The confirm email field is different from the email field", "Retry");
+                                }
+                                if (String.IsNullOrWhiteSpace(_viewModel.UserAccount.AddressLine1))
+                                {
+                                    allRequiredFieldsAreValid = false;
+                                    DisplayAlert("Missing Info", "The address 1 field is required", "Retry");
+                                }
+                                if (String.IsNullOrWhiteSpace(_viewModel.UserAccount.City))
+                                {
+                                    allRequiredFieldsAreValid = false;
+                                    DisplayAlert("Missing Info", "The city field is required", "Retry");
+                                }
+
+                                if (allRequiredFieldsAreValid)
+                                {
+                                    var result = await _viewModel.UpdateAccountInfo();
+                                    _toolbarItemIsEnabled = true;
+
+                                    if (result.Item1)
+                                    {
+                                        this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
+                                        this.Navigation.PopAsync(false); // Pop Registration page
+                                        this.Navigation.PopAsync(false); // Pop old AccountInfo page
+                                    }
+                                    else
+                                    {
+                                        DisplayAlert("Error", result.Item2, "Retry");    
+                                    }
                                 }
                                 else
                                 {
-                                    DisplayAlert("Error", result.Item2, "Retry");    
-                                } 
+                                    _toolbarItemIsEnabled = true;
+                                }
                             }
                         }
                     });
