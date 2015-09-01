@@ -7,6 +7,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Xamarin;
 using XLabs.Ioc;
 using XLabs.Platform.Services.Geolocation;
 
@@ -20,6 +21,9 @@ namespace Tap5050Buyer.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            Insights.Initialize("0b1f83db0942cb019d5dc57abfe89464310133c8", (Android.App.Activity)Xamarin.Forms.Forms.Context);
+            Insights.Track("Android start");
 
             if (!Resolver.IsSet)
             {
