@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Foundation;
 using UIKit;
+using Xamarin;
 
 namespace Tap5050Buyer.iOS
 {
@@ -13,6 +14,8 @@ namespace Tap5050Buyer.iOS
         {
             // if you want to use a different Application Delegate class from "AppDelegate"
             // you can specify it here.
+            Insights.Initialize("0b1f83db0942cb019d5dc57abfe89464310133c8");
+
             UIApplication.Main(args, null, "AppDelegate");
         }
     }
