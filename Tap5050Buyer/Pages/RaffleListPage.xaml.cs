@@ -20,8 +20,6 @@ namespace Tap5050Buyer
         public RaffleListPage(bool isLocationDetected, IList<RaffleLocation> raffleLocations, RaffleLocation userSelectedLocation, GeonamesCountrySubdivision countrySubdivision)
         {
             InitializeComponent();
-            NavigationPage.SetHasBackButton(this, false);
-
             Title = "Available Raffles";
 
             LocationDetected = isLocationDetected;

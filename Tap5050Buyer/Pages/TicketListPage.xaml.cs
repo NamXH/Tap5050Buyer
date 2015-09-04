@@ -6,6 +6,8 @@ namespace Tap5050Buyer
 {
     public partial class TicketListPage : ContentPage
     {
+        internal const string c_loadingMessage = "Loading your tickets.";
+
         private TicketListViewModel _viewModel;
 
         private StackLayout _layout;
@@ -16,6 +18,7 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             this.Title = "Your Raffles";
+            NavigationPage.SetBackButtonTitle(this, "Back");
 
             if (DatabaseManager.Token == null)
             {
@@ -51,6 +54,23 @@ namespace Tap5050Buyer
 
         public async void GetTicketsAndCreateList()
         {
+            // Show indicator while loading (can be refactored to be cleaner!!)
+            _layout = new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                Padding = new Thickness(20, 0, 20, 0),
+            };
+            _layout.Children.Add(new ActivityIndicator
+                {
+                    IsRunning = true
+                });
+            _layout.Children.Add(new Label
+                {
+                    Text = c_loadingMessage
+                });
+            this.Content = _layout;
+
             await _viewModel.LoadData(); // Can reduce app startup time by loading this data only when the Tickets tab is selected !!
             CreateList();
         }
