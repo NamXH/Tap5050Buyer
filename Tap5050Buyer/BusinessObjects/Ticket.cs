@@ -21,6 +21,13 @@ namespace Tap5050Buyer
             set;
         }
 
+        [JsonProperty(PropertyName = "has_jackpot")]
+        public string HasJackpot
+        {
+            get;
+            set;
+        }
+
         [JsonProperty(PropertyName = "event_id")]
         public int EventId
         {

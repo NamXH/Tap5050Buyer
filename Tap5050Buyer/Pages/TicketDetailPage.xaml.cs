@@ -77,23 +77,26 @@ namespace Tap5050Buyer
             #endregion
 
             #region Prize
-            var prizeDescription = new Label
+            if (firstTicket.HasJackpot == "Y")
             {
-                Text = firstTicket.PrizeDescription,
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                TextColor = Color.Green,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-            };
-            layout.Children.Add(prizeDescription);
+                var prizeDescription = new Label
+                {
+                    Text = firstTicket.PrizeDescription,
+                    FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                    TextColor = Color.Green,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                };
+                layout.Children.Add(prizeDescription);
 
-            var jackpotTotal = new Label
-            {
-                Text = "$" + firstTicket.JackpotTotal,
-                TextColor = Color.Red,
-                FontSize = 35,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-            };
-            layout.Children.Add(jackpotTotal);
+                var jackpotTotal = new Label
+                {
+                    Text = "$" + firstTicket.JackpotTotal,
+                    TextColor = Color.Red,
+                    FontSize = 35,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                };
+                layout.Children.Add(jackpotTotal);
+            }
             #endregion
 
             var labelWidthRequest = 128.00;
