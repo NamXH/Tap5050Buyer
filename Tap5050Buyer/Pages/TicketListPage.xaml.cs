@@ -47,7 +47,10 @@ namespace Tap5050Buyer
 
                 MessagingCenter.Subscribe<VerifyPhonePage>(this, "Verified", (sender) =>
                     {
-                        _layout.Children.Remove(_verifyButtonLayout);
+                        if (_verifyButtonLayout != null)
+                        {
+                            _layout.Children.Remove(_verifyButtonLayout);
+                        }
                     });
             }
         }
