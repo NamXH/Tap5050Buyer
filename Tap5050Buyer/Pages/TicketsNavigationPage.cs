@@ -9,11 +9,12 @@ namespace Tap5050Buyer
         public TicketsNavigationPage()
         {
             Title = "Tickets";
-            this.PushAsync(new TicketListPage());
+            Icon = "tickets.png";
 
+            this.PushAsync(new TicketListPage());
         }
 
-        // Doesn't work. Sometimes, PushAsync/PopAsync... doesn't update NavigationStack.Count
+        // Old implementation that doesn't work. Sometimes, PushAsync/PopAsync... doesn't update NavigationStack.Count
 //        private void Refresh()
 //        {
 //            var oldRoot = this.Navigation.NavigationStack.First();

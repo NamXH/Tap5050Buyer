@@ -8,6 +8,7 @@ namespace Tap5050Buyer
         public AccountInfoNavigationPage()
         {
             Title = "Account Info";
+            Icon = "icon_user.png";
 
             DatabaseManager.Token = DatabaseManager.GetFirstToken();
             if (DatabaseManager.Token == null)

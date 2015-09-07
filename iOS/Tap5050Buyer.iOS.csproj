@@ -189,6 +189,18 @@
     <BundleResource Include="Resources\twitter%401x.png" />
     <BundleResource Include="Resources\twitter%402x.png" />
     <BundleResource Include="Resources\twitter%403x.png" />
+    <BundleResource Include="Resources\cart%401x.png" />
+    <BundleResource Include="Resources\cart%402x.png" />
+    <BundleResource Include="Resources\cart%403x.png" />
+    <BundleResource Include="Resources\information%401x.png" />
+    <BundleResource Include="Resources\information%402x.png" />
+    <BundleResource Include="Resources\information%403x.png" />
+    <BundleResource Include="Resources\icon_user%401x.png" />
+    <BundleResource Include="Resources\icon_user%402x.png" />
+    <BundleResource Include="Resources\icon_user%403x.png" />
+    <BundleResource Include="Resources\tickets%401x.png" />
+    <BundleResource Include="Resources\tickets%402x.png" />
+    <BundleResource Include="Resources\tickets%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

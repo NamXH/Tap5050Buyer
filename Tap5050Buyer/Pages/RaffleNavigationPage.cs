@@ -8,6 +8,7 @@ namespace Tap5050Buyer
         public RaffleNavigationPage()
         {
             Title = "Raffle";
+            Icon = "cart.png";
             this.PushAsync(new RaffleListPage(LoadingLocationViewModel.IsLocationDetected, LoadingLocationViewModel.RaffleLocations, LoadingLocationViewModel.UserSelectedLocation, GeolocationManager.CountrySubdivision));
         }
     }
