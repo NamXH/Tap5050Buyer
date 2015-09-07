@@ -76,9 +76,6 @@
     <Compile Include="Pages\VerifyPhonePage.xaml.cs">
       <DependentUpon>VerifyPhonePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\VersionPage.xaml.cs">
-      <DependentUpon>VersionPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\TicketsNavigationPage.cs" />
     <Compile Include="BusinessObjects\Ticket.cs" />
     <Compile Include="BusinessObjects\Country.cs" />
@@ -99,6 +96,10 @@
       <DependentUpon>TicketDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\TicketDetailViewModel.cs" />
+    <Compile Include="Pages\AboutNavigationPage.cs" />
+    <Compile Include="Pages\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -196,13 +197,13 @@
     <EmbeddedResource Include="Pages\VerifyPhonePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\VersionPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="Pages\TicketListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\TicketDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\AboutPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
