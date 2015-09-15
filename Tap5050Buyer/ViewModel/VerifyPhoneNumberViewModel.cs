@@ -41,7 +41,7 @@ namespace Tap5050Buyer
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Error when authenticate:" + e.Message);
+                    throw new Exception("Error when authenticate: " + e.Message, e);
                 }
 
                 if (response.IsSuccessStatusCode)

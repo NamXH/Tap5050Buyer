@@ -48,7 +48,7 @@ namespace Tap5050Buyer
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Error when authenticate:" + e.Message);
+                    throw new Exception("Error when authenticate: " + e.Message, e);
                 }
 
                 if (response.IsSuccessStatusCode)
@@ -124,7 +124,7 @@ namespace Tap5050Buyer
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Error while resetting password :" + e.Message);
+                    throw new Exception("Error while resetting password: " + e.Message, e);
                 }
 
                 // BAD server api leads to this complexity!!

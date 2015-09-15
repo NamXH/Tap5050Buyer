@@ -35,7 +35,7 @@ namespace Tap5050Buyer
                 }
                 catch (Exception e)
                 {
-                    throw new Exception(String.Format("Error when sending Post request to {0}{1}: {2}", ServerBaseAddress, endpointUrl, e.Message));
+                    throw new Exception(String.Format("Error when sending Post request to {0}{1}: {2}", ServerBaseAddress, endpointUrl, e.Message), e);
                 }
 
                 if (response.IsSuccessStatusCode)

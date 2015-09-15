@@ -53,7 +53,7 @@ namespace Tap5050Buyer
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Error while retrieving account info:" + e.Message);
+                    throw new Exception("Error while retrieving tickets: " + e.Message, e);
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace Tap5050Buyer
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Error while retrieving account info:" + e.Message);
+                    throw new Exception("Error while retrieving account info: " + e.Message, e);
                 }
             }
         }
