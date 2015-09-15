@@ -9,11 +9,24 @@ namespace Tap5050Buyer
 {
     public class ContactsViewModel
     {
+        private const string c_smsMessageTemplate = "I am supporting {0} and I hope you will too by purchasing a raffle ticket at {1} if you are in {2}";
+        private static readonly string c_emailMessageTemplate = "Hey, I’m supporting {0} and it would be great if you supported them too. If you’re interested in helping, you can buy a raffle ticket at {1}. It’s a great cause and I thought you may be interested." + Environment.NewLine + Environment.NewLine + "BTW it’s only available for people that live in {2}." + Environment.NewLine + Environment.NewLine + "Talk soon,";
+
         public ObservableCollection<ExtendedContact> ExtendedContacts { get; set; }
 
-        public ContactsViewModel(IList<ExtendedContact> extendedContact)
+        public RaffleEvent Raffle { get; set; }
+
+        public ContactsViewModel(IList<ExtendedContact> extendedContact, RaffleEvent raffle)
         {
             ExtendedContacts = new ObservableCollection<ExtendedContact>(extendedContact.OrderBy(x => x.InnerContact.DisplayName).ToList());
+            if (raffle != null)
+            {
+                Raffle = raffle;
+            }
+            else
+            {
+                Raffle = new RaffleEvent();
+            }
         }
 
         public void SendSms()
@@ -29,7 +42,7 @@ namespace Tap5050Buyer
                 }
             }
 
-            socialShare.Sms("Testing", selectedContactNumbers.ToArray());
+            socialShare.Sms(String.Format(c_smsMessageTemplate, Raffle.Organization, Raffle.BuyTicketUrl, Raffle.LocationName), selectedContactNumbers.ToArray());
 
             MessagingCenter.Send<ContactsViewModel>(this, "Done");
         }
@@ -47,7 +60,7 @@ namespace Tap5050Buyer
                 }
             }
 
-            socialShare.Email("Testing", "abc", selectedContactNumbers.ToArray());
+            socialShare.Email(String.Format(c_emailMessageTemplate, Raffle.Organization, Raffle.BuyTicketUrl, Raffle.LocationName), Raffle.Organization, selectedContactNumbers.ToArray());
 
             MessagingCenter.Send<ContactsViewModel>(this, "Done");
         }

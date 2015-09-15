@@ -17,8 +17,8 @@ namespace Tap5050Buyer
         private const string c_facebookAppID = "838514282900661";
         private const string c_twitterAPIKey = "BDXgNpLtpotOT4vFqXLbg8cWE";
         private const string c_twitterSecret = "JGoVsaWvqpJS6HdVPlSVZ2tYloFaXDni7TFWhfthL1LJrsAgh7";
-        private const string c_facebookMessageTemplate = "I bought a {0} ticket from {1} to support the good they do in our community. If you would like a chance to win a great prize and support their efforts you can buy a ticket at {2}.";
-        // Raffle Name, Organization, ECOMMERCE SITE SHORTENED URL
+        private const string c_facebookMessageTemplate = "A big shout out to my fb friends: I am supporting {0} and I hope you will too by purchasing a raffle ticket at {1} if you are in {2}";
+        private const string c_twitterMessageTemplate = "I am supporting {0} and I hope you will too by purchasing a raffle ticket at {1} if you are in {2}";
 
         public bool LocationDetected { get; set; }
 
@@ -253,7 +253,7 @@ namespace Tap5050Buyer
             socialMediaLayout.Children.Add(facebookButton);
             facebookButton.Clicked += (sender, e) =>
             {
-                socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Name, raffle.Organization, raffle.BuyTicketUrl), raffle.BuyTicketUrl);
+                socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl);
             };
 
             var twitterButton = new ImageButton
@@ -266,7 +266,7 @@ namespace Tap5050Buyer
             socialMediaLayout.Children.Add(twitterButton);
             twitterButton.Clicked += (sender, e) =>
             {
-                socialShare.Twitter(c_twitterAPIKey, c_twitterSecret, String.Format(c_facebookMessageTemplate, raffle.Name, raffle.Organization, raffle.BuyTicketUrl), raffle.BuyTicketUrl);
+                socialShare.Twitter(c_twitterAPIKey, c_twitterSecret, String.Format(c_twitterMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl);
             };
 
             var smsButton = new ImageButton
@@ -290,7 +290,7 @@ namespace Tap5050Buyer
                         extendedContacts.Add(new ExtendedContact(contact));
                     }
 
-                    Navigation.PushAsync(new ContactsPage(extendedContacts, 0));
+                    Navigation.PushAsync(new ContactsPage(extendedContacts, 0, raffle));
                 }
             };
 
@@ -315,7 +315,7 @@ namespace Tap5050Buyer
                         extendedContacts.Add(new ExtendedContact(contact));
                     }
 
-                    Navigation.PushAsync(new ContactsPage(extendedContacts, 1));
+                    Navigation.PushAsync(new ContactsPage(extendedContacts, 1, raffle));
                 }
             };
 

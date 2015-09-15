@@ -10,11 +10,11 @@ namespace Tap5050Buyer
     {
         private ContactsViewModel _viewModel;
 
-        public ContactsPage(IList<ExtendedContact> contacts, int socialMediaMethod)
+        public ContactsPage(IList<ExtendedContact> contacts, int socialMediaMethod, RaffleEvent raffle)
         {
             InitializeComponent();
 
-            _viewModel = new ContactsViewModel(contacts);
+            _viewModel = new ContactsViewModel(contacts, raffle);
             BindingContext = _viewModel;
 
             Title = "Contacts";
