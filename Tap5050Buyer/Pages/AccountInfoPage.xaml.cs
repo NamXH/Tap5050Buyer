@@ -243,17 +243,49 @@ namespace Tap5050Buyer
             mediaLayout.Children.Add(mediaNote);
             #endregion
 
+            var buttonLayout = new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.Center,
+                Orientation = StackOrientation.Horizontal,
+            };
+            mainLayout.Children.Add(buttonLayout);
+
             var signOutButton = new Button
             {
-                Text = "Sign Out",
+                Text = "App Sign Out",
                 HorizontalOptions = LayoutOptions.Center,
+                BorderColor = Color.Accent,
+                BorderWidth = 1,
+                BorderRadius = 12,
+                HeightRequest = 46,
+                WidthRequest = 130,
             };
-            mainLayout.Children.Add(signOutButton);
+            buttonLayout.Children.Add(signOutButton);
             signOutButton.Clicked += (sender, e) =>
             {
                 _viewModel.SignOut();
                 this.Navigation.InsertPageBefore(new LoginPage(), this);
                 this.Navigation.PopAsync();
+            };
+
+            var resetSocialButton = new Button
+            {
+                Text = "Reset Social Media",
+                HorizontalOptions = LayoutOptions.Center,
+                BorderColor = Color.Accent,
+                BorderWidth = 1,
+                BorderRadius = 12,
+                HeightRequest = 46,
+                WidthRequest = 150,
+            };
+            buttonLayout.Children.Add(resetSocialButton);
+            resetSocialButton.Clicked += async (sender, e) =>
+            {
+                var answer = await DisplayAlert("Confirm", "Reset Facebook and Twitter Login?", "Yes", "No");
+                if (answer)
+                {
+                    DependencyService.Get<ISocialShare>().ResetLogin();
+                }
             };
         }
 
