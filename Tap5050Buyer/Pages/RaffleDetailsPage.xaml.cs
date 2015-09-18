@@ -29,6 +29,8 @@ namespace Tap5050Buyer
             InitializeComponent();
 
             Title = "Raffle Details";
+            NavigationPage.SetBackButtonTitle(this, "Back"); // Set back button title for the next page
+
             LocationDetected = locationDetected;
 
             foreach (var raffle in raffleEvents)
@@ -233,6 +235,7 @@ namespace Tap5050Buyer
                 layout.Children.Add(locationWarning);
             }
 
+            #region Social Share
             var socialShare = DependencyService.Get<ISocialShare>();
 
             var socialMediaLayout = new StackLayout
@@ -318,6 +321,7 @@ namespace Tap5050Buyer
                     Navigation.PushAsync(new ContactsPage(extendedContacts, 1, raffle));
                 }
             };
+            #endregion
 
             return page;
         }
