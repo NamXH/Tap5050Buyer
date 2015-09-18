@@ -10,7 +10,7 @@ namespace Tap5050Buyer
         public AboutPage()
         {
             InitializeComponent();
-            Title = "Buy Tickets v1.2";
+            Title = "Buy Tickets v1.3";
 
             var scroll = new ScrollView();
             Content = scroll;
