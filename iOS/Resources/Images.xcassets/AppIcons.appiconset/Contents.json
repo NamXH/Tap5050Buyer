@@ -1,34 +1,37 @@
 {
   "images": [
     {
-      "filename": "Icon-Small.png",
+      "filename": "29x29.png",
       "size": "29x29",
       "scale": "1x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-Small@2x.png",
+      "filename": "58x58.png",
       "size": "29x29",
       "scale": "2x",
       "idiom": "iphone"
     },
     {
+      "filename": "87x87.png",
       "size": "29x29",
       "scale": "3x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-Small-40@2x.png",
+      "filename": "80x80.png",
       "size": "40x40",
       "scale": "2x",
       "idiom": "iphone"
     },
     {
+      "filename": "120x120.png",
       "size": "40x40",
       "scale": "3x",
       "idiom": "iphone"
     },
     {
+      "filename": "57x57.png",
       "size": "57x57",
       "scale": "1x",
       "idiom": "iphone"
@@ -39,37 +42,37 @@
       "idiom": "iphone"
     },
     {
-      "filename": "TAP_120X120.png",
+      "filename": "120x120.png",
       "size": "60x60",
       "scale": "2x",
       "idiom": "iphone"
     },
     {
-      "filename": "TAP_180X180.png",
+      "filename": "180x180.png",
       "size": "60x60",
       "scale": "3x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-Small.png",
+      "filename": "29x29.png",
       "size": "29x29",
       "scale": "1x",
       "idiom": "ipad"
     },
     {
-      "filename": "Icon-Small@2x.png",
+      "filename": "58x58.png",
       "size": "29x29",
       "scale": "2x",
       "idiom": "ipad"
     },
     {
-      "filename": "Icon-Small-40.png",
+      "filename": "40x40.png",
       "size": "40x40",
       "scale": "1x",
       "idiom": "ipad"
     },
     {
-      "filename": "Icon-Small-40@2x.png",
+      "filename": "80x80.png",
       "size": "40x40",
       "scale": "2x",
       "idiom": "ipad"
@@ -95,13 +98,13 @@
       "idiom": "ipad"
     },
     {
-      "filename": "TAP_76X76.png",
+      "filename": "76x76.png",
       "size": "76x76",
       "scale": "1x",
       "idiom": "ipad"
     },
     {
-      "filename": "TAP_152X152.png",
+      "filename": "152x152.png",
       "size": "76x76",
       "scale": "2x",
       "idiom": "ipad"
