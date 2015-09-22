@@ -10,6 +10,7 @@ using Android.Widget;
 using Xamarin;
 using XLabs.Ioc;
 using XLabs.Platform.Services.Geolocation;
+using XLabs.Platform.Device;
 
 namespace Tap5050Buyer.Droid
 {
@@ -37,7 +38,8 @@ namespace Tap5050Buyer.Droid
         {
             var resolverContainer = new SimpleContainer();
 
-            resolverContainer.Register<IGeolocator, Geolocator>();
+            resolverContainer.Register<IGeolocator, Geolocator>()
+                .Register<IDevice>(t => AndroidDevice.CurrentDevice);
 
             Resolver.SetResolver(resolverContainer.GetResolver());
         }
