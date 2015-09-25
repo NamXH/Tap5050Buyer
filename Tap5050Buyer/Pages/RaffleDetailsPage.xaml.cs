@@ -18,7 +18,7 @@ namespace Tap5050Buyer
         private const string c_twitterAPIKey = "BDXgNpLtpotOT4vFqXLbg8cWE";
         private const string c_twitterSecret = "JGoVsaWvqpJS6HdVPlSVZ2tYloFaXDni7TFWhfthL1LJrsAgh7";
         private const string c_facebookMessageTemplate = "A big shout out to my fb friends: I am supporting {0} and I hope you will too by purchasing a raffle ticket at {1} if you are in {2}";
-        private const string c_twitterMessageTemplate = "I am supporting {0} and I hope you will too by purchasing a raffle ticket at {1} if you are in {2}";
+        private const string c_twitterMessageTemplate = "I am supporting {0} and I hope you will too by purchasing a raffle ticket at";
 
         public bool LocationDetected { get; set; }
 
@@ -268,7 +268,8 @@ namespace Tap5050Buyer
             socialMediaLayout.Children.Add(twitterButton);
             twitterButton.Clicked += (sender, e) =>
             {
-                socialShare.Twitter(c_twitterAPIKey, c_twitterSecret, String.Format(c_twitterMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl);
+                var orgName = raffle.Organization.Substring(0, Math.Min(raffle.Organization.Length, 40)); // Truncate the name if exceed 40 chars
+                socialShare.Twitter(c_twitterAPIKey, c_twitterSecret, String.Format(c_twitterMessageTemplate, orgName), raffle.BuyTicketUrl);
             };
 
             var smsButton = new ImageButton
