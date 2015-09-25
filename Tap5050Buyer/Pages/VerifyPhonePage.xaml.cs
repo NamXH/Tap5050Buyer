@@ -12,6 +12,7 @@ namespace Tap5050Buyer
         public VerifyPhonePage(string email, string phoneNumber, string countryCode)
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "Back");
             _tableView.Intent = TableIntent.Menu;
 
             // If use code instead of xaml, we don't have to remove just add the code after. However, this is good too.

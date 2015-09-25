@@ -13,6 +13,7 @@ namespace Tap5050Buyer
         public ContactsPage(IList<ExtendedContact> contacts, int socialMediaMethod, RaffleEvent raffle)
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "Back");
 
             _viewModel = new ContactsViewModel(contacts, raffle);
             BindingContext = _viewModel;

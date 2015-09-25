@@ -27,7 +27,6 @@ namespace Tap5050Buyer
         public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId)
         {
             InitializeComponent();
-
             Title = "Raffle Details";
             NavigationPage.SetBackButtonTitle(this, "Back"); // Set back button title for the next page
 

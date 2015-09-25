@@ -15,6 +15,7 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             Title = "Login to Your Account";
+            NavigationPage.SetBackButtonTitle(this, "Back");
 
             _viewModel = new LoginPageViewModel();
             this.BindingContext = _viewModel;

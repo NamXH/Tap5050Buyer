@@ -15,6 +15,7 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             Title = "Your Tickets";
+            NavigationPage.SetBackButtonTitle(this, "Back");
 
             _viewModel = new TicketDetailViewModel(tickets);
 

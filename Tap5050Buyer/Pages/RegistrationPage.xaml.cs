@@ -15,6 +15,7 @@ namespace Tap5050Buyer
         public RegistrationPage(bool isUpdate, Page parent, UserAccount userAccount = null)
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "Back");
             if (!isUpdate)
             {
                 Title = "Registration";

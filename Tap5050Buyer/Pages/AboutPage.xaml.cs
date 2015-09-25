@@ -11,6 +11,7 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             Title = "Buy Tickets v1.3";
+            NavigationPage.SetBackButtonTitle(this, "Back");
 
             var scroll = new ScrollView();
             Content = scroll;

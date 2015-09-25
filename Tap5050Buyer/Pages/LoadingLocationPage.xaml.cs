@@ -20,6 +20,7 @@ namespace Tap5050Buyer
         public LoadingLocationPage()
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "Back");
 
             _viewModel = new LoadingLocationViewModel();
             BindingContext = _viewModel;

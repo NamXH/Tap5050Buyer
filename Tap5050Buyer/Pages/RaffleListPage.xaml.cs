@@ -21,6 +21,7 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             Title = "Available Raffles";
+            NavigationPage.SetBackButtonTitle(this, "Back");
 
             LocationDetected = isLocationDetected;
             _viewModel = new RaffleListViewModel(isLocationDetected, raffleLocations, userSelectedLocation, countrySubdivision);
