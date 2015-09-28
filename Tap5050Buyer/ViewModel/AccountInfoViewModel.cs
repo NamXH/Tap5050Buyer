@@ -131,9 +131,9 @@ namespace Tap5050Buyer
                 {
                     response = await client.PostAsync(c_userApiAddress, content);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    throw new Exception("Error while creating new account!");
+                    throw new Exception("Error while creating new account!", e);
                 }
                 if (response.IsSuccessStatusCode)
                 {
