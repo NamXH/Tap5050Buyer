@@ -126,7 +126,7 @@ namespace Tap5050Buyer
             }
             catch (Exception e)
             {
-                throw new Exception("Error while getting countries: " + e.Message);
+                throw new Exception("Error while getting countries: " + e.Message, e);
             }
             var json = response.Content.ReadAsStringAsync().Result;
 
