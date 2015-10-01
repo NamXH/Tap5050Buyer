@@ -21,6 +21,7 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             NavigationPage.SetBackButtonTitle(this, "Back");
+            this.BackgroundImage = "test.png";
 
             _viewModel = new LoadingLocationViewModel();
             BindingContext = _viewModel;
