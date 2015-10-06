@@ -121,6 +121,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SocialShareAndroid.cs" />
     <Compile Include="Database\SqliteAndroid.cs" />
+    <Compile Include="SplashActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -148,7 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\email.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\facebook.png" />
     <AndroidResource Include="Resources\drawable-hdpi\sms.png" />
     <AndroidResource Include="Resources\drawable-hdpi\twitter.png" />
     <AndroidResource Include="Resources\drawable\icon.png" />
@@ -156,5 +156,9 @@
     <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable\globe.png" />
+    <AndroidResource Include="Resources\drawable\splash.png" />
+    <AndroidResource Include="Resources\values\Styles.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\facebook.png" />
+    <AndroidResource Include="Resources\drawable\app_icon.png" />
   </ItemGroup>
 </Project>
