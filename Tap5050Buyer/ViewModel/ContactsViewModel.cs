@@ -44,7 +44,7 @@ namespace Tap5050Buyer
 
             socialShare.Sms(String.Format(c_smsMessageTemplate, Raffle.Organization, Raffle.BuyTicketUrl, Raffle.LocationName), selectedContactNumbers.ToArray());
 
-            MessagingCenter.Send<ContactsViewModel>(this, "Done");
+//            MessagingCenter.Send<ContactsViewModel>(this, "Done"); // Previously used to pop the contact list page
         }
 
         public void SendEmails()
@@ -62,7 +62,7 @@ namespace Tap5050Buyer
 
             socialShare.Email(String.Format(c_emailMessageTemplate, Raffle.Organization, Raffle.BuyTicketUrl, Raffle.LocationName), Raffle.Organization, selectedContactNumbers.ToArray());
 
-            MessagingCenter.Send<ContactsViewModel>(this, "Done");
+//            MessagingCenter.Send<ContactsViewModel>(this, "Done");
         }
     }
 }
