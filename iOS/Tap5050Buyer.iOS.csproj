@@ -230,16 +230,12 @@
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small%402x.png" />
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small-40.png" />
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small-40%402x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\TAP_120X120.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Contents.json" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-568h%402x.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_640X960.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_640X1136.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_1242X2208.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_750X1334.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\TAP_180X180.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\TAP_76X76.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\TAP_152X152.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\tap_2208X1242.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\TAP_768X1024.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\TAP_1536X2048.png" />
