@@ -21,7 +21,6 @@ namespace Tap5050Buyer
         {
             InitializeComponent();
             NavigationPage.SetBackButtonTitle(this, "Back");
-            this.BackgroundImage = "test.png";
 
             _viewModel = new LoadingLocationViewModel();
             BindingContext = _viewModel;
@@ -57,22 +56,37 @@ namespace Tap5050Buyer
 
         private void RemoveAllElement()
         {
-            var count = layout.Children.Count - 1;
+            var count = _layout.Children.Count - 1;
             for (int i = count; i >= 0; i--)
             {
-                layout.Children.RemoveAt(i);
+                _layout.Children.RemoveAt(i);
             }
         }
 
         private void AddActivityIndicator()
         {
-            layout.Children.Add(new ActivityIndicator
+            var img = new Image
+            {
+                Aspect = Aspect.AspectFit,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+            };
+            img.Source = "globe.png";
+
+            _layout.Children.Add(img);
+
+            _layout.Children.Add(new ActivityIndicator
                 {
-                    IsRunning = true
+                    IsRunning = true,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center,
                 });
-            layout.Children.Add(new Label
+            
+            _layout.Children.Add(new Label
                 {
-                    Text = c_loadingMessage
+                    Text = c_loadingMessage,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center,
                 });
         }
 
@@ -96,8 +110,8 @@ namespace Tap5050Buyer
                 LoadInfo();
             };
 
-            layout.Children.Add(label);
-            layout.Children.Add(tryAgainButton);
+            _layout.Children.Add(label);
+            _layout.Children.Add(tryAgainButton);
         }
 
         private void AddLocationPicker()
@@ -106,14 +120,14 @@ namespace Tap5050Buyer
             {
                 Text = c_cannotDetectGeolocationMessage,
             };
-            layout.Children.Add(label);
+            _layout.Children.Add(label);
 
             var picker = new Picker
             {
                 Title = "Province",
                 BindingContext = LoadingLocationViewModel.UserSelectedLocation,
             };
-            layout.Children.Add(picker);
+            _layout.Children.Add(picker);
 
             foreach (var location in LoadingLocationViewModel.RaffleLocations)
             {
@@ -125,7 +139,7 @@ namespace Tap5050Buyer
             {
                 Text = "Next",
             };
-            layout.Children.Add(button);
+            _layout.Children.Add(button);
             button.Clicked += (sender, e) =>
             {
                 MessagingCenter.Send<LoadingLocationPage>(this, "Success");

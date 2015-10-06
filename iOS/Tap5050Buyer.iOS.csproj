@@ -201,7 +201,7 @@
     <BundleResource Include="Resources\tickets%401x.png" />
     <BundleResource Include="Resources\tickets%402x.png" />
     <BundleResource Include="Resources\tickets%403x.png" />
-    <BundleResource Include="Resources\test.png" />
+    <BundleResource Include="Resources\globe.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
