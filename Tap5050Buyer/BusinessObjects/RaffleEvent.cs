@@ -6,13 +6,15 @@ namespace Tap5050Buyer
     public class RaffleEvent
     {
         [JsonProperty(PropertyName = "event_id")]
-        public int Id {
+        public int Id
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "event_name")]
-        public string Name {
+        public string Name
+        {
             get;
             set;
         }
@@ -25,67 +27,92 @@ namespace Tap5050Buyer
         }
 
         [JsonProperty(PropertyName = "has_jackpot")]
-        public string HasJackpot {
+        public string HasJackpot
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "prize_url")]
-        public string PrizeUrl {
+        public string PrizeUrl
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "jackpot_description")]
-        public string JackpotDescription {
+        public string JackpotDescription
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "buy_ticket_url")]
-        public string BuyTicketUrl {
+        public string BuyTicketUrl
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "image_url")]
-        public string ImageUrl {
+        public string ImageUrl
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "jackpot_total")]
-        public string JackpotTotal {
+        public string JackpotTotal
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "user_id")]
-        public string UserId {
+        public string UserId
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "organization")]
-        public string Organization {
+        public string Organization
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "location_name")]
-        public string LocationName {
+        public string LocationName
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "location_id")]
-        public string LocationId {
+        public string LocationId
+        {
             get;
             set;
         }
 
         [JsonProperty(PropertyName = "licence_number")]
-        public string LicenceNumber {
+        public string LicenceNumber
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "event_type")]
+        public string EventType
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty(PropertyName = "master_event_id")]
+        public int MasterEventId
+        {
             get;
             set;
         }

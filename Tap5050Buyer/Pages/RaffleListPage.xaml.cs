@@ -28,7 +28,7 @@ namespace Tap5050Buyer
 
             var locationPicker = new Picker();
             locationPicker.HorizontalOptions = LayoutOptions.Center;
-            layout.Children.Add(locationPicker);
+            _layout.Children.Add(locationPicker);
 
             locationPicker.Items.Add(_viewModel.LocationName);
             locationPicker.SelectedIndex = 0;
@@ -36,7 +36,7 @@ namespace Tap5050Buyer
 
             if (_viewModel.RaffleLocation == null) // only happen when locationDetected == true
             {
-                layout.Children.Add(new StackLayout
+                _layout.Children.Add(new StackLayout
                     {
                         Children =
                         { new Label
@@ -85,19 +85,32 @@ namespace Tap5050Buyer
         // Should refactor later to become a better MVVM architecture!! Use TicketListPage as a reference !!
         public void CreateRaffleEventList(IList<RaffleEvent> raffleEvents)
         {
+            var nonSlaveEvents = raffleEvents.Where(x => x.EventType != "slave");
+            var normalEvents = raffleEvents.Where(x => x.EventType == "normal");
+
             var raffleEventListView = new ListView();
-            raffleEventListView.ItemsSource = raffleEvents;
+            raffleEventListView.ItemsSource = nonSlaveEvents;
             raffleEventListView.ItemTemplate = new DataTemplate(typeof(RaffleEventCell));
             raffleEventListView.ItemSelected += (sender, e) =>
             {
                 if (e.SelectedItem != null)
                 {
-                    // PushAsync a new RaffleDetailsPage instead of creating one and reuse it: to workaround a bug in Carousel + TabbedPage in iOS !!
-                    this.Navigation.PushAsync(new RaffleDetailsPage(LocationDetected, raffleEvents, ((RaffleEvent)e.SelectedItem).Id));
-                    raffleEventListView.SelectedItem = null;
+                    var selectedEvent = (RaffleEvent)e.SelectedItem;
+
+                    if (selectedEvent.EventType == "normal")
+                    {
+                        // PushAsync a new RaffleDetailsPage instead of creating one and reuse it: to workaround a bug in Carousel + TabbedPage in iOS !!
+                        this.Navigation.PushAsync(new RaffleDetailsPage(LocationDetected, normalEvents, selectedEvent.Id));
+                        raffleEventListView.SelectedItem = null;
+                    }
+                    else // EventType = "master"
+                    {
+                        var slaveEvents = raffleEvents.Where(x => (x.EventType == "slave") && (x.MasterEventId == selectedEvent.Id));
+                        this.Navigation.PushAsync(new SlaveEventsPage(LocationDetected, slaveEvents));
+                    }
                 }
             };
-            layout.Children.Add(raffleEventListView);
+            _layout.Children.Add(raffleEventListView);
         }
     }
 

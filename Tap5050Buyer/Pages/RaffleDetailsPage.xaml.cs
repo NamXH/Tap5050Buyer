@@ -24,7 +24,7 @@ namespace Tap5050Buyer
 
         public Color BackgroundColor { get; set; }
 
-        public RaffleDetailsPage(bool locationDetected, IList<RaffleEvent> raffleEvents, int selectedRaffleId)
+        public RaffleDetailsPage(bool locationDetected, IEnumerable<RaffleEvent> raffleEvents, int selectedRaffleId)
         {
             InitializeComponent();
             Title = "Raffle Details";
