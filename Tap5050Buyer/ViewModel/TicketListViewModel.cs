@@ -26,35 +26,45 @@ namespace Tap5050Buyer
 
         public async Task<List<Ticket>> GetTickets()
         {
-            using (var client = new HttpClient())
+            if (DatabaseManager.Token == null)
             {
-                client.BaseAddress = new Uri(c_serverBaseAddress);
+                throw new Exception("Token is null while trying to retrieve tickets!");
+            }
 
-                HttpResponseMessage response = null;
-                try // should be more fine grain maybe !!
+            var result = await ServerCaller.ExtendTokenAsync(DatabaseManager.Token.Value);
+
+            if (result.Item1)
+            {
+                using (var client = new HttpClient())
                 {
-                    if (DatabaseManager.Token == null)
+                    client.BaseAddress = new Uri(c_serverBaseAddress);
+
+                    HttpResponseMessage response = null;
+                    try // should be more fine grain maybe !!
                     {
-                        throw new Exception("Token is null while trying to retrieve tickets!");
+                        var url = c_ticketsApiAddress + "?token_id=" + DatabaseManager.Token.Value;
+                        response = await client.GetAsync(url);
+
+                        var json = response.Content.ReadAsStringAsync().Result;
+
+                        var obj = JsonConvert.DeserializeObject<JObject>(json);
+                        var items = obj["items"];
+                        if (items != null)
+                        {
+                            return JsonConvert.DeserializeObject<List<Ticket>>(items.ToString());
+                        }
+                        return null; 
                     }
-
-                    var url = c_ticketsApiAddress + "?token_id=" + DatabaseManager.Token.Value;
-                    response = await client.GetAsync(url);
-
-                    var json = response.Content.ReadAsStringAsync().Result;
-
-                    var obj = JsonConvert.DeserializeObject<JObject>(json);
-                    var items = obj["items"];
-                    if (items != null)
+                    catch (Exception e)
                     {
-                        return JsonConvert.DeserializeObject<List<Ticket>>(items.ToString());
+                        throw new Exception("Error while retrieving tickets: " + e.Message, e);
                     }
-                    return null; 
                 }
-                catch (Exception e)
-                {
-                    throw new Exception("Error while retrieving tickets: " + e.Message, e);
-                }
+            }
+            else
+            {
+                // Handle invalid or expired token !!
+                return null;
             }
         }
 

@@ -76,6 +76,25 @@ namespace Tap5050Buyer
                 }
             } 
         }
+
+        public static async Task<Tuple<bool, string>> ExtendTokenAsync(string token)
+        {
+            var queryString = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("token_id", token),
+            };
+
+            var body = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("nothing", ""), // Has to do this since our server's api use a POST without body
+            };
+
+            var endpointUrl = "apex/tap5050_dev/Mobile_Web_Serv/check_token_validation";
+
+            var response = await ServerCaller.PostAsync(queryString, body, endpointUrl);
+
+            return response;
+        }
     }
 }
 
