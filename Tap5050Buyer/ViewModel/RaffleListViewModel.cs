@@ -48,7 +48,7 @@ namespace Tap5050Buyer
             {
                 response = await client.GetAsync(c_serverEventApiAddress + "?location=" + locationName);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }
