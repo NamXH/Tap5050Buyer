@@ -5,6 +5,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Text;
+using System.IO;
 
 namespace Tap5050Buyer
 {
@@ -40,27 +43,45 @@ namespace Tap5050Buyer
 
         public async Task<List<RaffleEvent>> GetRaffleEventsAtLocation(string locationName)
         {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(c_serverBaseAddress);
+            var url = c_serverBaseAddress + c_serverEventApiAddress + "?location=" + locationName;
 
-            HttpResponseMessage response = null;
-            try
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            var response = (HttpWebResponse)await Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null);
+
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                response = await client.GetAsync(c_serverEventApiAddress + "?location=" + locationName);
+                StringBuilder stringBuilder = new StringBuilder(); 
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null) // Follow Nan Chen's Tap5050Seller app solution
+                    {
+                        stringBuilder.Append(line);
+                    }
+                }
+                var json = stringBuilder.ToString();  
+
+                JObject obj;
+                try
+                {
+                    obj = JsonConvert.DeserializeObject<JObject>(json);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Error when deserializing server json.", e);
+                }
+
+                var items = obj["items"];
+                if (items != null)
+                {
+                    return JsonConvert.DeserializeObject<List<RaffleEvent>>(items.ToString());
+                }
+                return null; 
             }
-            catch (Exception e)
+            else
             {
                 return null;
             }
-            var json = response.Content.ReadAsStringAsync().Result;
-
-            var obj = JsonConvert.DeserializeObject<JObject>(json);
-            var items = obj["items"];
-            if (items != null)
-            {
-                return JsonConvert.DeserializeObject<List<RaffleEvent>>(items.ToString());
-            }
-            return null; 
         }
 
         public RaffleLocation MatchRaffleLocationWithCountrySubdivision(IList<RaffleLocation> raffleLocations, GeonamesCountrySubdivision countrySubdivision)
