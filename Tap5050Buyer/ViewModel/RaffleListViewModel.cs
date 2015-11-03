@@ -46,6 +46,10 @@ namespace Tap5050Buyer
             var url = c_serverBaseAddress + c_serverEventApiAddress + "?location=" + locationName;
 
             var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/x-www-form-urlencoded";
+            // request.ProtocolVersion is not PCL compatible
+
             var response = (HttpWebResponse)await Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null);
 
             if (response.StatusCode == HttpStatusCode.OK)

@@ -11,7 +11,7 @@ namespace Tap5050Buyer
         public SlaveEventsPage(bool isLocationDetected, IEnumerable<RaffleEvent> raffleEvents)
         {
             InitializeComponent();
-            Title = "Child Events";
+            Title = "Choose Charity";
             NavigationPage.SetBackButtonTitle(this, "Back");
 
             if ((raffleEvents != null) && (raffleEvents.Any()))
