@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text;
 using System.IO;
+using Xamarin.Forms;
 
 namespace Tap5050Buyer
 {
@@ -44,48 +45,24 @@ namespace Tap5050Buyer
         public async Task<List<RaffleEvent>> GetRaffleEventsAtLocation(string locationName)
         {
             var url = c_serverBaseAddress + c_serverEventApiAddress + "?location=" + locationName;
+            var json = await DependencyService.Get<IWebRequestProtocolVersion10>().GetResponseStringAsync(url);
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "application/x-www-form-urlencoded";
-            // request.ProtocolVersion is not PCL compatible
-
-            var response = (HttpWebResponse)await Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null);
-
-            if (response.StatusCode == HttpStatusCode.OK)
+            JObject obj;
+            try
             {
-                StringBuilder stringBuilder = new StringBuilder(); 
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                {
-                    string line;
-                    while ((line = reader.ReadLine()) != null) // Follow Nan Chen's Tap5050Seller app solution
-                    {
-                        stringBuilder.Append(line);
-                    }
-                }
-                var json = stringBuilder.ToString();  
-
-                JObject obj;
-                try
-                {
-                    obj = JsonConvert.DeserializeObject<JObject>(json);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Error when deserializing server json.", e);
-                }
-
-                var items = obj["items"];
-                if (items != null)
-                {
-                    return JsonConvert.DeserializeObject<List<RaffleEvent>>(items.ToString());
-                }
-                return null; 
+                obj = JsonConvert.DeserializeObject<JObject>(json);
             }
-            else
+            catch (Exception e)
             {
-                return null;
+                throw new Exception("Error when deserializing server json for events.", e);
             }
+            
+            var items = obj["items"];
+            if (items != null)
+            {
+                return JsonConvert.DeserializeObject<List<RaffleEvent>>(items.ToString());
+            }
+            return null; 
         }
 
         public RaffleLocation MatchRaffleLocationWithCountrySubdivision(IList<RaffleLocation> raffleLocations, GeonamesCountrySubdivision countrySubdivision)

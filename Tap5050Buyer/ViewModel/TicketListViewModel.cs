@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace Tap5050Buyer
 {
@@ -35,31 +36,25 @@ namespace Tap5050Buyer
 
             if (result.Item1)
             {
-                using (var client = new HttpClient())
+                var url = c_serverBaseAddress + c_ticketsApiAddress + "?token_id=" + DatabaseManager.Token.Value;
+                var json = await DependencyService.Get<IWebRequestProtocolVersion10>().GetResponseStringAsync(url);
+
+                JObject obj;
+                try
                 {
-                    client.BaseAddress = new Uri(c_serverBaseAddress);
-
-                    HttpResponseMessage response = null;
-                    try // should be more fine grain maybe !!
-                    {
-                        var url = c_ticketsApiAddress + "?token_id=" + DatabaseManager.Token.Value;
-                        response = await client.GetAsync(url);
-
-                        var json = response.Content.ReadAsStringAsync().Result;
-
-                        var obj = JsonConvert.DeserializeObject<JObject>(json);
-                        var items = obj["items"];
-                        if (items != null)
-                        {
-                            return JsonConvert.DeserializeObject<List<Ticket>>(items.ToString());
-                        }
-                        return null; 
-                    }
-                    catch (Exception e)
-                    {
-                        throw new Exception("Error while retrieving tickets: " + e.Message, e);
-                    }
+                    obj = JsonConvert.DeserializeObject<JObject>(json);
                 }
+                catch (Exception e)
+                {
+                    throw new Exception("Error when deserializing server json for tickets.", e);
+                }
+
+                var items = obj["items"];
+                if (items != null)
+                {
+                    return JsonConvert.DeserializeObject<List<Ticket>>(items.ToString());
+                }
+                return null; 
             }
             else
             {

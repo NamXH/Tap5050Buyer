@@ -55,6 +55,8 @@
     <MtouchProfiling>true</MtouchProfiling>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
+    <IpaPackageName>
+    </IpaPackageName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -213,6 +215,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="SocialShareIOS.cs" />
     <Compile Include="Database\SqliteIOS.cs" />
+    <Compile Include="WebRequestProtocolVersion10.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork" />
