@@ -276,7 +276,7 @@ namespace Tap5050Buyer
                 BorderColor = Color.Accent,
                 BorderWidth = 1,
                 BorderRadius = 12,
-                HeightRequest = 46,
+                MinimumHeightRequest = 46,
                 WidthRequest = 150,
             };
             buttonLayout.Children.Add(resetSocialButton);

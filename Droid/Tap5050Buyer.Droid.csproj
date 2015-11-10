@@ -172,7 +172,7 @@
     <AndroidResource Include="Resources\drawable\globe.png" />
     <AndroidResource Include="Resources\drawable\splash.png" />
     <AndroidResource Include="Resources\values\Styles.xml" />
-    <AndroidResource Include="Resources\drawable-hdpi\facebook.png" />
     <AndroidResource Include="Resources\drawable\app_icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\facebook.png" />
   </ItemGroup>
 </Project>
