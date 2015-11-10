@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Net;
-using Tap5050Buyer.iOS;
+using Tap5050Buyer.Droid;
 using System.Threading.Tasks;
+using System.Net;
 using System.Text;
 using System.IO;
 
 [assembly: Xamarin.Forms.Dependency(typeof(WebRequestProtocolVersion10))]
-namespace Tap5050Buyer.iOS
+namespace Tap5050Buyer.Droid
 {
     public class WebRequestProtocolVersion10 : IWebRequestProtocolVersion10
     {
@@ -43,3 +43,4 @@ namespace Tap5050Buyer.iOS
         }
     }
 }
+
