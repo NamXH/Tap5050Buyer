@@ -128,6 +128,7 @@ namespace Tap5050Buyer
                         throw new Exception("Token is null while trying to retrieve data!");
                     }
 
+                    // Don't have to worry about expired token here since we have handled it in GetTickets()
                     var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token.Value;
                     response = await client.GetAsync(url);
 

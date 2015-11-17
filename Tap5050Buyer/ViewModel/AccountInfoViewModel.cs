@@ -42,7 +42,7 @@ namespace Tap5050Buyer
             }
         }
 
-        public async Task GetAccountInfo()
+        public async Task<bool> GetAccountInfo()
         {
             using (var client = new HttpClient())
             {
@@ -56,24 +56,46 @@ namespace Tap5050Buyer
                         throw new Exception("Token is null while trying to retrieve data!");
                     }
 
-                    var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token.Value;
-                    response = await client.GetAsync(url);
+                    var result = await ServerCaller.ExtendTokenAsync(DatabaseManager.Token.Value);
 
-                    var json = response.Content.ReadAsStringAsync().Result;
-
-                    UserAccount = JsonConvert.DeserializeObject<UserAccount>(json);
-
-                    // Translate from code to full name
-                    var country = DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryCode == UserAccount.CountryCode).FirstOrDefault();
-                    if (country != null)
+                    if (!result.Item1)
                     {
-                        UserAccount.Country = country.CountryName;
+                        var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token.Value;
+                        response = await client.GetAsync(url);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var json = response.Content.ReadAsStringAsync().Result;
+
+                            UserAccount = JsonConvert.DeserializeObject<UserAccount>(json);
+
+                            // Translate from code to full name
+                            var country = DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryCode == UserAccount.CountryCode).FirstOrDefault();
+                            if (country != null)
+                            {
+                                UserAccount.Country = country.CountryName;
+                            }
+
+                            var province = DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceAbbreviation == UserAccount.ProvinceAbbreviation).FirstOrDefault();
+                            if (province != null)
+                            {
+                                UserAccount.Province = province.ProvinceName;
+                            }
+
+                            return true;
+                        }
+                        else
+                        {
+                            // Handle unsuccessful requests
+                            return false;
+                        }
                     }
-
-                    var province = DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceAbbreviation == UserAccount.ProvinceAbbreviation).FirstOrDefault();
-                    if (province != null)
+                    else
                     {
-                        UserAccount.Province = province.ProvinceName;
+                        // Expired token
+                        DatabaseManager.DeleteToken();
+                        MessagingCenter.Send<AccountInfoViewModel>(this, "Token Deleted");
+                        return false;
                     }
                 }
                 catch (Exception e)
@@ -216,7 +238,7 @@ namespace Tap5050Buyer
         public void SignOut()
         {
             DatabaseManager.DeleteToken();
-            MessagingCenter.Send<AccountInfoViewModel> (this, "Logout");
+            MessagingCenter.Send<AccountInfoViewModel>(this, "Logout");
         }
     }
 }
