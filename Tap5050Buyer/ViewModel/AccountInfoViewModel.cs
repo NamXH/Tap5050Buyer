@@ -42,6 +42,18 @@ namespace Tap5050Buyer
             }
         }
 
+        public bool PhoneNumberHasNotChanged()
+        {
+            if (UserAccountCopy == null)
+            {
+                return false;
+            }
+            else
+            {
+                return UserAccount.Phone == UserAccountCopy.Phone;
+            }
+        }
+
         public async Task<bool> GetAccountInfo()
         {
             using (var client = new HttpClient())
@@ -58,7 +70,7 @@ namespace Tap5050Buyer
 
                     var result = await ServerCaller.ExtendTokenAsync(DatabaseManager.Token.Value);
 
-                    if (!result.Item1)
+                    if (result.Item1)
                     {
                         var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token.Value;
                         response = await client.GetAsync(url);
@@ -86,7 +98,7 @@ namespace Tap5050Buyer
                         }
                         else
                         {
-                            // Handle unsuccessful requests
+                            // Handle unsuccessful requests!!
                             return false;
                         }
                     }

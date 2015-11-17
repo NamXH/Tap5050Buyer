@@ -22,12 +22,12 @@ namespace Tap5050Buyer
             _viewModel = new AccountInfoViewModel();
             this.BindingContext = _viewModel;
 
+            LoadData(); // Load here to check token expiration before doing other things
+
             this.ToolbarItems.Add(new ToolbarItem("Edit", null, () =>
                     {
                         this.Navigation.PushAsync(new RegistrationPage(true, this, new UserAccount(_viewModel.UserAccount)));
                     }));
-
-            LoadData();
 
             MessagingCenter.Subscribe<VerifyPhonePage>(this, "Verified", (sender) =>
                 {

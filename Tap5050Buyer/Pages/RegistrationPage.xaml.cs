@@ -281,6 +281,12 @@ namespace Tap5050Buyer
 
                                     if (result.Item1)
                                     {
+                                        // Refresh the ticket list page when phone number changes
+                                        if (!_viewModel.PhoneNumberHasNotChanged()) // 2 negative statements, a bit ugly
+                                        {
+                                            MessagingCenter.Send<RegistrationPage>(this, "Phone Number Changed");
+                                        }
+
                                         this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
                                         this.Navigation.PopAsync(false); // Pop Registration page
                                         this.Navigation.PopAsync(false); // Pop old AccountInfo page

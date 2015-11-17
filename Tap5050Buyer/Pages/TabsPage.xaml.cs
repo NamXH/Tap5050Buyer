@@ -24,6 +24,11 @@ namespace Tap5050Buyer
                     RefreshTicketsTab();
                 });
 
+            MessagingCenter.Subscribe<RegistrationPage>(this, "Phone Number Changed", (sender) =>
+                {
+                    RefreshTicketsTab();
+                });
+
             // We can group these token check request into one request at the beginning of the application!!
             MessagingCenter.Subscribe<TicketListViewModel>(this, "Token Deleted", (sender) =>
                 {

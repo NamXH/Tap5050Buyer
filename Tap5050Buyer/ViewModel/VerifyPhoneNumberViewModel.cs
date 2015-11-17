@@ -32,6 +32,8 @@ namespace Tap5050Buyer
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(c_serverBaseAddress);
+
+                // No need to check token expiration here since it has just been checked in AccountInfoVM, TicketListVM
                 var url = c_requestPhoneVerificationApiAddress + "?token_id=" + DatabaseManager.Token.Value;
 
                 HttpResponseMessage response = null;
