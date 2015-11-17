@@ -12,7 +12,7 @@ namespace Tap5050Buyer
 {
     public static class GeolocationManager
     {
-        private static readonly string _geonamesUsername = "namhoang";
+        private static readonly string _geonamesUsername = "cohagan";
         private static readonly string _reverseGeocodingServiceBaseUri = "http://api.geonames.org/";
 
         private static IGeolocator _geolocator;
