@@ -22,7 +22,7 @@ namespace Tap5050Buyer
 
             if (DatabaseManager.Token == null)
             {
-                var layout = new StackLayout
+                var warningLayout = new StackLayout
                 {
                     Children =
                     { new Label
@@ -35,8 +35,8 @@ namespace Tap5050Buyer
                     Padding = new Thickness(20, 0, 20, 0),
                     VerticalOptions = LayoutOptions.CenterAndExpand,
                 };
-
-                this.Content = layout;
+                
+                this.Content = warningLayout;
             }
             else
             {
@@ -82,7 +82,7 @@ namespace Tap5050Buyer
         {
             _layout = new StackLayout();
 
-            if ((_viewModel.UserAccount != null) & (_viewModel.UserAccount.MobilePhoneVerified == "N"))
+            if ((_viewModel.UserAccount != null) && (_viewModel.UserAccount.MobilePhoneVerified == "N"))
             {
                 _verifyButtonLayout = new StackLayout
                 {

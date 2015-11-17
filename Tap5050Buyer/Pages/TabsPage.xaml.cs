@@ -22,6 +22,11 @@ namespace Tap5050Buyer
                 {
                     RefreshTicketsTab();
                 });
+
+            MessagingCenter.Subscribe<TicketListViewModel>(this, "Token Deleted", (sender) =>
+                {
+                    RefreshTicketsTab(); // If we don't want to remove the whole page, we can modify TicketListPage directly
+                });
         }
 
         public void RefreshTicketsTab()

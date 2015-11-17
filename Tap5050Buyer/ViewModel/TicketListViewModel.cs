@@ -59,6 +59,8 @@ namespace Tap5050Buyer
             else
             {
                 // Handle invalid or expired token !!
+                DatabaseManager.DeleteToken();
+                MessagingCenter.Send<TicketListViewModel>(this, "Token Deleted");
                 return null;
             }
         }
@@ -67,23 +69,23 @@ namespace Tap5050Buyer
         {
             Tickets = await GetTickets();
 
-            foreach (var ticket in Tickets)
-            {
-                if (!String.IsNullOrWhiteSpace(ticket.TicketNumbersString))
-                {
-                    ticket.TicketNumbers = ticket.TicketNumbersString.Trim().Split(' ').ToList();
-                }
-
-                if (!String.IsNullOrWhiteSpace(ticket.WinningNumbersString))
-                {
-                    ticket.WinningNumbers = ticket.WinningNumbersString.Trim().Split(' ').ToList();
-                }
-            }
-
-            await GetAccountInfo(); // Not very good here!! We get Account Info here only to check if his phone has been verified or not!!
-
             if (Tickets != null)
             {
+                foreach (var ticket in Tickets)
+                {
+                    if (!String.IsNullOrWhiteSpace(ticket.TicketNumbersString))
+                    {
+                        ticket.TicketNumbers = ticket.TicketNumbersString.Trim().Split(' ').ToList();
+                    }
+
+                    if (!String.IsNullOrWhiteSpace(ticket.WinningNumbersString))
+                    {
+                        ticket.WinningNumbers = ticket.WinningNumbersString.Trim().Split(' ').ToList();
+                    }
+                }
+
+                await GetAccountInfo(); // Not very good here!! We get Account Info here only to check if his phone has been verified or not!!
+
                 var raffleEventForTicketsDic = new Dictionary<int, RaffleEventForTickets>();
 
                 foreach (var ticket in Tickets)
@@ -105,6 +107,10 @@ namespace Tap5050Buyer
                 }
 
                 EventForTicketsList = raffleEventForTicketsDic.Values;
+            }
+            else
+            {
+                EventForTicketsList = Enumerable.Empty<RaffleEventForTickets>();
             }
         }
 
