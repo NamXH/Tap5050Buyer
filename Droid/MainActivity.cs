@@ -14,7 +14,7 @@ using XLabs.Platform.Device;
 
 namespace Tap5050Buyer.Droid
 {
-    [Activity(Label = "RaffleWallet", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, Theme = "@android:style/Theme.Holo.Light")]
+    [Activity(Label = "RaffleWallet", Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, Theme = "@android:style/Theme.Holo.Light")]
     public class MainActivity : XLabs.Forms.XFormsApplicationDroid
     {
         protected override void OnCreate(Bundle bundle)
