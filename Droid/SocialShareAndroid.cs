@@ -50,7 +50,6 @@ namespace Tap5050Buyer.Droid
             {
                 email.PutExtra(Android.Content.Intent.ExtraEmail, recivers);
             
-
                 email.PutExtra(Android.Content.Intent.ExtraSubject, subject);
 
                 email.PutExtra(Android.Content.Intent.ExtraText, message);

@@ -18,7 +18,6 @@ namespace Tap5050Buyer.Droid
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            System.Threading.Thread.Sleep(3000); // Simulate a long loading process on app startup.
             this.StartActivity(typeof(MainActivity));
         }
     }
