@@ -49,15 +49,16 @@ namespace Tap5050Buyer.Droid
             if (recivers != null)
             {
                 email.PutExtra(Android.Content.Intent.ExtraEmail, recivers);
+            
+
+                email.PutExtra(Android.Content.Intent.ExtraSubject, subject);
+
+                email.PutExtra(Android.Content.Intent.ExtraText, message);
+
+                email.SetType("message/rfc822");
+
+                Forms.Context.StartActivity(email);
             }
-
-            email.PutExtra(Android.Content.Intent.ExtraSubject, subject);
-
-            email.PutExtra(Android.Content.Intent.ExtraText, message);
-
-            email.SetType("message/rfc822");
-
-            Forms.Context.StartActivity(email);
         }
 
         public void Sms(string message, string[] recivers)
@@ -105,10 +106,10 @@ namespace Tap5050Buyer.Droid
         private void FacebookLoginPost(string clientID, string message, string link)
         {
             var auth = new OAuth2Authenticator(
-                  clientId: clientID,
-                  scope: "publish_actions",
-                  authorizeUrl: new Uri("https://m.facebook.com/dialog/oauth/"),
-                  redirectUrl: new Uri("http://www.facebook.com/connect/login_success.html"));
+                           clientId: clientID,
+                           scope: "publish_actions",
+                           authorizeUrl: new Uri("https://m.facebook.com/dialog/oauth/"),
+                           redirectUrl: new Uri("http://www.facebook.com/connect/login_success.html"));
 
             auth.Completed += (sender, eventArgs) =>
             {
@@ -191,13 +192,13 @@ namespace Tap5050Buyer.Droid
         private void TwitterLoginPost(string clientID, string secrete, string message, string link)
         { 
             var auth = new OAuth1Authenticator(
-                 consumerKey: clientID,
-                 consumerSecret: secrete,
-                 requestTokenUrl: new Uri("https://api.twitter.com/oauth/request_token"),
-                 authorizeUrl: new Uri("https://api.twitter.com/oauth/authorize"),
-                 accessTokenUrl: new Uri("https://api.twitter.com/oauth/access_token"),
-                 callbackUrl: new Uri("http://www.facebook.com/connect/login_success.html")
-             );
+                           consumerKey: clientID,
+                           consumerSecret: secrete,
+                           requestTokenUrl: new Uri("https://api.twitter.com/oauth/request_token"),
+                           authorizeUrl: new Uri("https://api.twitter.com/oauth/authorize"),
+                           accessTokenUrl: new Uri("https://api.twitter.com/oauth/access_token"),
+                           callbackUrl: new Uri("http://www.facebook.com/connect/login_success.html")
+                       );
 
             auth.Completed += (sender, eventArgs) =>
             {

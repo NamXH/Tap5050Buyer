@@ -311,7 +311,9 @@ namespace Tap5050Buyer
                 var allContacts = await GetAllContacts();
                 if (allContacts != null)
                 {
-                    var contactsWithAnEmail = allContacts.Where(x => x.Emails.Any());
+                    // var contactsWithAnEmail = allContacts.Where(x => x.Emails.Any()); // This causes a bug in IQueryable, we .ToList() to work around!!
+                    var all = allContacts.ToList();
+                    var contactsWithAnEmail = all.Where(x => x.Emails.Any());
 
                     var extendedContacts = new List<ExtendedContact>();
                     foreach (var contact in contactsWithAnEmail)
