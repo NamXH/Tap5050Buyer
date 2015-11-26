@@ -9,6 +9,7 @@
     <RootNamespace>Tap5050Buyer.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>Tap5050Buyer.iOS</AssemblyName>
+    <XamarinInsightsApiKey>0b1f83db0942cb019d5dc57abfe89464310133c8</XamarinInsightsApiKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>

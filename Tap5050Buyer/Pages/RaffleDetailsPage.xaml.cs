@@ -248,8 +248,9 @@ namespace Tap5050Buyer
 
             var facebookButton = new ImageButton
             {
-                ImageHeightRequest = 50,
-                ImageWidthRequest = 50,
+                ImageHeightRequest = 80,
+                ImageWidthRequest = 80,
+                BackgroundColor = Color.Transparent,
                 Source = "facebook.png",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
             };
@@ -261,8 +262,9 @@ namespace Tap5050Buyer
 
             var twitterButton = new ImageButton
             {
-                ImageHeightRequest = 50,
-                ImageWidthRequest = 50,
+                ImageHeightRequest = 80,
+                ImageWidthRequest = 80,
+                BackgroundColor = Color.Transparent,
                 Source = "twitter.png",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
             };
@@ -275,8 +277,9 @@ namespace Tap5050Buyer
 
             var smsButton = new ImageButton
             {
-                ImageHeightRequest = 50,
-                ImageWidthRequest = 50,
+                ImageHeightRequest = 80,
+                ImageWidthRequest = 80,
+                BackgroundColor = Color.Transparent,
                 Source = "sms.png",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
             };
@@ -300,8 +303,9 @@ namespace Tap5050Buyer
 
             var emailButton = new ImageButton
             {
-                ImageHeightRequest = 50,
-                ImageWidthRequest = 50,
+                ImageHeightRequest = 80,
+                ImageWidthRequest = 80,
+                BackgroundColor = Color.Transparent,
                 Source = "email.png",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
             };
