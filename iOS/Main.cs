@@ -12,10 +12,11 @@ namespace Tap5050Buyer.iOS
 		// This is the main entry point of the application.
 		static void Main (string[] args)
 		{
-			Xamarin.Insights.Initialize (XamarinInsights.ApiKey);
 			// if you want to use a different Application Delegate class from "AppDelegate"
 			// you can specify it here.
-			//            Insights.Initialize(Insights.DebugModeKey);
+
+            Insights.Initialize(Insights.DebugModeKey);
+//            Xamarin.Insights.Initialize (XamarinInsights.ApiKey);
 			Insights.Track ("iOS Starts");
 			UIApplication.Main (args, null, "AppDelegate");
 		}
