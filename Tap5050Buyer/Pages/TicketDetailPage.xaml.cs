@@ -24,14 +24,23 @@ namespace Tap5050Buyer
 
         public async void LoadDataThenCreateCarouselPage(int eventId)
         {
-            foreach (var ticketGroup in _viewModel.TicketGroups)
+            if (Device.OS == TargetPlatform.Android)
             {
-                var page = CreatePage(ticketGroup);
+                var selectedTicketGroup = _viewModel.TicketGroups.Single(x => x.EventId == eventId);
+                var page = CreatePage(selectedTicketGroup);
                 Children.Add(page);
-                if (ticketGroup.EventId == eventId)
+            }
+            else
+            {
+                foreach (var ticketGroup in _viewModel.TicketGroups)
                 {
-                    this.SelectedItem = page;
-                } 
+                    var page = CreatePage(ticketGroup);
+                    Children.Add(page);
+                    if (ticketGroup.EventId == eventId)
+                    {
+                        this.SelectedItem = page;
+                    } 
+                }
             }
         }
 
