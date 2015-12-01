@@ -246,10 +246,12 @@ namespace Tap5050Buyer
             };
             layout.Children.Add(socialMediaLayout);
 
+            var buttonSize = Device.OnPlatform<int>(50, 80, 50);
+
             var facebookButton = new ImageButton
             {
-                ImageHeightRequest = 80,
-                ImageWidthRequest = 80,
+                ImageHeightRequest = buttonSize,
+                ImageWidthRequest = buttonSize,
                 BackgroundColor = Color.Transparent,
                 Source = "facebook.png",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
@@ -262,8 +264,8 @@ namespace Tap5050Buyer
 
             var twitterButton = new ImageButton
             {
-                ImageHeightRequest = 80,
-                ImageWidthRequest = 80,
+                ImageHeightRequest = buttonSize,
+                ImageWidthRequest = buttonSize,
                 BackgroundColor = Color.Transparent,
                 Source = "twitter.png",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
@@ -277,8 +279,8 @@ namespace Tap5050Buyer
 
             var smsButton = new ImageButton
             {
-                ImageHeightRequest = 80,
-                ImageWidthRequest = 80,
+                ImageHeightRequest = buttonSize,
+                ImageWidthRequest = buttonSize,
                 BackgroundColor = Color.Transparent,
                 Source = "sms.png",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
@@ -303,8 +305,8 @@ namespace Tap5050Buyer
 
             var emailButton = new ImageButton
             {
-                ImageHeightRequest = 80,
-                ImageWidthRequest = 80,
+                ImageHeightRequest = buttonSize,
+                ImageWidthRequest = buttonSize,
                 BackgroundColor = Color.Transparent,
                 Source = "email.png",
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
