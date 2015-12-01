@@ -291,7 +291,8 @@ namespace Tap5050Buyer
                 var allContacts = await GetAllContacts();
                 if (allContacts != null)
                 {
-                    var contactsWithAMobileNumber = allContacts.Where(x => x.Phones.Any(y => y.Label.Equals("Mobile", StringComparison.OrdinalIgnoreCase)));
+                    var all = allContacts.ToList();
+                    var contactsWithAMobileNumber = all.Where(x => x.Phones.Any(y => y.Label.Equals("Mobile", StringComparison.OrdinalIgnoreCase)));
 
                     var extendedContacts = new List<ExtendedContact>();
                     foreach (var contact in contactsWithAMobileNumber)
