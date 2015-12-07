@@ -40,8 +40,8 @@ namespace Tap5050Buyer
 
         private async void LoadData()
         {
-            var result = await _viewModel.GetAccountInfo();
-            if (result)
+            var result = await _viewModel.LoadAccountInfo();
+            if (result.Item1)
             {
                 _layout.Children.Remove(_indicator);
 
@@ -290,6 +290,10 @@ namespace Tap5050Buyer
                         DependencyService.Get<ISocialShare>().ResetLogin();
                     }
                 };
+            }
+            else
+            {
+                // Error!!
             }
         }
 

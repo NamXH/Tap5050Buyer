@@ -16,6 +16,8 @@ namespace Tap5050Buyer
 
         public static IList<RaffleLocation> RaffleLocations { get; set; }
 
+        public static bool FailToGetCountriesOrProvinces { get; set; }
+
         // Don't make this static so we only use GeolocationManager instead.
         public GeonamesCountrySubdivision CountrySubdivision { get; set; }
 
@@ -36,6 +38,7 @@ namespace Tap5050Buyer
             bool isGetCountriesAndProvinces = false;
             var getCountries = GetCountries();
             var getProvinces = GetProvinces();
+            FailToGetCountriesOrProvinces = false;
 
             if ((DatabaseManager.DbConnection.Table<Country>().Count() == 0) || (DatabaseManager.DbConnection.Table<Province>().Count() == 0))
             {
@@ -72,14 +75,20 @@ namespace Tap5050Buyer
                 var countries = getCountries.Result;
                 var provinces = getProvinces.Result;
 
-                foreach (var country in countries)
+                if ((countries == null) || (provinces == null))
                 {
-                    DatabaseManager.DbConnection.Insert(country);
+                    FailToGetCountriesOrProvinces = true;
                 }
-
-                foreach (var province in provinces)
+                else
                 {
-                    DatabaseManager.DbConnection.Insert(province);
+                    foreach (var country in countries)
+                    {
+                        DatabaseManager.DbConnection.Insert(country);
+                    }
+                    foreach (var province in provinces)
+                    {
+                        DatabaseManager.DbConnection.Insert(province);
+                    }
                 }
             }
         }
@@ -93,25 +102,27 @@ namespace Tap5050Buyer
             var client = new HttpClient();
             client.BaseAddress = new Uri(c_serverBaseAddress);
 
-            HttpResponseMessage response = null;
-            try
+            var response = await client.GetAsync(c_serverLocationApiAddress);
+
+            if (response.IsSuccessStatusCode)
             {
-                response = await client.GetAsync(c_serverLocationApiAddress);
+                var json = response.Content.ReadAsStringAsync().Result;
+
+                var obj = JsonConvert.DeserializeObject<JObject>(json);
+                var items = obj["items"];
+                if (items != null)
+                {
+                    return JsonConvert.DeserializeObject<List<RaffleLocation>>(items.ToString());
+                }
+                else
+                {
+                    return null;
+                }
             }
-            catch (Exception)
+            else
             {
-                // should throw exception !!
                 return null;
             }
-            var json = response.Content.ReadAsStringAsync().Result;
-
-            var obj = JsonConvert.DeserializeObject<JObject>(json);
-            var items = obj["items"];
-            if (items != null)
-            {
-                return JsonConvert.DeserializeObject<List<RaffleLocation>>(items.ToString());
-            }
-            return null;
         }
 
         public async Task<List<Country>> GetCountries()
@@ -119,24 +130,27 @@ namespace Tap5050Buyer
             var client = new HttpClient();
             client.BaseAddress = new Uri(c_serverBaseAddress);
 
-            HttpResponseMessage response = null;
-            try
-            {
-                response = await client.GetAsync(c_countriesApiAddress);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Error while getting countries: " + e.Message, e);
-            }
-            var json = response.Content.ReadAsStringAsync().Result;
+            var response = await client.GetAsync(c_countriesApiAddress);
 
-            var obj = JsonConvert.DeserializeObject<JObject>(json);
-            var items = obj["items"];
-            if (items != null)
+            if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<List<Country>>(items.ToString());
+                var json = response.Content.ReadAsStringAsync().Result;
+
+                var obj = JsonConvert.DeserializeObject<JObject>(json);
+                var items = obj["items"];
+                if (items != null)
+                {
+                    return JsonConvert.DeserializeObject<List<Country>>(items.ToString());
+                }
+                else
+                {
+                    return null;
+                }
             }
-            return null; 
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<List<Province>> GetProvinces()
@@ -144,24 +158,27 @@ namespace Tap5050Buyer
             var client = new HttpClient();
             client.BaseAddress = new Uri(c_serverBaseAddress);
 
-            HttpResponseMessage response = null;
-            try
-            {
-                response = await client.GetAsync(c_provincesApiAddress);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Error while getting provinces: " + e.Message);
-            }
-            var json = response.Content.ReadAsStringAsync().Result;
+            var response = await client.GetAsync(c_provincesApiAddress);
 
-            var obj = JsonConvert.DeserializeObject<JObject>(json);
-            var items = obj["items"];
-            if (items != null)
+            if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<List<Province>>(items.ToString());
+                var json = response.Content.ReadAsStringAsync().Result;
+
+                var obj = JsonConvert.DeserializeObject<JObject>(json);
+                var items = obj["items"];
+                if (items != null)
+                {
+                    return JsonConvert.DeserializeObject<List<Province>>(items.ToString());
+                }
+                else
+                {
+                    return null;
+                }
             }
-            return null; 
+            else
+            {
+                return null;
+            }
         }
     }
 }

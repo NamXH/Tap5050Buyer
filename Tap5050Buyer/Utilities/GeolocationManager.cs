@@ -81,8 +81,16 @@ namespace Tap5050Buyer
                     return;
                 }
 
-                var json = response.Content.ReadAsStringAsync().Result;
-                _countrySubdivision = JsonConvert.DeserializeObject<GeonamesCountrySubdivision>(json);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    _countrySubdivision = JsonConvert.DeserializeObject<GeonamesCountrySubdivision>(json);
+                }
+                else
+                {
+                    _countrySubdivision = null;
+                    return; 
+                }
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Tap5050Buyer
     public partial class LoadingLocationPage : ContentPage
     {
         internal const string c_loadingMessage = "Waiting for your current location.";
-        internal const string c_cannotReachServerErrorMessage = "Cannot contact server. Please check your Internet connection and try again.";
+        internal const string c_cannotReachServerErrorMessage = "There is a problem contacting server. Please check your Internet connection and try again later.";
         internal const string c_cannotDetectGeolocationMessage = "Cannot detect your location. Please manually pick one.";
 
         private LoadingLocationViewModel _viewModel;
@@ -34,14 +34,14 @@ namespace Tap5050Buyer
         {
             await _viewModel.GetCurrentLocationAndServerData();
 
-            if (LoadingLocationViewModel.RaffleLocations == null)
+            if ((LoadingLocationViewModel.RaffleLocations == null) || (LoadingLocationViewModel.FailToGetCountriesOrProvinces))
             {
                 RemoveAllElement();
                 AddTryAgainButton();
             }
             else
             {
-//                LoadingLocationViewModel.IsLocationDetected = false; // For TEST!!
+                LoadingLocationViewModel.IsLocationDetected = false; // For TEST!!
                 if (LoadingLocationViewModel.IsLocationDetected)
                 {
                     MessagingCenter.Send<LoadingLocationPage>(this, "Success");

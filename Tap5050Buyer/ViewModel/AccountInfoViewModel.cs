@@ -54,7 +54,7 @@ namespace Tap5050Buyer
             }
         }
 
-        public async Task<bool> GetAccountInfo()
+        public async Task<Tuple<bool, string>> LoadAccountInfo() // Not the best design!!
         {
             using (var client = new HttpClient())
             {
@@ -94,12 +94,12 @@ namespace Tap5050Buyer
                                 UserAccount.Province = province.ProvinceName;
                             }
 
-                            return true;
+                            return new Tuple<bool, string>(true, "Success");
                         }
                         else
                         {
                             // Handle unsuccessful requests!!
-                            return false;
+                            return new Tuple<bool, string>(false, "Cannot retrieve account info.");
                         }
                     }
                     else
@@ -107,7 +107,7 @@ namespace Tap5050Buyer
                         // Expired token
                         DatabaseManager.DeleteToken();
                         MessagingCenter.Send<AccountInfoViewModel>(this, "Token Deleted");
-                        return false;
+                        return new Tuple<bool, string>(false, "Login token is invalid.");
                     }
                 }
                 catch (Exception e)
