@@ -293,7 +293,7 @@ namespace Tap5050Buyer
             }
             else
             {
-                // Error!!
+                DisplayAlert("Error", result.Item2 + " Please try again later.", "OK");
             }
         }
 
