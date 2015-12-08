@@ -39,6 +39,11 @@ namespace Tap5050Buyer
                 var url = c_serverBaseAddress + c_ticketsApiAddress + "?token_id=" + DatabaseManager.Token.Value;
                 var json = await DependencyService.Get<IWebRequestProtocolVersion10>().GetResponseStringAsync(url);
 
+                if (json == String.Empty)
+                {
+                    return null;
+                }
+
                 JObject obj;
                 try
                 {
@@ -130,23 +135,30 @@ namespace Tap5050Buyer
 
                     // Don't have to worry about expired token here since we have handled it in GetTickets()
                     var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token.Value;
+
                     response = await client.GetAsync(url);
-
-                    var json = response.Content.ReadAsStringAsync().Result;
-
-                    UserAccount = JsonConvert.DeserializeObject<UserAccount>(json);
-
-                    // Translate from code to full name
-                    var country = DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryCode == UserAccount.CountryCode).FirstOrDefault();
-                    if (country != null)
+                    if (response.IsSuccessStatusCode)
                     {
-                        UserAccount.Country = country.CountryName;
+                        var json = response.Content.ReadAsStringAsync().Result;
+
+                        UserAccount = JsonConvert.DeserializeObject<UserAccount>(json);
+
+                        // Translate from code to full name
+                        var country = DatabaseManager.DbConnection.Table<Country>().Where(x => x.CountryCode == UserAccount.CountryCode).FirstOrDefault();
+                        if (country != null)
+                        {
+                            UserAccount.Country = country.CountryName;
+                        }
+
+                        var province = DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceAbbreviation == UserAccount.ProvinceAbbreviation).FirstOrDefault();
+                        if (province != null)
+                        {
+                            UserAccount.Province = province.ProvinceName;
+                        }
                     }
-
-                    var province = DatabaseManager.DbConnection.Table<Province>().Where(x => x.ProvinceAbbreviation == UserAccount.ProvinceAbbreviation).FirstOrDefault();
-                    if (province != null)
+                    else
                     {
-                        UserAccount.Province = province.ProvinceName;
+                        UserAccount = null;
                     }
                 }
                 catch (Exception e)

@@ -127,6 +127,11 @@ namespace Tap5050Buyer
             };
 
             this.Content = _layout;
+
+            if (_viewModel.UserAccount == null) // Where there is a problem retrieving Account Info from server
+            {
+                DisplayAlert("Something went wrong", "Cannot check your phone number verification.", "OK");
+            }
         }
     }
 

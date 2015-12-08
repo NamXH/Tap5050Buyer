@@ -47,6 +47,11 @@ namespace Tap5050Buyer
             var url = c_serverBaseAddress + c_serverEventApiAddress + "?location=" + locationName;
             var json = await DependencyService.Get<IWebRequestProtocolVersion10>().GetResponseStringAsync(url);
 
+            if (json == String.Empty)
+            {
+                return null;
+            }
+
             JObject obj;
             try
             {

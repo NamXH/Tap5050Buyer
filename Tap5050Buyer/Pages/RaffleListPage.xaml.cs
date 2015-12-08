@@ -79,7 +79,15 @@ namespace Tap5050Buyer
         public async void GetRaffleEventsAndCreateList(string raffleLocationName)
         {
             var raffleEvents = await _viewModel.GetRaffleEventsAtLocation(raffleLocationName);
-            CreateRaffleEventList(raffleEvents);
+            raffleEvents = null;
+            if (raffleEvents != null)
+            {
+                CreateRaffleEventList(raffleEvents);
+            }
+            else
+            {
+                DisplayAlert("Error", "Cannot retrieve raffles. Please try again later.", "OK");
+            }
         }
 
         // Should refactor later to become a better MVVM architecture!! Use TicketListPage as a reference !!
