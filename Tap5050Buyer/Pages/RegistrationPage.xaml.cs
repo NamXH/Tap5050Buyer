@@ -287,9 +287,10 @@ namespace Tap5050Buyer
                                             MessagingCenter.Send<RegistrationPage>(this, "Phone Number Changed");
                                         }
 
-                                        this.Navigation.InsertPageBefore(new AccountInfoPage(), parent);
+                                        this.Navigation.InsertPageBefore(new AccountInfoPage(), parent); // parent is old AccountInfo page
+                                        this.Navigation.RemovePage(parent);
                                         this.Navigation.PopAsync(false); // Pop Registration page
-                                        this.Navigation.PopAsync(false); // Pop old AccountInfo page
+//                                        this.Navigation.PopAsync(false); // Pop old AccountInfo page. Not use this anymore.
                                     }
                                     else
                                     {

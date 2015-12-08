@@ -79,7 +79,6 @@ namespace Tap5050Buyer
         public async void GetRaffleEventsAndCreateList(string raffleLocationName)
         {
             var raffleEvents = await _viewModel.GetRaffleEventsAtLocation(raffleLocationName);
-            raffleEvents = null;
             if (raffleEvents != null)
             {
                 CreateRaffleEventList(raffleEvents);
