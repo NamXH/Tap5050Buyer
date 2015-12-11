@@ -24,18 +24,7 @@ namespace Tap5050Buyer
 
             LoadData(); // Load here to check token expiration before doing other things
 
-            this.ToolbarItems.Add(new ToolbarItem("Edit", null, () =>
-                    {
-                        this.Navigation.PushAsync(new RegistrationPage(true, this, new UserAccount(_viewModel.UserAccount)));
-                    }));
 
-            MessagingCenter.Subscribe<VerifyPhonePage>(this, "Verified", (sender) =>
-                {
-                    if (_verifyButton != null)
-                    {
-                        _phoneLayout.Children.Remove(_verifyButton);
-                    }
-                });
         }
 
         private async void LoadData()
@@ -290,6 +279,19 @@ namespace Tap5050Buyer
                         DependencyService.Get<ISocialShare>().ResetLogin();
                     }
                 };
+
+                this.ToolbarItems.Add(new ToolbarItem("Edit", null, () =>
+                        {
+                            this.Navigation.PushAsync(new RegistrationPage(true, this, new UserAccount(_viewModel.UserAccount)));
+                        }));
+
+                MessagingCenter.Subscribe<VerifyPhonePage>(this, "Verified", (sender) =>
+                    {
+                        if (_verifyButton != null)
+                        {
+                            _phoneLayout.Children.Remove(_verifyButton);
+                        }
+                    });
             }
             else
             {
