@@ -23,8 +23,6 @@ namespace Tap5050Buyer
             this.BindingContext = _viewModel;
 
             LoadData(); // Load here to check token expiration before doing other things
-
-
         }
 
         private async void LoadData()
