@@ -136,7 +136,14 @@ namespace Tap5050Buyer
                     // Don't have to worry about expired token here since we have handled it in GetTickets()
                     var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token.Value;
 
-                    response = await client.GetAsync(url);
+                    try
+                    {
+                        response = await client.GetAsync(url);
+                    }
+                    catch
+                    {
+                        UserAccount = null;
+                    }
                     if (response.IsSuccessStatusCode)
                     {
                         var json = response.Content.ReadAsStringAsync().Result;

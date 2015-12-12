@@ -75,7 +75,7 @@ namespace Tap5050Buyer
                 {
                     response = await client.GetAsync(endpointAddress);
                 }
-                catch (Exception)
+                catch
                 {
                     _countrySubdivision = null;
                     return;

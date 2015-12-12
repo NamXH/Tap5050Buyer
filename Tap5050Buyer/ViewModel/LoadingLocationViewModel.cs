@@ -102,7 +102,15 @@ namespace Tap5050Buyer
             var client = new HttpClient();
             client.BaseAddress = new Uri(c_serverBaseAddress);
 
-            var response = await client.GetAsync(c_serverLocationApiAddress);
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.GetAsync(c_serverLocationApiAddress);
+            }
+            catch
+            {
+                return null;
+            }
 
             if (response.IsSuccessStatusCode)
             {
@@ -130,7 +138,15 @@ namespace Tap5050Buyer
             var client = new HttpClient();
             client.BaseAddress = new Uri(c_serverBaseAddress);
 
-            var response = await client.GetAsync(c_countriesApiAddress);
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.GetAsync(c_countriesApiAddress);
+            }
+            catch
+            {
+                return null;
+            }
 
             if (response.IsSuccessStatusCode)
             {
@@ -158,7 +174,15 @@ namespace Tap5050Buyer
             var client = new HttpClient();
             client.BaseAddress = new Uri(c_serverBaseAddress);
 
-            var response = await client.GetAsync(c_provincesApiAddress);
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.GetAsync(c_provincesApiAddress);
+            }
+            catch
+            {
+                return null;
+            }
 
             if (response.IsSuccessStatusCode)
             {

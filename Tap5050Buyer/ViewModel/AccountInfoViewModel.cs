@@ -73,7 +73,15 @@ namespace Tap5050Buyer
                     if (result.Item1)
                     {
                         var url = c_userApiAddress + "?token_id=" + DatabaseManager.Token.Value;
-                        response = await client.GetAsync(url);
+
+                        try
+                        {
+                            response = await client.GetAsync(url);
+                        }
+                        catch (Exception e)
+                        {
+                            return new Tuple<bool, string>(false, e.Message);
+                        }
 
                         if (response.IsSuccessStatusCode)
                         {
@@ -165,9 +173,9 @@ namespace Tap5050Buyer
                 {
                     response = await client.PostAsync(c_userApiAddress, content);
                 }
-                catch (Exception e)
+                catch
                 {
-                    throw new Exception("Error while creating new account!", e);
+                    return new Tuple<bool, string>(false, "Error while contacting server to create account."); 
                 }
                 if (response.IsSuccessStatusCode)
                 {

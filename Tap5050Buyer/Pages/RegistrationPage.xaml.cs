@@ -209,7 +209,7 @@ namespace Tap5050Buyer
                     }
                     else
                     {
-                        DisplayAlert("Server request failed", "", "OK");
+                        DisplayAlert("Server request failed", result.Item2 + " Please try again later", "OK");
                     }
                 };
             }

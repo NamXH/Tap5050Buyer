@@ -20,7 +20,15 @@ namespace Tap5050Buyer.iOS
             request.Method = "GET";
             request.ProtocolVersion = HttpVersion.Version10;
 
-            var response = (HttpWebResponse)await Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null);
+            HttpWebResponse response;
+            try
+            {
+                response = (HttpWebResponse)await Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null);
+            }
+            catch
+            {
+                return String.Empty;
+            }
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
