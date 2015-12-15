@@ -41,7 +41,7 @@ namespace Tap5050Buyer
             }
             else
             {
-                LoadingLocationViewModel.IsLocationDetected = false; // For TEST!!
+//                LoadingLocationViewModel.IsLocationDetected = false; // For TEST!!
                 if (LoadingLocationViewModel.IsLocationDetected)
                 {
                     MessagingCenter.Send<LoadingLocationPage>(this, "Success");

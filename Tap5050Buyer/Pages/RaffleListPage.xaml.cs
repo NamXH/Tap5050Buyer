@@ -81,6 +81,13 @@ namespace Tap5050Buyer
             var raffleEvents = await _viewModel.GetRaffleEventsAtLocation(raffleLocationName);
             if (raffleEvents != null)
             {
+                foreach (var raffleEvent in raffleEvents)
+                {
+                    if (String.IsNullOrEmpty(raffleEvent.ImageUrl))
+                    {
+                        raffleEvent.ImageUrl = "tap5050.png";
+                    }
+                }
                 CreateRaffleEventList(raffleEvents);
             }
             else

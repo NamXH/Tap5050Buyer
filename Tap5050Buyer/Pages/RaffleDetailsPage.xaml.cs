@@ -103,12 +103,20 @@ namespace Tap5050Buyer
             var quarterScreenSize = (DeviceService.Device.Display.Width - layout.Padding.Left - layout.Padding.Right) / 4.5;
             var image = new Image
             {
-                Source = ImageSource.FromUri(new Uri(raffle.ImageUrl)),
                 WidthRequest = quarterScreenSize,
                 HeightRequest = quarterScreenSize,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
             };
+            if (raffle.ImageUrl != "tap5050.png") // Default string set in RaffleListPage if the ImageUrl is null or empty
+            {
+                image.Source = ImageSource.FromUri(new Uri(raffle.ImageUrl));
+            }
+            else
+            {
+                image.Source = ImageSource.FromFile("tap5050.png");
+            }
+
             imageLayout.Children.Add(image);
 
             if (!String.IsNullOrWhiteSpace(raffle.LicenceNumber))
