@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Tap5050Buyer
 {
-    // TO DO: some pages need to be refactored to a better MVVM architecture
+    // TO DO: some pages may need to be refactored to a better MVVM architecture
     public partial class RaffleDetailsPage : CarouselPage
     {
         // Facebook and Twitter account info
@@ -42,11 +42,13 @@ namespace Tap5050Buyer
                 }
             }
 
-            // Previously used to pop the contact list page
+////////////////////
+//             Previously used to pop the contact list page
 //            MessagingCenter.Subscribe<ContactsViewModel>(this, "Done", (sender) =>
 //                {
 //                    Navigation.PopAsync();
 //                });
+////////////////////
         }
 
         // Can change to use BindingContext here later !!
