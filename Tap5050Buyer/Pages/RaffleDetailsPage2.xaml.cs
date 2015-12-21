@@ -24,7 +24,7 @@ namespace Tap5050Buyer
 
         public Color BackgroundColor { get; set; }
 
-        public RaffleDetailsPage2(bool locationDetected, IEnumerable<RaffleEvent> raffleEvents, int selectedRaffleId)
+        public RaffleDetailsPage2(bool locationDetected, RaffleEvent selectedRaffle)
         {
             InitializeComponent();
             Title = "Raffle Details";
@@ -32,19 +32,12 @@ namespace Tap5050Buyer
 
             LocationDetected = locationDetected;
 
-            foreach (var raffle in raffleEvents)
-            {
-                if (raffle.Id == selectedRaffleId)
-                {
-                    CreateRaffleEventDetailsPage(raffle);
-                }
-            }
+            CreateRaffleEventDetailsPage(selectedRaffle);
         }
 
         // Can change to use BindingContext here later !!
         public void CreateRaffleEventDetailsPage(RaffleEvent raffle)
         {
-//            var page = new ContentPage();
             this.BackgroundColor = BackgroundColor;
 
             var layout = new StackLayout

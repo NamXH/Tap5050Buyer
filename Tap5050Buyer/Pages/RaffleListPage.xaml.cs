@@ -114,7 +114,14 @@ namespace Tap5050Buyer
                     if (selectedEvent.EventType == "normal")
                     {
                         // PushAsync a new RaffleDetailsPage instead of creating one and reuse it: to workaround a bug in Carousel + TabbedPage in iOS !!
-                        this.Navigation.PushAsync(new RaffleDetailsPage2(LocationDetected, normalEvents, selectedEvent.Id));
+                        if (Device.OS == TargetPlatform.iOS)
+                        {
+                            this.Navigation.PushAsync(new RaffleDetailsPage(LocationDetected, normalEvents, selectedEvent.Id)); // Old implementation
+                        }
+                        else
+                        {
+                            this.Navigation.PushAsync(new RaffleDetailsPage2(LocationDetected, selectedEvent));
+                        }
                     }
                     else // EventType = "master"
                     {

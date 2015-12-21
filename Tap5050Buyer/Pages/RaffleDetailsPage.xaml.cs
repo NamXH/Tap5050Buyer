@@ -36,10 +36,10 @@ namespace Tap5050Buyer
             {
                 var page = CreateRaffleEventDetailsPage(raffle);
                 Children.Add(page);
-//                if (raffle.Id == selectedRaffleId)
-//                {
-//                    this.SelectedItem = page;
-//                }
+                if (raffle.Id == selectedRaffleId)
+                {
+                    this.SelectedItem = page;
+                }
             }
 
 ////////////////////
