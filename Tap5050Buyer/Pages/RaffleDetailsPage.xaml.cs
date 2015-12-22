@@ -196,7 +196,14 @@ namespace Tap5050Buyer
 //
 //                this.Navigation.PushAsync(browserPage);
 
-                Device.OpenUri(new Uri(raffle.PrizeUrl)); // External browser
+                try
+                {
+                    Device.OpenUri(new Uri(raffle.PrizeUrl)); // External browser
+                }
+                catch (Exception ex)
+                {
+                    DisplayAlert("Error", ex.Message + " Please try again later.", "OK");
+                }
             };
             buttonsLayout.Children.Add(prizeButton);
 
