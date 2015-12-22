@@ -7,6 +7,7 @@ using Contacts.Plugin;
 using System.Linq;
 using Contacts.Plugin.Abstractions;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Tap5050Buyer
 {
@@ -202,7 +203,7 @@ namespace Tap5050Buyer
                 }
                 catch (Exception ex)
                 {
-                    DisplayAlert("Error", ex.Message + " Please try again later.", "OK");
+                    DisplayAlert("Error", ex.Message + Environment.NewLine + "Please try again later.", "OK");
                 }
             };
             buttonsLayout.Children.Add(prizeButton);
@@ -217,11 +218,17 @@ namespace Tap5050Buyer
                 HeightRequest = 46,
                 WidthRequest = 120,
             };
-            buyButton.Clicked += (sender, e) =>
+            buyButton.Clicked += async (sender, e) =>
             {
-                var browser = new WebView();
-                browser.Source = raffle.BuyTicketUrl;
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var response = await client.GetAsync(raffle.BuyTicketUrl); // Workaround: WebView doesn't have a method to notify us when the Source is invalid or there is no Internet connection
+                    }
 
+                    var browser = new WebView();
+                    browser.Source = raffle.BuyTicketUrl;
 
 //                browser.Navigated += async (object obj, WebNavigatedEventArgs eventArgs) =>
 //                {
@@ -230,11 +237,16 @@ namespace Tap5050Buyer
 //                    Debug.WriteLine("Action: " + action);
 //                };
 
-                var browserPage = new ContentPage();
-                browserPage.Content = browser;
-                browserPage.Title = "Buy Tickets";
+                    var browserPage = new ContentPage();
+                    browserPage.Content = browser;
+                    browserPage.Title = "Buy Tickets";
 
-                this.Navigation.PushAsync(browserPage);
+                    this.Navigation.PushAsync(browserPage);
+                }
+                catch (Exception ex)
+                {
+                    DisplayAlert("Error", ex.Message + Environment.NewLine + "Please try again later.", "OK");
+                }
             };
             buttonsLayout.Children.Add(buyButton);
             #endregion
