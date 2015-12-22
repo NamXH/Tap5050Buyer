@@ -129,7 +129,8 @@ namespace Tap5050Buyer.iOS
                         }
                     });
             };
-            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(auth.GetUI(), true, null);
+            var view = auth.GetUI();
+            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(view, true, null);
         }
 
 
