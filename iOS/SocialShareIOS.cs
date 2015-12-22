@@ -129,6 +129,13 @@ namespace Tap5050Buyer.iOS
                         }
                     });
             };
+
+            // !!
+            auth.Error += (object sender, AuthenticatorErrorEventArgs e) =>
+            {
+            };
+
+
             var view = auth.GetUI();
             UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(view, true, null);
         }
@@ -141,7 +148,7 @@ namespace Tap5050Buyer.iOS
                 {
                     if (t.IsFaulted)
                     {
-                        Console.WriteLine("Error: " + t.Exception.InnerException.Message);
+//                        Console.WriteLine("Error: " + t.Exception.InnerException.Message);
                         FacebookLoginPost(clientID, message, link);
                     }
                     else
