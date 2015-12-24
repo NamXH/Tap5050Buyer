@@ -12,7 +12,7 @@ using System.Net.Http;
 namespace Tap5050Buyer
 {
     // TO DO: some pages may need to be refactored to a better MVVM architecture
-    public partial class RaffleDetailsPage : CarouselPage
+    public partial class RaffleDetailsPage : CarouselPage // Currently only use this for iOS
     {
         // Facebook and Twitter account info
         private const string c_facebookAppID = "838514282900661";
@@ -286,9 +286,30 @@ namespace Tap5050Buyer
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
             };
             socialMediaLayout.Children.Add(facebookButton);
-            facebookButton.Clicked += (sender, e) =>
+            facebookButton.Clicked += async (sender, e) =>
             {
-                socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl);
+                var facebookIsReachable = true;
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var response = await client.GetAsync("https://m.facebook.com"); // Workaround the infinite FB authentication pop-up when there is no Internet
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new Exception("Connection error with status code " + response.StatusCode);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    facebookIsReachable = false;
+                    DisplayAlert("Error", "Facebook is unreachable. Please check your connection and try again." + Environment.NewLine + ex.Message, "OK");
+                }
+
+                if (facebookIsReachable)
+                {
+                    socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl);
+                }
             };
 
             var twitterButton = new ImageButton

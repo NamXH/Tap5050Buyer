@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Tap5050Buyer
 {
     // TO DO: some pages may need to be refactored to a better MVVM architecture
-    public partial class RaffleDetailsPage2 : ContentPage
+    public partial class RaffleDetailsPage2 : ContentPage // Currently only use this for Android
     {
         // Facebook and Twitter account info
         private const string c_facebookAppID = "838514282900661";
