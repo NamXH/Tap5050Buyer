@@ -23,8 +23,8 @@ namespace Tap5050Buyer.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
-            Insights.Initialize(Insights.DebugModeKey, (Android.App.Activity)Xamarin.Forms.Forms.Context);
-//            Insights.Initialize("0b1f83db0942cb019d5dc57abfe89464310133c8", (Android.App.Activity)Xamarin.Forms.Forms.Context);
+//            Insights.Initialize(Insights.DebugModeKey, (Android.App.Activity)Xamarin.Forms.Forms.Context);
+            Insights.Initialize("0b1f83db0942cb019d5dc57abfe89464310133c8", (Android.App.Activity)Xamarin.Forms.Forms.Context);
             Insights.Track("Android start");
 
             if (!Resolver.IsSet)

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.tap5050.RaffleWallet" android:versionName="1.15" android:versionCode="15">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.tap5050.RaffleWallet" android:versionName="1.16" android:versionCode="16">
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="21" />
 	<application android:label="RaffleWallet" android:icon="@drawable/app_icon"></application>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
