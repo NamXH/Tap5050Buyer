@@ -125,6 +125,86 @@ namespace Tap5050Buyer
             {
                 this.Navigation.PushAsync(new RegistrationPage(false, this));
             };
+
+            var gap01 = new TableSection();
+            tableView.Root.Add(gap01);
+
+            var termsAndPrivacySection = new TableSection();
+            if (Device.OS == TargetPlatform.Android)
+            {
+                termsAndPrivacySection.Title = "By logging in, you agree to Tap50:50's RaffleWallet";
+            }
+            else
+            {
+                termsAndPrivacySection.Title = "By logging in, you agree to Tap50:50's RaffleWallet Terms of Service and Privacy Policy";
+            }
+            tableView.Root.Add(termsAndPrivacySection);
+
+            var termsViewCell = new ViewCell();
+            termsAndPrivacySection.Add(termsViewCell);
+
+            var termsLayout = new StackLayout();
+            if (Device.OS == TargetPlatform.Android)
+            {
+                termsLayout.Padding = new Thickness(5, 0, 5, 0);
+            }
+            else
+            {
+                termsLayout.Padding = new Thickness(15, 0, 15, 0);
+            }
+            termsViewCell.View = termsLayout;
+
+            var termsButton = new Button
+            {
+                Text = "Terms of Service",
+                
+            };
+            if (Device.OS == TargetPlatform.Android)
+            {
+                termsButton.HorizontalOptions = LayoutOptions.FillAndExpand;
+            }
+            else
+            {
+                termsButton.HorizontalOptions = LayoutOptions.Start;
+            }
+            termsLayout.Children.Add(termsButton);
+            termsButton.Clicked += async (sender, e) =>
+            {
+                this.Navigation.PushAsync(new TermsOfServicePage()); 
+            };
+
+            var privacyViewCell = new ViewCell();
+            termsAndPrivacySection.Add(privacyViewCell);
+
+            var privacyLayout = new StackLayout();
+            if (Device.OS == TargetPlatform.Android)
+            {
+                privacyLayout.Padding = new Thickness(5, 0, 5, 0);
+            }
+            else
+            {
+                privacyLayout.Padding = new Thickness(15, 0, 15, 0);
+            }
+            privacyViewCell.View = privacyLayout;
+
+            var privacyButton = new Button
+            {
+                Text = "Privacy",
+                HorizontalOptions = LayoutOptions.Start,
+            };
+            if (Device.OS == TargetPlatform.Android)
+            {
+                privacyButton.HorizontalOptions = LayoutOptions.FillAndExpand;
+            }
+            else
+            {
+                privacyButton.HorizontalOptions = LayoutOptions.Start;
+            }
+            privacyLayout.Children.Add(privacyButton);
+            privacyButton.Clicked += async (sender, e) =>
+            {
+                this.Navigation.PushAsync(new PrivacyPage()); 
+            };
         }
 
         private async Task Login(string username, string password)
