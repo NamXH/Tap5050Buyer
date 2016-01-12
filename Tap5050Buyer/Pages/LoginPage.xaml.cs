@@ -170,7 +170,7 @@ namespace Tap5050Buyer
             termsLayout.Children.Add(termsButton);
             termsButton.Clicked += async (sender, e) =>
             {
-                this.Navigation.PushAsync(new TermsOfServicePage()); 
+                this.Navigation.PushAsync(new TermsOfServicePage2()); 
             };
 
             var privacyViewCell = new ViewCell();

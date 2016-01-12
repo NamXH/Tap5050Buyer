@@ -113,6 +113,30 @@
     <Compile Include="Pages\PrivacyPage.xaml.cs">
       <DependentUpon>PrivacyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\TermsOfServicePage2.xaml.cs">
+      <DependentUpon>TermsOfServicePage2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TermsPage2.cs" />
+    <Compile Include="Pages\TermsPage3.cs" />
+    <Compile Include="Pages\TermsPage4.cs" />
+    <Compile Include="Pages\TermsPage5.cs" />
+    <Compile Include="Pages\TermsPage6.cs" />
+    <Compile Include="Pages\TermsPage7.cs" />
+    <Compile Include="Pages\TermsPage8.cs" />
+    <Compile Include="Pages\TermsPage9.cs" />
+    <Compile Include="Pages\TermsPage10.cs" />
+    <Compile Include="Pages\TermsPage11.cs" />
+    <Compile Include="Pages\TermsPage12.cs" />
+    <Compile Include="Pages\TermsPage13.cs" />
+    <Compile Include="Pages\TermsPage14.cs" />
+    <Compile Include="Pages\TermsPage15.cs" />
+    <Compile Include="Pages\TermsPage16.cs" />
+    <Compile Include="Pages\TermsPage17.cs" />
+    <Compile Include="Pages\TermsPage18.cs" />
+    <Compile Include="Pages\TermsPage19.cs" />
+    <Compile Include="Pages\TermsPage20.cs" />
+    <Compile Include="Pages\TermsPage1.cs" />
+    <Compile Include="Pages\TermsPage21.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -229,6 +253,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\PrivacyPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\TermsOfServicePage2.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
