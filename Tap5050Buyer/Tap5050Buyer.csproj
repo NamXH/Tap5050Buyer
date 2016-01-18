@@ -116,27 +116,27 @@
     <Compile Include="Pages\TermsOfServicePage2.xaml.cs">
       <DependentUpon>TermsOfServicePage2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\TermsPage2.cs" />
-    <Compile Include="Pages\TermsPage3.cs" />
-    <Compile Include="Pages\TermsPage4.cs" />
-    <Compile Include="Pages\TermsPage5.cs" />
-    <Compile Include="Pages\TermsPage6.cs" />
-    <Compile Include="Pages\TermsPage7.cs" />
-    <Compile Include="Pages\TermsPage8.cs" />
-    <Compile Include="Pages\TermsPage9.cs" />
-    <Compile Include="Pages\TermsPage10.cs" />
-    <Compile Include="Pages\TermsPage11.cs" />
-    <Compile Include="Pages\TermsPage12.cs" />
-    <Compile Include="Pages\TermsPage13.cs" />
-    <Compile Include="Pages\TermsPage14.cs" />
-    <Compile Include="Pages\TermsPage15.cs" />
-    <Compile Include="Pages\TermsPage16.cs" />
-    <Compile Include="Pages\TermsPage17.cs" />
-    <Compile Include="Pages\TermsPage18.cs" />
-    <Compile Include="Pages\TermsPage19.cs" />
-    <Compile Include="Pages\TermsPage20.cs" />
-    <Compile Include="Pages\TermsPage1.cs" />
-    <Compile Include="Pages\TermsPage21.cs" />
+    <Compile Include="TermsPages\TermsPage1.cs" />
+    <Compile Include="TermsPages\TermsPage10.cs" />
+    <Compile Include="TermsPages\TermsPage11.cs" />
+    <Compile Include="TermsPages\TermsPage12.cs" />
+    <Compile Include="TermsPages\TermsPage13.cs" />
+    <Compile Include="TermsPages\TermsPage14.cs" />
+    <Compile Include="TermsPages\TermsPage15.cs" />
+    <Compile Include="TermsPages\TermsPage16.cs" />
+    <Compile Include="TermsPages\TermsPage17.cs" />
+    <Compile Include="TermsPages\TermsPage18.cs" />
+    <Compile Include="TermsPages\TermsPage19.cs" />
+    <Compile Include="TermsPages\TermsPage2.cs" />
+    <Compile Include="TermsPages\TermsPage20.cs" />
+    <Compile Include="TermsPages\TermsPage21.cs" />
+    <Compile Include="TermsPages\TermsPage3.cs" />
+    <Compile Include="TermsPages\TermsPage4.cs" />
+    <Compile Include="TermsPages\TermsPage5.cs" />
+    <Compile Include="TermsPages\TermsPage6.cs" />
+    <Compile Include="TermsPages\TermsPage7.cs" />
+    <Compile Include="TermsPages\TermsPage8.cs" />
+    <Compile Include="TermsPages\TermsPage9.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -205,6 +205,7 @@
     <Folder Include="PickerConverters\" />
     <Folder Include="Database\" />
     <Folder Include="Utilities\" />
+    <Folder Include="TermsPages\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\LoadingLocationPage.xaml">

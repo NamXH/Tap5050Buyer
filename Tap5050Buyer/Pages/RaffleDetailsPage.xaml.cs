@@ -294,7 +294,7 @@ namespace Tap5050Buyer
                     using (var client = new HttpClient())
                     {
                         var response = await client.GetAsync("https://m.facebook.com"); // Workaround the infinite FB authentication pop-up when there is no Internet
-                        if (!response.IsSuccessStatusCode)
+                        if ((int)response.StatusCode >= 400)
                         {
                             throw new Exception("Connection error with status code " + response.StatusCode);
                         }
