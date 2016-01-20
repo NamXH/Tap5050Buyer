@@ -107,7 +107,7 @@ namespace Tap5050Buyer
 
             var label10 = new Label
             {
-                Text = "- Data locations: Our servers are based in Canada, so your personal information will hosted and processed by us in the Candada. Your personal information may also be processed in, or transferred or disclosed to, countries in which Tap5050 subsidiaries and offices are located and in which our service providers are located or have servers."
+                Text = "- Data locations: Our servers are based in Canada, so your personal information will hosted and processed by us in Candada. Your personal information may also be processed in, or transferred or disclosed to, countries in which Tap5050 subsidiaries and offices are located and in which our service providers are located or have servers."
                 + Environment.NewLine
                 + "- Security: Details about Tap5050's security practices are available in our Security Statement. We are committed to handling your personal information and data with integrity and care. However, regardless of the security protections and precautions we undertake, there is always a risk that your personal data may be viewed and used by unauthorized third parties as a result of collecting and transmitting your data through the internet.",
             };
