@@ -20,11 +20,14 @@ namespace Tap5050Buyer
             _viewModel = new LoginPageViewModel();
             this.BindingContext = _viewModel;
 
+            var layout = new StackLayout();
+            this.Content = layout;
+
             var tableView = new TableView
             {
                 Intent = TableIntent.Menu,
             };
-            this.Content = tableView;
+            layout.Children.Add(tableView);
 
             var usernameSection = new TableSection();
             tableView.Root.Add(usernameSection);
@@ -126,85 +129,70 @@ namespace Tap5050Buyer
                 this.Navigation.PushAsync(new RegistrationPage(false, this));
             };
 
-            var gap01 = new TableSection();
-            tableView.Root.Add(gap01);
+            #region Terms and Privacy
+            var termsLayout = new StackLayout
+            {
+                Padding = new Thickness(0, 5, 0, 5)
+            };
+            layout.Children.Add(termsLayout);
 
-            var termsAndPrivacySection = new TableSection();
-            if (Device.OS == TargetPlatform.Android)
+            var termsLabel = new Label
             {
-                termsAndPrivacySection.Title = "By logging in, you agree to Tap50:50's RaffleWallet";
-            }
-            else
-            {
-                termsAndPrivacySection.Title = "By logging in, you agree to Tap50:50's RaffleWallet Terms of Service and Privacy Policy";
-            }
-            tableView.Root.Add(termsAndPrivacySection);
+                Text = "By tapping Login, you agree to Tap50:50's RaffleWallet",
+                FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                HorizontalOptions = LayoutOptions.Center,
+            };
+            termsLayout.Children.Add(termsLabel);
 
-            var termsViewCell = new ViewCell();
-            termsAndPrivacySection.Add(termsViewCell);
-
-            var termsLayout = new StackLayout();
-            if (Device.OS == TargetPlatform.Android)
+            var termsButtonsLayout = new StackLayout
             {
-                termsLayout.Padding = new Thickness(5, 0, 5, 0);
-            }
-            else
-            {
-                termsLayout.Padding = new Thickness(15, 0, 15, 0);
-            }
-            termsViewCell.View = termsLayout;
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.Center
+            };
+            termsLayout.Children.Add(termsButtonsLayout);
 
             var termsButton = new Button
             {
+                BackgroundColor = Color.Transparent,
+                BorderColor = Color.Transparent,
                 Text = "Terms of Service",
-                
+                TextColor = Color.Accent,
+                FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
             };
-            if (Device.OS == TargetPlatform.Android)
-            {
-                termsButton.HorizontalOptions = LayoutOptions.FillAndExpand;
-            }
-            else
-            {
-                termsButton.HorizontalOptions = LayoutOptions.Start;
-            }
-            termsLayout.Children.Add(termsButton);
+            termsButtonsLayout.Children.Add(termsButton);
+
             termsButton.Clicked += async (sender, e) =>
             {
                 this.Navigation.PushAsync(new TermsOfServicePage2()); 
             };
 
-            var privacyViewCell = new ViewCell();
-            termsAndPrivacySection.Add(privacyViewCell);
-
-            var privacyLayout = new StackLayout();
-            if (Device.OS == TargetPlatform.Android)
+            var termsText = new Label
             {
-                privacyLayout.Padding = new Thickness(5, 0, 5, 0);
-            }
-            else
-            {
-                privacyLayout.Padding = new Thickness(15, 0, 15, 0);
-            }
-            privacyViewCell.View = privacyLayout;
+                Text = "and",
+                FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+            };
+            termsButtonsLayout.Children.Add(termsText);
 
             var privacyButton = new Button
             {
-                Text = "Privacy",
-                HorizontalOptions = LayoutOptions.Start,
+                BackgroundColor = Color.Transparent,
+                BorderColor = Color.Transparent,
+                Text = "Privacy Policy",
+                TextColor = Color.Accent,
+                FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)),
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
             };
-            if (Device.OS == TargetPlatform.Android)
-            {
-                privacyButton.HorizontalOptions = LayoutOptions.FillAndExpand;
-            }
-            else
-            {
-                privacyButton.HorizontalOptions = LayoutOptions.Start;
-            }
-            privacyLayout.Children.Add(privacyButton);
+            termsButtonsLayout.Children.Add(privacyButton);
             privacyButton.Clicked += async (sender, e) =>
             {
                 this.Navigation.PushAsync(new PrivacyPage()); 
             };
+            #endregion
         }
 
         private async Task Login(string username, string password)

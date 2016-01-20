@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace Tap5050Buyer
 {
-    public partial class TermsOfServicePage2 : ContentPage
+    public partial class TermsOfServicePage2 : ContentPage // New design, currently in use
     {
         public TermsOfServicePage2()
         {
