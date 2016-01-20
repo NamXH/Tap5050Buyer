@@ -11,9 +11,9 @@ namespace Tap5050Buyer
 {
     public class TicketListViewModel
     {
-        internal const string c_serverBaseAddress = "https://dev.tap5050.com/";
-        internal const string c_ticketsApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/tickets";
-        internal const string c_userApiAddress = "apex/tap5050_dev/Mobile_Web_Serv/users";
+        internal const string c_serverBaseAddress = "https://www.tap5050.com/";
+        internal const string c_ticketsApiAddress = "apex/tap5050_test/Mobile_Web_Serv/tickets";
+        internal const string c_userApiAddress = "apex/tap5050_test/Mobile_Web_Serv/users";
 
         public List<Ticket> Tickets { get; set; }
 

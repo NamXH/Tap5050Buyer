@@ -9,7 +9,7 @@ namespace Tap5050Buyer
     public static class ServerCaller
     {
         // May remove the trailing slash later!!
-        public static readonly string ServerBaseAddress = "https://dev.tap5050.com/";
+        public static readonly string ServerBaseAddress = "https://www.tap5050.com/";
 
         public static async Task<Tuple<bool, string>> PostAsync(List<KeyValuePair<string, string>> queryString, List<KeyValuePair<string, string>> body, string endpointUrl)
         {
@@ -90,7 +90,7 @@ namespace Tap5050Buyer
                 new KeyValuePair<string, string>("nothing", ""), // Has to do this since our server's api use a POST without body
             };
 
-            var endpointUrl = "apex/tap5050_dev/Mobile_Web_Serv/check_token_validation";
+            var endpointUrl = "apex/tap5050_test/Mobile_Web_Serv/check_token_validation";
 
             var response = await ServerCaller.PostAsync(queryString, body, endpointUrl);
 
