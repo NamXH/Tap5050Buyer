@@ -7,6 +7,7 @@ using Contacts.Plugin;
 using System.Linq;
 using Contacts.Plugin.Abstractions;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Tap5050Buyer
 {
@@ -179,7 +180,14 @@ namespace Tap5050Buyer
                 //
                 //                this.Navigation.PushAsync(browserPage);
 
-                Device.OpenUri(new Uri(raffle.PrizeUrl)); // External browser
+                try
+                {
+                    Device.OpenUri(new Uri(raffle.PrizeUrl)); // External browser
+                }
+                catch (Exception ex)
+                {
+                    DisplayAlert("Error", ex.Message + Environment.NewLine + "Please try again later.", "OK");
+                }
             };
             buttonsLayout.Children.Add(prizeButton);
 
@@ -193,24 +201,35 @@ namespace Tap5050Buyer
                 HeightRequest = 46,
                 WidthRequest = 120,
             };
-            buyButton.Clicked += (sender, e) =>
+            buyButton.Clicked += async (sender, e) =>
             {
-                var browser = new WebView();
-                browser.Source = raffle.BuyTicketUrl;
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var response = await client.GetAsync(raffle.BuyTicketUrl); // Workaround: WebView doesn't have a method to notify us when the Source is invalid or there is no Internet connection
+                    }
 
+                    var browser = new WebView();
+                    browser.Source = raffle.BuyTicketUrl;
 
-                //                browser.Navigated += async (object obj, WebNavigatedEventArgs eventArgs) =>
-                //                {
-                //                    Debug.WriteLine(eventArgs.Url);
-                //                    var action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Email", "Twitter", "Facebook");
-                //                    Debug.WriteLine("Action: " + action);
-                //                };
+                    //                browser.Navigated += async (object obj, WebNavigatedEventArgs eventArgs) =>
+                    //                {
+                    //                    Debug.WriteLine(eventArgs.Url);
+                    //                    var action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Email", "Twitter", "Facebook");
+                    //                    Debug.WriteLine("Action: " + action);
+                    //                };
 
-                var browserPage = new ContentPage();
-                browserPage.Content = browser;
-                browserPage.Title = "Buy Tickets";
+                    var browserPage = new ContentPage();
+                    browserPage.Content = browser;
+                    browserPage.Title = "Buy Tickets";
 
-                this.Navigation.PushAsync(browserPage);
+                    this.Navigation.PushAsync(browserPage);
+                }
+                catch (Exception ex)
+                {
+                    DisplayAlert("Error", ex.Message + Environment.NewLine + "Please try again later.", "OK");
+                }
             };
             buttonsLayout.Children.Add(buyButton);
             #endregion
@@ -250,9 +269,30 @@ namespace Tap5050Buyer
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
             };
             socialMediaLayout.Children.Add(facebookButton);
-            facebookButton.Clicked += (sender, e) =>
+            facebookButton.Clicked += async (sender, e) =>
             {
-                socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl);
+                var facebookIsReachable = true;
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var response = await client.GetAsync("https://m.facebook.com"); // Workaround the infinite FB authentication pop-up when there is no Internet
+                        if ((int)response.StatusCode >= 400)
+                        {
+                            throw new Exception("Connection error with status code " + response.StatusCode);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    facebookIsReachable = false;
+                    DisplayAlert("Error", "Facebook is unreachable. Please check your connection and try again." + Environment.NewLine + ex.Message, "OK");
+                }
+
+                if (facebookIsReachable)
+                {
+                    socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl);
+                }
             };
 
             var twitterButton = new ImageButton
