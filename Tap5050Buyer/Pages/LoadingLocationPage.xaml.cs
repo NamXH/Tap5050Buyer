@@ -14,6 +14,7 @@ namespace Tap5050Buyer
         internal const string c_loadingMessage = "Waiting for your current location.";
         internal const string c_cannotReachServerErrorMessage = "There is a problem contacting server. Please check your Internet connection and try again later.";
         internal const string c_cannotDetectGeolocationMessage = "Cannot detect your location. Please manually pick one.";
+        internal const string c_noRaffleAvailable = "No raffles available. Please check back later.";
 
         private LoadingLocationViewModel _viewModel;
 
@@ -37,7 +38,12 @@ namespace Tap5050Buyer
             if ((LoadingLocationViewModel.RaffleLocations == null) || (LoadingLocationViewModel.FailToGetCountriesOrProvinces))
             {
                 RemoveAllElement();
-                AddTryAgainButton();
+                AddTryAgainButton(c_cannotReachServerErrorMessage);
+            }
+            else if (LoadingLocationViewModel.RaffleLocations.Count == 0)
+            {
+                RemoveAllElement();
+                AddTryAgainButton(c_noRaffleAvailable);
             }
             else
             {
@@ -90,11 +96,11 @@ namespace Tap5050Buyer
                 });
         }
 
-        private void AddTryAgainButton()
+        private void AddTryAgainButton(string errorMessage)
         {
             var label = new Label
             {
-                Text = c_cannotReachServerErrorMessage,
+                Text = errorMessage,
             };
             
             var tryAgainButton = new Button

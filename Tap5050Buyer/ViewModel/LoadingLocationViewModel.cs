@@ -54,11 +54,12 @@ namespace Tap5050Buyer
             await Task.WhenAll(tasks);
 
             RaffleLocations = getRaffleLocationsTask.Result;
-            if (RaffleLocations != null)
+            if ((RaffleLocations != null) && (RaffleLocations.Count > 0))
             {
                 // Set default value
                 UserSelectedLocation = RaffleLocations[0];
             }
+
             CountrySubdivision = GeolocationManager.CountrySubdivision;
 
             if ((CountrySubdivision != null) && (CountrySubdivision.AdminName != null))
