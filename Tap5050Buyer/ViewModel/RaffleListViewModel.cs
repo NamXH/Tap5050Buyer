@@ -15,7 +15,7 @@ namespace Tap5050Buyer
     public class RaffleListViewModel
     {
         public const string c_serverBaseAddress = "https://www.tap5050.com/";
-        public const string c_serverEventApiAddress = "apex/tap5050_test/Mobile_Web_Serv/events";
+        public const string c_serverEventApiAddress = "apex/tap5050/Mobile_Web_Serv/events";
 
         public RaffleLocation RaffleLocation { get; set; }
 

@@ -16,8 +16,8 @@ namespace Tap5050Buyer.iOS
 			// you can specify it here.
 
 //            Insights.Initialize(Insights.DebugModeKey);
-            Xamarin.Insights.Initialize (XamarinInsights.ApiKey);
-			Insights.Track ("iOS Starts");
+//            Xamarin.Insights.Initialize (XamarinInsights.ApiKey);
+//			Insights.Track ("iOS Starts");
 			UIApplication.Main (args, null, "AppDelegate");
 		}
 	}

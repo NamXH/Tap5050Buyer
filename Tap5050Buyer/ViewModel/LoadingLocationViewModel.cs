@@ -10,9 +10,9 @@ namespace Tap5050Buyer
     public class LoadingLocationViewModel
     {
         internal const string c_serverBaseAddress = "https://www.tap5050.com/";
-        internal const string c_serverLocationApiAddress = "apex/tap5050_test/Mobile_Web_Serv/locations";
-        internal const string c_countriesApiAddress = "apex/tap5050_test/Mobile_Web_Serv/countries";
-        internal const string c_provincesApiAddress = "apex/tap5050_test/Mobile_Web_Serv/states_provinces";
+        internal const string c_serverLocationApiAddress = "apex/tap5050/Mobile_Web_Serv/locations";
+        internal const string c_countriesApiAddress = "apex/tap5050/Mobile_Web_Serv/countries";
+        internal const string c_provincesApiAddress = "apex/tap5050/Mobile_Web_Serv/states_provinces";
 
         public static IList<RaffleLocation> RaffleLocations { get; set; }
 

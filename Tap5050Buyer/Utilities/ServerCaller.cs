@@ -90,7 +90,7 @@ namespace Tap5050Buyer
                 new KeyValuePair<string, string>("nothing", ""), // Has to do this since our server's api use a POST without body
             };
 
-            var endpointUrl = "apex/tap5050_test/Mobile_Web_Serv/check_token_validation";
+            var endpointUrl = "apex/tap5050/Mobile_Web_Serv/check_token_validation";
 
             var response = await ServerCaller.PostAsync(queryString, body, endpointUrl);
 

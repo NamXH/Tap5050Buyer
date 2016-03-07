@@ -11,8 +11,8 @@ namespace Tap5050Buyer
     public class LoginPageViewModel
     {
         internal const string c_serverBaseAddress = "https://www.tap5050.com/";
-        internal const string c_authenticationApiAddress = "apex/tap5050_test/Mobile_Web_Serv/auth";
-        internal const string c_resetPasswordApiAddress = "apex/tap5050_test/Mobile_Web_Serv/reset_password";
+        internal const string c_authenticationApiAddress = "apex/tap5050/Mobile_Web_Serv/auth";
+        internal const string c_resetPasswordApiAddress = "apex/tap5050/Mobile_Web_Serv/reset_password";
 
         public string Username { get; set; }
 

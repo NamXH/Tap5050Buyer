@@ -9,8 +9,8 @@ namespace Tap5050Buyer
     public class VerifyPhoneNumberViewModel
     {
         internal const string c_serverBaseAddress = "https://www.tap5050.com/";
-        internal const string c_requestPhoneVerificationApiAddress = "apex/tap5050_test/Mobile_Web_Serv/request_mobile_phone_verification";
-        internal const string c_phoneVerificationApiAddress = "apex/tap5050_test/Mobile_Web_Serv/mobile_phone_verification";
+        internal const string c_requestPhoneVerificationApiAddress = "apex/tap5050/Mobile_Web_Serv/request_mobile_phone_verification";
+        internal const string c_phoneVerificationApiAddress = "apex/tap5050/Mobile_Web_Serv/mobile_phone_verification";
 
         public string VerificationCode { get; set; }
 
