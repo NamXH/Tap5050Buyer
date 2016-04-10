@@ -7,6 +7,8 @@ using UIKit;
 using MessageUI;
 using Foundation;
 using Tap5050Buyer.iOS;
+using Facebook.CoreKit;
+using Facebook.ShareKit;
 
 [assembly: Xamarin.Forms.Dependency(typeof(SocialShareIOS))]
 namespace Tap5050Buyer.iOS
@@ -79,27 +81,49 @@ namespace Tap5050Buyer.iOS
             UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(smsController, true, null);
         }
 
-        public void Facebook(string clientID, string message, string link)
+        public void Facebook(string clientID, string message, string link, string imgUrl, string raffleName, string charityName)
         {
-            //check if there is a stored account
-            Account facebookAccount = new Account(); 
-            bool hasStoredAccout = false;
-		
-            IEnumerable<Account> facebookAccounts = AccountStore.Create().FindAccountsForService("Facebook");
-            foreach (var x in facebookAccounts)
-            {
-                facebookAccount = x;
-                hasStoredAccout = true;
-            }	
+//            //check if there is a stored account
+//            Account facebookAccount = new Account(); 
+//            bool hasStoredAccout = false;
+//		
+//            IEnumerable<Account> facebookAccounts = AccountStore.Create().FindAccountsForService("Facebook");
+//            foreach (var x in facebookAccounts)
+//            {
+//                facebookAccount = x;
+//                hasStoredAccout = true;
+//            }	
+//
+//            if (!hasStoredAccout)
+//            {
+//                FacebookLoginPost(clientID, message, link);
+//            }
+//            else
+//            {
+//                FacebookPost(facebookAccount, message, clientID, link);
+//            }
 
-            if (!hasStoredAccout)
+            Profile.EnableUpdatesOnAccessTokenChange(true);
+            Settings.AppID = clientID;
+            Settings.DisplayName = "RaffleWallet";
+
+            ShareLinkContent content = new ShareLinkContent();
+            if (String.IsNullOrEmpty(imgUrl))
             {
-                FacebookLoginPost(clientID, message, link);
+                content.ImageURL = new NSUrl("https://www.tap5050.com/apex/wwv_flow_file_mgr.get_file?p_security_group_id=9113403474056812&p_fname=tap5050logo.png");
             }
             else
             {
-                FacebookPost(facebookAccount, message, clientID, link);
+                content.ImageURL = new NSUrl(imgUrl);
             }
+            content.SetContentUrl(new NSUrl(link));
+            content.ContentDescription = String.Format("I supported {0} by purchasing a {1} ticket.  You can too by clicking here.", charityName, raffleName);
+            content.ContentTitle = raffleName;
+            MyShareDialog sd = new MyShareDialog();
+            sd.FromViewController = UIApplication.SharedApplication.KeyWindow.RootViewController;
+            sd.SetShareContent(content);
+            sd.Mode = ShareDialogMode.FeedBrowser;
+            sd.Show();
         }
 
         private void FacebookLoginPost(string clientID, string message, string link)

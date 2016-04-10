@@ -288,28 +288,30 @@ namespace Tap5050Buyer
             socialMediaLayout.Children.Add(facebookButton);
             facebookButton.Clicked += async (sender, e) =>
             {
-                var facebookIsReachable = true;
-                try
-                {
-                    using (var client = new HttpClient())
-                    {
-                        var response = await client.GetAsync("https://m.facebook.com"); // Workaround the infinite FB authentication pop-up when there is no Internet
-                        if ((int)response.StatusCode >= 400)
-                        {
-                            throw new Exception("Connection error with status code " + response.StatusCode);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    facebookIsReachable = false;
-                    DisplayAlert("Error", "Facebook is unreachable. Please check your connection and try again." + Environment.NewLine + ex.Message, "OK");
-                }
+//                var facebookIsReachable = true;
+//                try
+//                {
+//                    using (var client = new HttpClient())
+//                    {
+//                        var response = await client.GetAsync("https://m.facebook.com"); // Workaround the infinite FB authentication pop-up when there is no Internet
+//                        if ((int)response.StatusCode >= 400)
+//                        {
+//                            throw new Exception("Connection error with status code " + response.StatusCode);
+//                        }
+//                    }
+//                }
+//                catch (Exception ex)
+//                {
+//                    facebookIsReachable = false;
+//                    DisplayAlert("Error", "Facebook is unreachable. Please check your connection and try again." + Environment.NewLine + ex.Message, "OK");
+//                }
+//
+//                if (facebookIsReachable)
+//                {
+//                    socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl);
+//                }
 
-                if (facebookIsReachable)
-                {
-                    socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl);
-                }
+                socialShare.Facebook(c_facebookAppID, String.Format(c_facebookMessageTemplate, raffle.Organization, raffle.BuyTicketUrl, raffle.LocationName), raffle.BuyTicketUrl, raffle.ImageUrl, raffle.Name, raffle.Organization);
             };
 
             var twitterButton = new ImageButton
